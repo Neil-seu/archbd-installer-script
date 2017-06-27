@@ -22,7 +22,6 @@ echo ""
 echo "Which one to do partition (in full form)"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
-mount $DEVICE_NUMBER /mnt
 
 printf '\e[1;37m%-6s\e[m' "##################################################################"
 printf "\n"
