@@ -12,7 +12,7 @@ printf "\n"
 read -p "press any key to continue"
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
 printf "\n"
-cfdisk $device
+#cfdisk $device
 
 
 umount_partitions(){
