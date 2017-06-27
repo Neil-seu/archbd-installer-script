@@ -20,17 +20,21 @@ echo "list of DISKs attached (HDD or SSD)"
 #lsblk -l | grep disk | awk '{print "/dev/" $1}'
 lsblk -o name,mountpoint,label,size,uuid
 echo ""
-echo "Which one to do partition (in full form)"
+echo "Which one to do partition (in full form like /dev/sdX. X means sda/sdb/sdc etc.)"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
 clear
-echo "To format and mount, choose your partition you have just created from the list below :"
+echo "To format and mount, choose your partition in full form you have just created from the list below :"
 #lsblk -l | grep disk | awk '{print "/dev/" $1}'
 lsblk -o name,mountpoint,label,size,uuid
 echo ""
 read DEVICE_NUMBER
+echo "formatting..."
 mkfs.ext4 $DEVICE_NUMBER
+echo "format successful"
+echo "mounting root partition..."
 mount $DEVICE_NUMBER /mnt
+echo "mount successful"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 clear
 printf '\e[1;37m%-6s\e[m' "##################################################################"
