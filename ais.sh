@@ -12,8 +12,9 @@ printf "\n"
 read -p "press any key to continue"
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
 printf "\n"
-#cfdisk $device
-#UMOUNT PARTITIONS {{{
+cfdisk $device
+
+UMOUNT PARTITIONS {{{
 umount_partitions(){
 mounted_partitions=(`lsblk | grep ${MOUNTPOINT} | awk '{print $7}' | sort -r`)
 swapoff -a
@@ -21,8 +22,9 @@ for i in ${mounted_partitions[@]}; do
 umount $i
 done
 }
-#}}}
-#SELECT DEVICE {{{
+}}}
+
+SELECT DEVICE {{{
 select_device(){
 devices_list=(`lsblk -d | awk '{print "/dev/" $1}' | grep 'sd\|hd\|vd\|nvme'`);
 PS3="$prompt1"
@@ -39,8 +41,9 @@ fi
 done
 BOOT_MOUNTPOINT=$device
 }
-#}}}
-#CREATE PARTITION SCHEME {{{
+}}}
+
+CREATE PARTITION SCHEME {{{
 create_partition_scheme(){
 LUKS=0
 LVM=0
@@ -77,8 +80,9 @@ esac
 [[ -n $OPT ]] && break
 done
 }
-#}}}
-#SETUP PARTITION{{{
+}}}
+
+SETUP PARTITION{{{
 create_partition(){
 apps_list=("cfdisk" "cgdisk" "fdisk" "gdisk" "parted");
 PS3="$prompt1"
