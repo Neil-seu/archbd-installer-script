@@ -22,7 +22,15 @@ echo ""
 echo "Which one to do partition (in full form)"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
-
+clear
+echo "To format and mount, choose your partition you have just created from the list below :"
+lsblk -d | grep disk | awk '{print "/dev/" $1}'
+echo ""
+read DEVICE_NUMBER
+mkfs.ext4 $DEVICE_NUMBER
+mount $DEVICE_NUMBER /mnt
+printf '\e[1;33m%-6s\e[m' "### Success! ###"
+clear
 printf '\e[1;37m%-6s\e[m' "##################################################################"
 printf "\n"
 read -p "press any key to continue"
