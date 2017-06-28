@@ -18,10 +18,9 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
 #lsblk -l | grep disk | awk '{print "/dev/" $1}'
 lsblk -o name,mountpoint,label,size,uuid
-echo ""
-printf '\e[1;33m%-6s\e[m' "Which one to do partition (in full form like /dev/sdX. X means sda/sdb/sdc etc.)"
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "Enter your choice:$DEVICE_NUMBER"
+printf '\e[1;33m%-6s\e[m' "Which one to do partition (in full form like /dev/sdX. X means sda/sdb/sdc etc.)"
+echo "Enter your choice:$DEVICE_NUMBER"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
 clear
@@ -29,7 +28,7 @@ printf '\e[1;33m%-6s\e[m' "To format and mount, choose your partition in full fo
 #lsblk -l | grep disk | awk '{print "/dev/" $1}'
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "Enter your choice:$DEVICE_NUMBER"
+echo "Enter your choice:$DEVICE_NUMBER"
 read DEVICE_NUMBER
 printf '\e[1;33m%-6s\e[m' "formatting..."
 mkfs.ext4 $DEVICE_NUMBER
