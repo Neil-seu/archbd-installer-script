@@ -56,15 +56,24 @@ clear
 
 
 ## Installing the base system 
+printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup brltty
+printf "\n"
+read -p " Done! press any key to continue..."
+clear
 
-pacstrap /mnt base base-devel
 
 ## Generating the fstab
-
+printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 genfstab -U /mnt > /mnt/etc/fstab
+printf "\n"
+read -p "Success! press any key to continue..."
+clear
+
 
 ## Entering the chroot into the new installed system
-
+printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
+read -p "press any key to continue"
 arch-chroot /mnt
 
 ## Installation and configuring GRUB
