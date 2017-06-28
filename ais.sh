@@ -7,8 +7,6 @@ printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will auto
 printf "\n"
 read -p "press any key to continue"
 mount -o remount,size=2G /run/archiso/cowspace
-printf "\n"
-clear
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
 read -p "press any key to continue"
@@ -21,6 +19,7 @@ echo "list of DISKs attached (HDD or SSD)"
 lsblk -o name,mountpoint,label,size,uuid
 echo ""
 echo "Which one to do partition (in full form like /dev/sdX. X means sda/sdb/sdc etc.)"
+echo "Enter your choice:$DEVICE_NUMBER"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
 clear
