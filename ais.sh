@@ -70,6 +70,30 @@ printf "\n"
 read -p "Success! press any key to continue..."
 clear
 
+#### Doing some basic stuff
+
+printf '\e[1;33m%-6s\e[m' "## Set your root password: ##"
+passwd
+printf "\n"
+read -p "press any key to continue"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Enter the computers hostname: ##"
+read $HOSTNAME
+echo $HOSTNAME > /etc/hostname
+printf "\n"
+echo " Done! "
+read -p "press any key to continue"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account: ##"
+echo "Enter the username:"
+read $USERNAME
+useradd -m -G wheel $USERNAME
+echo "Enter the password for the user:"
+passwd $USERNAME
 
 ## Entering the chroot into the new installed system
 printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
@@ -77,10 +101,13 @@ read -p "press any key to continue"
 arch-chroot /mnt
 
 ## Installation and configuring GRUB
-
-pacman -Syy grub os-prober
+printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
+pacman -Syy grub os-prober --noconfirm
 grub-install --recheck $DEVICE_NUMBER
 grub-mkconfig -o /boot/grub/grub.cfg
+printf "\n"
+read -p "Succes! press any key to proceed..."
+clear
 
 
 
