@@ -44,10 +44,34 @@ read DEVICE_NUMBER
 printf '\e[1;33m%-6s\e[m' "formatting..."
 mkfs.ext4 $DEVICE_NUMBER
 printf '\e[1;33m%-6s\e[m' "format successful"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "mounting root partition..."
 mount $DEVICE_NUMBER /mnt
 printf '\e[1;33m%-6s\e[m' "mount successful"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
 read -p "press any key to continue"
 clear
+
+
+## Installing the base system 
+
+pacstrap /mnt base base-devel
+
+## Generating the fstab
+
+genfstab -U /mnt > /mnt/etc/fstab
+
+## Entering the chroot into the new installed system
+
+arch-chroot /mnt
+
+## Installation and configuring GRUB
+
+pacman -Syy grub os-prober
+grub-install --recheck $DEVICE_NUMBER
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
