@@ -92,6 +92,7 @@ printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account
 echo "Enter the username:"
 read $USERNAME
 useradd -m -G wheel $USERNAME
+sed -i '/%wheel ALL=(ALL) ALL/s/^#//' $ARCH/etc/sudoers
 echo "Enter the password for the user:"
 passwd $USERNAME
 
