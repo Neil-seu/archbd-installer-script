@@ -166,6 +166,7 @@ clear
 
 ### Installing Desktop environment
 printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
+printf "\n"
 sed -i -e '$a\\n[arch-anywhere]\nServer = http://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 pacman -Syy yaourt xf86-video-vesa mesa xf86-video-intel xorg-server xorg-utils xorg-xinit xterm xfce4 xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
