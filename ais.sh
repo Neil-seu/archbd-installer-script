@@ -13,7 +13,7 @@
 ### License: GPL v2.0
 ###############################################################
 clear
-printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script #####################"
+printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script ######################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
 printf "\n"
@@ -85,7 +85,7 @@ clear
 printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
 read -p "press any key to continue"
 arch-chroot /mnt
-
+mkinitcpio -p linux
 
 #### Doing some basic stuff
 
@@ -164,4 +164,25 @@ read -p "Succes! press any key to proceed..."
 clear
 
 
+### Installing Desktop environment
+printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
+sed -i -e '$a\\n[arch-anywhere]\nServer = http://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+pacman -Syy yaourt xf86-video-vesa mesa xf86-video-intel xorg-server xorg-utils xorg-xinit xterm xfce4 xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+printf "\n"
+echo "Enabling login manager services..."
+systemctl enable lightdm.service
+echo "Done!"
+read -p "press any key to continue..."
+clear
+
+
+## Unmounting devices in case if any devices are already mounted
+umount /mnt/boot
+umount -R /mnt
+printf '\e[1;33m%-6s\e[m' "###### All dirty work is done & devices are already unmounted! ######"
+printf "\n"
+read -p "press any key to reboot and unplug your USB or any CD-DVD drive..."
+exit
+reboot
 
