@@ -1,5 +1,17 @@
 #!/bin/sh
-#ArchInstallerSrcipt
+###############################################################
+### Arch Installer Srcipt
+###
+### Copyright (C) 2017 Md. Tariqul Islam Neil
+###
+### By: Neil (Neil-seu)
+### Email: tariqulislamseu@gmail.com
+###
+### Any questions, comments, or bug reports may be sent to above
+### email address. Enjoy, and keep on using Arch.
+###
+### License: GPL v2.0
+###############################################################
 clear
 printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script #####################"
 printf "\n"
@@ -24,10 +36,8 @@ umount -R /mnt
 
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
 printf "\n"
-#cfdisk $device
 #echo "list of DISKs attached (HDD or SSD)"
 printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
-#lsblk -l | grep disk | awk '{print "/dev/" $1}'
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "Which one to do partition (in full form like /dev/sdX. X means sda/sdb/sdc etc.)"
@@ -57,7 +67,7 @@ clear
 
 ## Installing the base system 
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
-pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup brltty
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 read -p " Done! press any key to continue..."
 clear
@@ -69,6 +79,13 @@ genfstab -U /mnt > /mnt/etc/fstab
 printf "\n"
 read -p "Success! press any key to continue..."
 clear
+
+
+## Entering the chroot into the new installed system
+printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
+read -p "press any key to continue"
+arch-chroot /mnt
+
 
 #### Doing some basic stuff
 
@@ -92,14 +109,50 @@ printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account
 echo "Enter the username:"
 read $USERNAME
 useradd -m -G wheel $USERNAME
-sed -i '/%wheel ALL=(ALL) ALL/s/^#//' $ARCH/etc/sudoers
+sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
 echo "Enter the password for the user:"
 passwd $USERNAME
-
-## Entering the chroot into the new installed system
-printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
+echo "Success!"
 read -p "press any key to continue"
-arch-chroot /mnt
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
+wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
+echo " $wireless_dev is found as your wireless device. Enabling... "
+systemctl enable dhcpcd@${wireless_dev}.service
+echo " SUCCESS! "
+wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
+echo " $wired_dev is found as your lan device. Enabling... "
+systemctl enable dhcpcd@${wired_dev}.service
+echo " SUCCESS! "
+echo "Enabling Network manager service during boot..."
+systemctl enable NetworkManager.service
+echo " SUCCESS! "
+echo "Enabling other necessary services..."
+systemctl enable bluetooth.service
+systemctl enable ppp@${wired_dev}.service
+systemctl enable ntpd.service
+echo "DONE!"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
+sed -i '/en_US.UTF-8 UTF-8/s/^#//' /mnt/etc/locale.gen
+locale-gen
+localectl set-locale LANG=en_US.UTF-8
+echo "Locale generation successful!"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
+tzselect
+timedatectl set-timezone 'Asia/Dhaka'
+timedatectl set-ntp true
+echo "SUCCESS!"
+read -p "press any key to continue..."
+clear
+
 
 ## Installation and configuring GRUB
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
