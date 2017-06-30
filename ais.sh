@@ -187,4 +187,3 @@ read -p "press any key to reboot and unplug your USB or any CD-DVD drive..."
 exit
 reboot
 
-
