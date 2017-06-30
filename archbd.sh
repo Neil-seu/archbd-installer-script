@@ -13,7 +13,6 @@
 ### License: GPL v3.0
 ###############################################################
 clear
-print "\n"
 printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script ######################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
