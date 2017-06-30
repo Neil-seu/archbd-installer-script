@@ -7,7 +7,7 @@
 ### By: Neil (Neil-seu)
 ### Email: tariqulislamseu@gmail.com
 ###
-### Any questions, comments, or bug reports may be sent to above
+### Any questions, comments, or bug reports or suggestions and ideas may be sent to above
 ### email address. Enjoy, and keep on using Arch.
 ###
 ### License: GPL v3.0
