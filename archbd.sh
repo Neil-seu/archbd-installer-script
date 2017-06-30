@@ -181,6 +181,16 @@ read -p "press any key to continue..."
 clear
 
 
+#### Installing Some common softwares
+printf '\e[1;33m%-6s\e[m' "######### Would you mind to install some common software? I guess not! Let's do this: #########"
+printf "\n"
+pacman -Syyu chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
+printf "\n"
+echo "Success!"
+read -p "press any key to continue..."
+clear
+
+
 ## Unmounting devices in case if any devices are already mounted
 umount /mnt/boot
 umount -R /mnt
