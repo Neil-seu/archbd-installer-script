@@ -31,25 +31,26 @@ read -p "press any key to continue"
 clear
 
 ## Unmounting devices in case if any devices are already mounted
-umount /mnt/boot
-umount -R /mnt
+##umount /mnt/boot
+##umount -R /mnt
 
 
 ## Disk Partition
 
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
 printf "\n"
-#echo "list of DISKs attached (HDD or SSD)"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "Which one to do partition (in full form like /dev/sdX. X means sda/sdb/sdc etc.)"
+printf '\e[1;33m%-6s\e[m' "Which one to do partition in full form like /dev/sdX. X means sda/sdb/sdc etc."
+printf "\n \n"
 echo "Enter your choice:"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
 clear
-printf '\e[1;33m%-6s\e[m' "To format and mount, choose your partition in full form you have just created from the list below :"
-#lsblk -l | grep disk | awk '{print "/dev/" $1}'
+printf '\e[1;33m%-6s\e[m' "To format and mount, choose your partition in full form like /dev/sdX() you have just created from the list below :"
+printf "\n \n"
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
 echo "Enter your choice:"
@@ -71,7 +72,7 @@ clear
 #### Installing the base system 
 printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 printf "\n"
-cp /mnt/etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist.backup
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
 rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 printf "\n"
