@@ -19,9 +19,12 @@ printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will auto
 printf "\n"
 read -p "press any key to continue"
 
-## Increasing the cowspace
+## Increasing the cowspace and importing the archlinux-keyring
 
 mount -o remount,size=2G /run/archiso/cowspace
+printf "\n"
+pacman -Syy archlinux-keyring git
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
 read -p "press any key to continue"
@@ -67,7 +70,7 @@ clear
 
 ## Installing the base system 
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
-pacstrap /mnt base base-devel archlinux-keyring parted git btrfs-progs f2fs-tools ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 read -p " Done! press any key to continue..."
 clear
@@ -169,7 +172,7 @@ printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #####
 printf "\n"
 sed -i -e '$a\\n[arch-anywhere]\nServer = http://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-pacman -Syy yaourt xf86-video-vesa mesa xf86-video-intel xorg-server xorg-utils xorg-xinit xterm xfce4 xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+pacman -Syy yaourt xf86-video-vesa mesa xf86-video-intel xorg-server xorg-utils xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
 systemctl enable lightdm.service
