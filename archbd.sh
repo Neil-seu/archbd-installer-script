@@ -13,10 +13,11 @@
 ### License: GPL v3.0
 ###############################################################
 clear
+print "\n \n"
 printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script ######################"
 printf "\n \n"
 printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
-printf "\n"
+printf "\n \n"
 read -p "press any key to continue"
 
 ## Increasing the cowspace and importing the archlinux-keyring
