@@ -10,7 +10,7 @@
 ### Any questions, comments, or bug reports may be sent to above
 ### email address. Enjoy, and keep on using Arch.
 ###
-### License: GPL v2.0
+### License: GPL v3.0
 ###############################################################
 clear
 printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script ######################"
