@@ -68,7 +68,15 @@ read -p "press any key to continue"
 clear
 
 
-## Installing the base system 
+#### Installing the base system 
+printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+printf "\n"
+cp /mnt/etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist.backup
+sed -i 's/^#Server/Server/' /mnt/etc/pacman.d/mirrorlist.backup
+rankmirrors -n 10 /mnt/etc/pacman.d/mirrorlist.backup > /mnt/etc/pacman.d/mirrorlist
+printf "\n"
+echo "Mirrorlist successfully generated!"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
