@@ -13,11 +13,11 @@
 ### License: GPL v3.0
 ###############################################################
 clear
-print "\n \n"
+print "\n"
 printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script ######################"
-printf "\n \n"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
-printf "\n \n"
+printf "\n"
 read -p "press any key to continue"
 
 ## Increasing the cowspace and importing the archlinux-keyring
@@ -39,18 +39,22 @@ clear
 ## Disk Partition
 
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
-printf "\n \n"
+printf "\n"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
 lsblk -o name,mountpoint,label,size,uuid
-printf "\n \n"
+printf "\n"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "Which one to do partition in full form like /dev/sdX. X means sda/sdb/sdc etc."
-printf "\n \n"
+printf "\n"
+printf "\n"
 echo "Enter your choice:"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
 clear
 printf '\e[1;33m%-6s\e[m' "To format and mount, choose your partition in full form like /dev/sdX() you have just created from the list below :"
-printf "\n \n"
+printf "\n"
+printf "\n"
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
 echo "Enter your choice:"
@@ -148,9 +152,11 @@ arch-chroot systemctl enable bluetooth.service
 arch-chroot systemctl enable ppp@${wired_dev}.service
 arch-chroot systemctl enable ntpd.service
 echo "DONE!"
-printf "\n \n"
+printf "\n"
+printf "\n"
 echo "#####################################################################"
-printf "\n \n"
+printf "\n"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
 sed -i '/en_US.UTF-8 UTF-8/s/^#//' /mnt/etc/locale.gen
 locale-gen
@@ -173,7 +179,8 @@ printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system b
 pacman -Syy grub os-prober --noconfirm
 arch-chroot grub-install --recheck $DEVICE_NUMBER
 arch-chroot grub-mkconfig -o /boot/grub/grub.cfg
-printf "\n \n"
+printf "\n"
+printf "\n"
 read -p "Succes! press any key to proceed..."
 clear
 
@@ -223,7 +230,8 @@ clear
 umount /mnt/boot
 umount -R /mnt
 printf '\e[1;33m%-6s\e[m' "###### All dirty work is done & devices are already unmounted! ######"
-printf "\n \n"
+printf "\n"
+printf "\n"
 read -p "press any key to reboot and unplug your USB or any CD-DVD drive..."
 exit
 reboot
