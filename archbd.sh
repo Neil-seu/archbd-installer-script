@@ -28,13 +28,13 @@ echo -e "${Yellow}*> Updating pacman keys..."
 		pacman-key --init
 		pacman-key --populate archlinux
 		pacman-key --refresh-keys
-		echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully." 
+		echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully!" 
 printf "\n"		
 pacman -Syy archlinux-keyring git
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
-read -p "press any key to continue"
+read -p "press any key to continue..."
 clear
 
 ## Unmounting devices in case if any devices are already mounted
