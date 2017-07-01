@@ -128,6 +128,9 @@ clear
 ## Installation and configuring GRUB
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
 printf "\n"
+arch-chroot /mnt
+break
+printf "\n"
 pacman -Syy grub os-prober --noconfirm
 printf '\e[1;33m%-6s\e[m' "####  Now choose your root partition: ####"
 printf "\n"
