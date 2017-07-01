@@ -18,7 +18,7 @@ printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Scri
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
 printf "\n"
-read -p "press any key to continue"
+read -p "press enter to continue"
 
 ## Increasing the cowspace and importing the archlinux-keyring
 
@@ -35,7 +35,7 @@ pacman -Syy archlinux-keyring git --noconfirm
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
-read -p "press any key to continue..."
+read -p "press enter to continue..."
 clear
 
 ## Unmounting devices in case if any devices are already mounted
@@ -72,11 +72,12 @@ printf '\e[1;33m%-6s\e[m' "format successful!"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "mounting root partition..."
 mount $DEVICE_NUMBER /mnt
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "mount successful"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
-read -p "press any key to continue..."
+read -p "press enter to continue..."
 clear
 
 
@@ -103,7 +104,7 @@ clear
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
-read -p " Done! press any key to continue..."
+read -p " Done! press enter to continue..."
 clear
 
 
@@ -111,7 +112,7 @@ clear
 printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 genfstab -U /mnt > /mnt/etc/fstab
 printf "\n"
-read -p "Success! press any key to continue..."
+read -p "Success! press enter to continue..."
 clear
 
 
@@ -120,36 +121,45 @@ printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some change
 ##arch-chroot /mnt
 printf "\n \n"
 arch-chroot /mnt mkinitcpio -p linux
-read -p "press any key to continue"
+read -p "press enter to continue"
 clear
 
 #### Doing some basic stuff
 
 printf '\e[1;33m%-6s\e[m' "## Set your root password: ##"
+printf "\n"
 passwd
 printf "\n"
-read -p "press any key to continue"
+read -p "press enter to continue..."
 printf "\n"
 echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Enter the computers hostname: ##"
+printf "\n"
 read $HOSTNAME
 echo $HOSTNAME > /etc/hostname
 printf "\n"
 echo " Done! "
-read -p "press any key to continue"
+printf "\n"
+read -p "press enter to continue"
 printf "\n"
 echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account: ##"
+printf "\n"
 echo "Enter the username:"
+printf "\n"
 read $USERNAME
 useradd -m -G wheel $USERNAME
 sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
+printf "\n"
 echo "Enter the password for the user:"
+printf "\n"
 passwd $USERNAME
+printf "\n"
 echo "Success!"
-read -p "press any key to continue"
+printf "\n"
+read -p "press enter to continue..."
 printf "\n"
 echo "#####################################################################"
 printf "\n"
@@ -157,14 +167,18 @@ printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: #
 wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
 echo " $wireless_dev is found as your wireless device. Enabling... "
 systemctl enable dhcpcd@${wireless_dev}.service
+printf "\n"
 echo " SUCCESS! "
+printf "\n"
 wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
 echo " $wired_dev is found as your lan device. Enabling... "
 systemctl enable dhcpcd@${wired_dev}.service
 echo " SUCCESS! "
+printf "\n"
 echo "Enabling Network manager service during boot..."
 systemctl enable NetworkManager.service
 echo " SUCCESS! "
+printf "\n"
 echo "Enabling other necessary services..."
 systemctl enable bluetooth.service
 systemctl enable ppp@${wired_dev}.service
@@ -179,27 +193,30 @@ printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale lang
 sed -i '/en_US.UTF-8 UTF-8/s/^#//' /mnt/etc/locale.gen
 locale-gen
 localectl set-locale LANG=en_US.UTF-8
+printf "\n"
 echo "Locale generation successful!"
 printf "\n"
 echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
+printf "\n"
 tzselect
 timedatectl set-timezone 'Asia/Dhaka'
 timedatectl set-ntp true
 echo "SUCCESS!"
-read -p "press any key to continue..."
+printf "\n"
+read -p "press enter to continue..."
 clear
 
 
 ## Installation and configuring GRUB
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
 pacman -Syy grub os-prober --noconfirm
-arch-chroot /mnt grub-install --recheck $DEVICE_NUMBER
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+grub-install --recheck $DEVICE_NUMBER
+grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
-read -p "Succes! press any key to proceed..."
+read -p "Succes! press enter to proceed..."
 clear
 
 
@@ -230,7 +247,7 @@ OPTIONS="nvidia amd intel"
        done
 echo "All drivers are successfully installed!"
 printf "\n"
-read -p "press any key to continue..."
+read -p "press enter to continue..."
 clear
 
 
@@ -240,7 +257,7 @@ printf "\n"
 pacman -Syyu chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
 printf "\n"
 echo "Success!"
-read -p "press any key to continue..."
+read -p "press enter to continue..."
 clear
 
 
@@ -250,7 +267,7 @@ umount -R /mnt
 printf '\e[1;33m%-6s\e[m' "###### All dirty work is done & devices are already unmounted! ######"
 printf "\n"
 printf "\n"
-read -p "press any key to reboot and unplug your USB or any CD-DVD drive..."
+read -p "press enter to reboot and unplug your USB or any CD-DVD drive..."
 exit
 reboot
 
