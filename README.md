@@ -24,7 +24,7 @@ https://github.com/Neil-seu/archbd-installer-script
 
 <h1>How to use it</h1>
 <p>After downloading just run
-sh archbd.sh
+<b>sh archbd.sh</b>
 
 then follow the instruction :)
 </p>
@@ -35,8 +35,8 @@ I tried to make the script easier as far as I could. I tried to make such way th
 </p>
 
 <h1> Contact with me </h1>
-<p>If you have any query or if you want to contribute this project, please feel free to contact with me through gmail.
-<b> gmail: tariqulislamseu@gmail.com </b>
+<p>If you have any query or if you want to contribute this project, please feel free to contact with me through 
+<b> tariqulislamseu@gmail.com </b>
 </p>
 
 </body>
