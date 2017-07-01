@@ -82,25 +82,25 @@ clear
 
 
 #### Installing the base system 
-##echo "Now choose any mirror :"
-##printf "\n"
-##printf "\n"
-##echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russian" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")"
-##printf "\n"
-##echo "Enter your choice :"
-##read COUNTRY 
+echo "Now choose any mirror :"
+printf "\n"
+printf "\n"
+echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russian" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")"
+printf "\n"
+echo "Enter your choice :"
+read COUNTRY 
+printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+reflector --verbose --country '$COUNTRY' --sort rate --save /etc/pacman.d/mirrorlist
+printf "\n"
+echo "Mirrorlist successfully generated!"        
 ##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-##sudo reflector --verbose --country '$COUNTRY' --sort rate --save /etc/pacman.d/mirrorlist
-##printf "\n"
-##echo "Mirrorlist successfully generated!"        
-##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-##printf "\n"
+printf "\n"
 ##cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 ##sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
 ##rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 ##printf "\n"
 ##echo "Mirrorlist successfully generated!"
-##printf "\n"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
@@ -118,10 +118,9 @@ clear
 
 ## Entering the chroot into the new installed system
 printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
-##arch-chroot /mnt
 printf "\n \n"
 arch-chroot /mnt mkinitcpio -p linux
-read -p "press enter to continue"
+read -p "press enter to continue..."
 clear
 
 #### Doing some basic stuff
