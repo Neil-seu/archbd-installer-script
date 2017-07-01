@@ -100,7 +100,7 @@ clear
 printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
 ##arch-chroot /mnt
 printf "\n \n"
-arch-chroot mkinitcpio -p linux
+arch-chroot /mnt mkinitcpio -p linux
 read -p "press any key to continue"
 clear
 
@@ -137,19 +137,19 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
 wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
 echo " $wireless_dev is found as your wireless device. Enabling... "
-arch-chroot systemctl enable dhcpcd@${wireless_dev}.service
+systemctl enable dhcpcd@${wireless_dev}.service
 echo " SUCCESS! "
 wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
 echo " $wired_dev is found as your lan device. Enabling... "
-arch-chroot systemctl enable dhcpcd@${wired_dev}.service
+systemctl enable dhcpcd@${wired_dev}.service
 echo " SUCCESS! "
 echo "Enabling Network manager service during boot..."
-arch-chroot systemctl enable NetworkManager.service
+systemctl enable NetworkManager.service
 echo " SUCCESS! "
 echo "Enabling other necessary services..."
-arch-chroot systemctl enable bluetooth.service
-arch-chroot systemctl enable ppp@${wired_dev}.service
-arch-chroot systemctl enable ntpd.service
+systemctl enable bluetooth.service
+systemctl enable ppp@${wired_dev}.service
+systemctl enable ntpd.service
 echo "DONE!"
 printf "\n"
 printf "\n"
@@ -176,8 +176,8 @@ clear
 ## Installation and configuring GRUB
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
 pacman -Syy grub os-prober --noconfirm
-arch-chroot grub-install --recheck $DEVICE_NUMBER
-arch-chroot grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot /mnt grub-install --recheck $DEVICE_NUMBER
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 read -p "Succes! press any key to proceed..."
@@ -192,14 +192,14 @@ sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel
 pacman -Syy yaourt xf86-video-vesa mesa xorg-server xorg-utils xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
-arch-chroot systemctl enable lightdm.service
+systemctl enable lightdm.service
 echo "Done!"
 printf "\n"
 echo "Now choose your gpu to install it's driver :"
 OPTIONS="nvidia amd intel"
       select opt in $OPTIONS; do
             if [ "$opt" = "nvidia" ]; then
-                pacman -Syy nvidia lib32-mesa-libgl xf86-video-nouveau lib32-nvidia-libgl --noconfirm
+                pacman -Syy lib32-mesa-libgl xf86-video-nouveau --noconfirm
                 exit
                elif [ "$opt" = "amd" ]; then
                 pacman -Syy xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
