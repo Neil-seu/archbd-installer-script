@@ -3,6 +3,7 @@
 ### Arch Installer Srcipt
 ###
 ### Copyright (C) 2017 Md. Tariqul Islam Neil
+### short link: https://goo.gl/PgF5ik
 ###
 ### By: Neil (Neil-seu)
 ### Email: tariqulislamseu@gmail.com
