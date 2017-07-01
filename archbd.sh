@@ -148,7 +148,7 @@ printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account
 printf "\n"
 echo "Enter the username:"
 printf "\n"
-read $USERNAME
+read USERNAME
 useradd -m -G wheel $USERNAME
 sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
 printf "\n"
@@ -210,7 +210,15 @@ clear
 
 ## Installation and configuring GRUB
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
+printf "\n"
 pacman -Syy grub os-prober --noconfirm
+printf '\e[1;33m%-6s\e[m' "####  Now choose your root partition: ####"
+printf "\n"
+lsblk -o name,mountpoint,label,size,uuid
+printf "\n"
+echo "Enter your choice:"
+printf "\n"
+read DEVICE_NUMBER
 grub-install --recheck $DEVICE_NUMBER
 grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
@@ -222,7 +230,6 @@ clear
 ##### Installing Desktop environment and necessary drivers
 printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
 printf "\n"
-sed -i -e '$a\\n[arch-anywhere]\nServer = http://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 pacman -Syy yaourt xf86-video-vesa mesa xorg-server xorg-utils xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
