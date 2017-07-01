@@ -31,7 +31,7 @@ echo -e "${Yellow}*> Updating pacman keys..."
 		pacman-key --refresh-keys
 		echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully!" 
 printf "\n"		
-pacman -Syy archlinux-keyring git --noconfirm
+pacman -Syy archlinux-keyring git reflector rsync --noconfirm
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
