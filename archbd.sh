@@ -28,13 +28,8 @@ echo -e "${Yellow}*> Updating pacman keys..."
 		pacman-key --init
 		pacman-key --populate archlinux
 		pacman-key --refresh-keys
-		if [ "$?" -gt "0" ]; then
-			echo -e "${Red}*> Error: ${Yellow}Failed to update pacman keys, exiting..."
-			exit 1
-		else
-			echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully."
-			exit 
-		fi
+		echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully." 
+printf "\n"		
 pacman -Syy archlinux-keyring git
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
