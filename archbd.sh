@@ -108,14 +108,14 @@ printf "\n"
 read -p " Done! press enter to continue..."
 clear
 
-archchroot(){
-  echo "arch-chroot /mnt /root"
-  cp $0 /mnt/root
-  chmod 755 /mnt/root/$(basename "$0")
-  arch-chroot /mnt /root/$(basename "$0") --chroot $1 $2
-  rm /mnt/root/$(basename "$0")
-  echo "exit"
-}
+##archchroot(){
+##  echo "arch-chroot /mnt /root"
+##  cp $0 /mnt/root
+##  chmod 755 /mnt/root/$(basename "$0")
+##  arch-chroot /mnt /root/$(basename "$0") --chroot $1 $2
+##  rm /mnt/root/$(basename "$0")
+##  echo "exit"
+##}
 
 ## Generating the fstab
 printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
@@ -146,8 +146,8 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-archchroot grub-install --target=i386-pc --recheck $DEVICE_NUMBER
-archchroot grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot /mnt/arch grub-install --target=i386-pc --recheck $DEVICE_NUMBER
+archchroot /mnt/arch grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 read -p "Succes! press enter to proceed..."
