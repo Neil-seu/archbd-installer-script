@@ -137,8 +137,9 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-arch-chroot /mnt grub-install $DEVICE_NUMBER
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+newroot=/mnt
+chroot $newroot grub-install $DEVICE_NUMBER
+chroot $newroot grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 read -p "Succes! press enter to proceed..."
@@ -154,6 +155,6 @@ printf '\e[1;33m%-6s\e[m' "###### All dirty work is done & devices are already u
 printf "\n"
 printf "\n"
 read -p "press enter to reboot and unplug your USB or any CD-DVD drive..."
-exit
+printf "\n"
 reboot
 
