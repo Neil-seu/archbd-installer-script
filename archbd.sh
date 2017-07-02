@@ -140,8 +140,8 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-arch-chroot /mnt/arch grub-install --target=i386-pc --recheck $DEVICE_NUMBER
-archchroot /mnt/arch grub-mkconfig -o /boot/grub/grub.cfg
+chroot /mnt/ grub-install --target=i386-pc --recheck $DEVICE_NUMBER
+chroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 read -p "Succes! press enter to proceed..."
