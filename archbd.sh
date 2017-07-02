@@ -24,13 +24,13 @@ read -p "press enter to continue"
 
 mount -o remount,size=2G /run/archiso/cowspace
 printf "\n \n"
-echo -e "${Yellow}*> Updating pacman keys..."
-		pacman-db-upgrade
-		pacman-key --init
-		pacman-key --populate archlinux
-		pacman-key --refresh-keys
-		echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully!" 
-printf "\n"		
+##echo -e "${Yellow}*> Updating pacman keys..."
+##		pacman-db-upgrade
+##		pacman-key --init
+##		pacman-key --populate archlinux
+##		pacman-key --refresh-keys
+##		echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully!" 
+##printf "\n"		
 pacman -Syy archlinux-keyring git reflector rsync --noconfirm
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
