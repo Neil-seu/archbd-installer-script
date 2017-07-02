@@ -98,7 +98,7 @@ printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please 
 printf "\n"
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-rankmirrors -n 10 -c Germany /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 printf "\n"
 echo "Mirrorlist successfully generated!"
 printf "\n"
