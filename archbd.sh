@@ -134,7 +134,8 @@ printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system b
 printf "\n"
 printf "\n"
 pacstrap /mnt grub os-prober --noconfirm
-printf '\e[1;33m%-6s\e[m' "####  Now choose your root partition: ####"
+clear
+printf '\e[1;33m%-6s\e[m' "####  Now choose your HDD or SSD like /dev/sdX. X means sda/sdb/sdc: ####"
 printf "\n"
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
