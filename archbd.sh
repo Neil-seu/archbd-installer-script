@@ -89,15 +89,10 @@ echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "C
 printf "\n"
 echo "Enter your choice :"
 read COUNTRY 
-##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-##reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
+printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
 printf "\n"
-echo -e "${Yellow}*> Now opening pacman mirrorlist with nano editor. \n Just uncomment your server under your chosen country.\n Once done press ctrl + x and press y...."
-printf "\n"
-read -p "press enter to open nano editor..."
-nano /etc/pacman.d/mirrorlists
-clear
-##echo "Mirrorlist successfully generated!"  
+echo "Mirrorlist successfully generated!"  
 ##printf "\n"
 ##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 ##printf "\n"
@@ -134,6 +129,8 @@ clear
 
 
 ## Installation and configuring GRUB
+arch-chroot /mnt
+clear
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
 printf "\n"
 printf "\n"
@@ -145,8 +142,8 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-fakeroot /mnt/ grub-install --target=i386-pc --recheck $DEVICE_NUMBER
-fakeroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
+grub-install --recheck $DEVICE_NUMBER
+grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 read -p "Succes! press enter to proceed..."
