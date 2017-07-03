@@ -24,7 +24,7 @@ read -p "press enter to continue"
 
 mount -o remount,size=2G /run/archiso/cowspace
 printf "\n \n"
-echo -e "${Yellow}*> Updating pacman keys..."
+printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
 	  pacman-db-upgrade
 		pacman-key --init
 		pacman-key --populate archlinux
