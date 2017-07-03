@@ -29,11 +29,11 @@ printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
 		pacman-key --init
 		pacman-key --populate archlinux
     pacman-key --refresh-keys
-echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully!" 
+printf '\e[1;32m%-6s\e[m' "Updated pacman keys successfully!" 
 printf "\n"		
 pacman -Syy archlinux-keyring git --noconfirm
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "### Success! ###"
+printf '\e[1;32m%-6s\e[m' "### Success! ###"
 printf "\n"
 read -p "press enter to continue..."
 clear
@@ -68,14 +68,14 @@ echo "Enter your choice:"
 read DEVICE_NUMBER
 printf '\e[1;33m%-6s\e[m' "formatting..."
 mkfs.ext4 $DEVICE_NUMBER
-printf '\e[1;33m%-6s\e[m' "format successful!"
+printf '\e[1;32m%-6s\e[m' "format successful!"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "mounting root partition..."
 mount $DEVICE_NUMBER /mnt
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "mount successful"
+printf '\e[1;32m%-6s\e[m' "mount successful"
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "### Success! ###"
+printf '\e[1;32m%-6s\e[m' "### Success! ###"
 printf "\n"
 read -p "press enter to continue..."
 clear
@@ -118,11 +118,12 @@ read -p "Success! press enter to continue..."
 clear
 
 
-## Entering the chroot into the new installed system
-printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
+## Configuring mkinitcpio
+printf '\e[1;33m%-6s\e[m' "##  Now Configuring mkinitcpio... ##"
 printf "\n \n"
 arch-chroot /mnt mkinitcpio -p linux
 printf "\n"
+printf '\e[1;32m%-6s\e[m' " Done!"
 read -p "press enter to continue..."
 clear
 
@@ -151,9 +152,8 @@ clear
 
 
 ## Unmounting devices in case if any devices are already mounted
-umount /mnt/boot
 umount -R /mnt
-printf '\e[1;33m%-6s\e[m' "###### All dirty work is done & devices are already unmounted! ######"
+printf '\e[1;32m%-6s\e[m' "###### All dirty work is done & devices are already unmounted! ######"
 printf "\n"
 printf "\n"
 read -p "press enter to reboot and unplug your USB or any CD-DVD drive..."
