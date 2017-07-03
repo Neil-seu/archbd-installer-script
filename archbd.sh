@@ -31,7 +31,7 @@ echo -e "${Yellow}*> Updating pacman keys..."
     pacman-key --refresh-keys
 echo -e "${Green}*> Updated: ${Yellow}Updated pacman keys successfully!" 
 printf "\n"		
-pacman -Syy archlinux-keyring git reflector rsync --noconfirm
+pacman -Syy archlinux-keyring git --noconfirm
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### Success! ###"
 printf "\n"
@@ -89,9 +89,14 @@ echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "C
 printf "\n"
 echo "Enter your choice :"
 read COUNTRY 
-printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
+##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+##reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
 printf "\n"
+echo -e "${Yellow}*> Now opening pacman mirrorlist with nano editor. \n Just uncomment your server under your chosen country.\n Once done press ctrl + x and press y...."
+printf "\n"
+read -p "press enter to open nano editor..."
+nano /etc/pacman.d/mirrorlists
+clear
 ##echo "Mirrorlist successfully generated!"  
 ##printf "\n"
 ##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
@@ -100,7 +105,7 @@ printf "\n"
 ##sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
 ##rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 ##printf "\n"
-echo "Mirrorlist successfully generated!"
+##echo "Mirrorlist successfully generated!"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools fakechroot ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
