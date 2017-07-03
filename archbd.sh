@@ -82,17 +82,17 @@ clear
 
 
 #### Installing the base system 
-echo "Now choose any mirror :"
-printf "\n"
-printf "\n"
-echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russian" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")"
-printf "\n"
-echo "Enter your choice :"
-read COUNTRY 
-printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
-printf "\n"
-echo "Mirrorlist successfully generated!"  
+##echo "Now choose any mirror :"
+##printf "\n"
+##printf "\n"
+##echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russian" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")"
+##printf "\n"
+##echo "Enter your choice :"
+##read COUNTRY 
+##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+##reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
+##printf "\n"
+##echo "Mirrorlist successfully generated!"  
 ##printf "\n"
 ##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 ##printf "\n"
@@ -101,9 +101,9 @@ echo "Mirrorlist successfully generated!"
 ##rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 ##printf "\n"
 ##echo "Mirrorlist successfully generated!"
-printf "\n"
+##printf "\n"
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
-pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools fakechroot ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
+pacstrap $DEVICE_NUMBER base base-devel parted btrfs-progs f2fs-tools fakechroot ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 read -p " Done! press enter to continue..."
 clear
@@ -121,7 +121,7 @@ clear
 ## Entering the chroot into the new installed system
 printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
 printf "\n \n"
-arch-chroot /mnt mkinitcpio -p linux
+arch-chroot $DEVICE_NUMBER mkinitcpio -p linux
 printf "\n"
 read -p "press enter to continue..."
 clear
@@ -132,7 +132,7 @@ clear
 printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
 printf "\n"
 printf "\n"
-pacman -Syy grub os-prober --noconfirm
+pacstrap $DEVICE_NUMBER grub os-prober --noconfirm
 printf '\e[1;33m%-6s\e[m' "####  Now choose your root partition: ####"
 printf "\n"
 lsblk -o name,mountpoint,label,size,uuid
@@ -140,8 +140,8 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-grub-install --recheck $DEVICE_NUMBER
-grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot $DEVICE_NUMBER grub-install --recheck $DEVICE_NUMBER
+arch-chroot $DEVICE_NUMBER grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 read -p "Succes! press enter to proceed..."
