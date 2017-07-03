@@ -121,7 +121,7 @@ clear
 ## Entering the chroot into the new installed system
 printf '\e[1;33m%-6s\e[m' "##  Now entering the chroot level to make some changes to the system... ##"
 printf "\n \n"
-mkinitcpio -p linux
+arch-chroot /mnt mkinitcpio -p linux
 printf "\n"
 read -p "press enter to continue..."
 clear
