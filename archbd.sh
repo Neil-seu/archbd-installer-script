@@ -112,51 +112,13 @@ read -p " Done! press enter to continue..."
 clear
 
 
-## Generating the fstab
-printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
-printf "\n"
-genfstab -U /mnt > /mnt/etc/fstab
-printf "\n"
-read -p "Success! press enter to continue..."
-clear
 
-
-## Configuring mkinitcpio
-printf '\e[1;33m%-6s\e[m' "##  Now Configuring mkinitcpio... ##"
-printf "\n \n"
-arch-chroot /mnt mkinitcpio -p linux
-printf "\n"
-printf '\e[1;32m%-6s\e[m' " Done!"
-read -p "press enter to continue..."
-clear
-
-
-
-## Installation and configuring GRUB
-printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
-printf "\n"
-printf "\n"
-pacstrap /mnt grub os-prober --noconfirm
-clear
-printf '\e[1;33m%-6s\e[m' "####  Now choose your HDD or SSD like /dev/sdX. X means sda/sdb/sdc: ####"
-printf "\n"
-lsblk -o name,mountpoint,label,size,uuid
-printf "\n"
-echo "Enter your choice:"
-printf "\n"
-read DEVICE_NUMBER
-arch-chroot /mnt grub-install --recheck $DEVICE_NUMBER
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-printf "\n"
-printf "\n"
-read -p "Succes! press enter to proceed..."
-clear
 
 #### Doing some basic stuff
 
 printf '\e[1;33m%-6s\e[m' "## Set your root password: ##"
 printf "\n"
-passwd
+arch-chroot /mnt passwd
 printf "\n"
 read -p "press enter to continue..."
 printf "\n"
@@ -165,7 +127,7 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Enter the computers hostname: ##"
 printf "\n"
 read $HOSTNAME
-echo $HOSTNAME > /etc/hostname
+echo $HOSTNAME > /mnt/etc/hostname
 printf "\n"
 echo " Done! "
 printf "\n"
@@ -228,7 +190,6 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
 sed -i '/en_US.UTF-8 UTF-8/s/^#//' /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
-arch-chroot /mnt localectl set-locale LANG=en_US.UTF-8
 printf "\n"
 echo "Locale generation successful!"
 printf "\n"
@@ -239,13 +200,90 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
 printf "\n"
 tzselect
-timedatectl set-timezone 'Asia/Dhaka'
 arch-chroot /mnt timedatectl set-ntp true
 echo "SUCCESS!"
 printf "\n"
 read -p "press enter to continue..."
 clear
 
+## Generating the fstab
+printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
+printf "\n"
+arch-chroot /mnt genfstab -U /mnt > /mnt/etc/fstab
+printf "\n"
+read -p "Success! press enter to continue..."
+clear
+
+
+## Configuring mkinitcpio
+printf '\e[1;33m%-6s\e[m' "##  Now Configuring mkinitcpio... ##"
+printf "\n \n"
+arch-chroot /mnt mkinitcpio -p linux
+printf "\n"
+printf '\e[1;32m%-6s\e[m' " Done!"
+read -p "press enter to continue..."
+clear
+
+
+
+## Installation and configuring GRUB
+printf '\e[1;33m%-6s\e[m' "####  Now installing the GRUB for making the system bootable and detecting other OS in your HDD or SSD... ####"
+printf "\n"
+printf "\n"
+pacstrap /mnt grub os-prober --noconfirm
+clear
+printf '\e[1;33m%-6s\e[m' "####  Now choose your HDD or SSD like /dev/sdX. X means sda/sdb/sdc: ####"
+printf "\n"
+lsblk -o name,mountpoint,label,size,uuid
+printf "\n"
+echo "Enter your choice:"
+printf "\n"
+read DEVICE_NUMBER
+arch-chroot /mnt grub-install --recheck $DEVICE_NUMBER
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+printf "\n"
+printf "\n"
+read -p "Succes! press enter to proceed..."
+clear
+
+##### Installing Desktop environment and necessary drivers
+printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
+printf "\n"
+sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+pacstrap /mnt yaourt xf86-video-vesa mesa xorg-server xorg-utils xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+printf "\n"
+echo "Enabling login manager services..."
+arch-chroot /mnt systemctl enable lightdm.service
+echo "Done!"
+printf "\n"
+echo "Now choose your gpu to install it's driver :"
+OPTIONS="nvidia amd intel"
+      select opt in $OPTIONS; do
+            if [ "$opt" = "nvidia" ]; then
+                pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
+                exit
+               elif [ "$opt" = "amd" ]; then
+                pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+                exit
+               elif [ "$opt" = "intel" ]; then
+                pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
+                exit
+             fi
+       done
+echo "All drivers are successfully installed!"
+printf "\n"
+read -p "press enter to continue..."
+clear
+
+
+#### Installing Some common softwares
+printf '\e[1;33m%-6s\e[m' "######### Would you mind to install some common software? I guess not! Let's do this: #########"
+printf "\n"
+pacstrap /mnt chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
+printf "\n"
+echo "Success!"
+read -p "press enter to continue..."
+clear
 
 
 ## Unmounting devices in case if any devices are already mounted
