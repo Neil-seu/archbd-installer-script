@@ -90,8 +90,10 @@ printf "\n"
 PS3="$prompt1"
 echo "Enter your country code:"
 read COUNTRY_CODE
+printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
 
-##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+
 ##reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
 ##printf "\n"
 ##echo "Mirrorlist successfully generated!"  
