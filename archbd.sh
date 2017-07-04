@@ -127,7 +127,7 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Enter the computers hostname: ##"
 printf "\n"
 read $HOSTNAME
-echo $HOSTNAME > /mnt/etc/hostname
+hostnamectl set-hostname $HOSTNAME
 printf "\n"
 echo " Done! "
 printf "\n"
@@ -140,12 +140,12 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-useradd -m -G wheel $USERNAME
+arch-chroot /mnt useradd -m -G wheel /bin/bash $USERNAME
 sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
-passwd $USERNAME
+arch-chroot /mnt passwd $USERNAME
 printf "\n"
 echo "Success!"
 printf "\n"
@@ -199,7 +199,7 @@ echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
 printf "\n"
-arch-chroot /mnt tzselect >> /mnt/etc/localtime
+arch-chroot /mnt tzselect > /etc/localtime
 echo "SUCCESS!"
 printf "\n"
 read -p "press enter to continue..."
@@ -208,7 +208,7 @@ clear
 ## Generating the fstab
 printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 printf "\n"
-genfstab -U /mnt > /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 printf "\n"
 read -p "Success! press enter to continue..."
 clear
