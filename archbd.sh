@@ -91,7 +91,7 @@ read COUNTRY_CODE
 printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 	url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
 	## making a temporary file where chosen mirror list will be placed and place it in a variable
-	tempfile=$(mktmp --suffix=-mirrorlist}
+	tempfile=$(mktmp --suffix=-mirrorlist)
 	## Getting latest mirrorlist and saving to temp file
 	wget -qO- "$url" | sed 's/^#Server/Server/g' > "$tempfile"
 	## Backing up and place the new mirrorlist
