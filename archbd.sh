@@ -199,20 +199,28 @@ arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
 printf "\n"
 echo " SUCCESS! "
 printf "\n"
+read -p "press enter to continue..."
+printf "\n"
 wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
 echo " $wired_dev is found as your lan device. Enabling... "
 arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
 echo " SUCCESS! "
 printf "\n"
+read -p "press enter to continue..."
+printf "\n"
 echo "Enabling Network manager service during boot..."
 arch-chroot /mnt systemctl enable NetworkManager.service
 echo " SUCCESS! "
+printf "\n"
+read -p "press enter to continue..."
 printf "\n"
 echo "Enabling other necessary services..."
 arch-chroot /mnt systemctl enable bluetooth.service
 arch-chroot /mnt systemctl enable ppp@${wired_dev}.service
 arch-chroot /mnt systemctl enable ntpd.service
 echo "DONE!"
+printf "\n"
+read -p "press enter to continue..."
 printf "\n"
 printf "\n"
 echo "#####################################################################"
@@ -224,6 +232,8 @@ arch-chroot /mnt locale-gen
 arch-chroot /mnt localectl set-locale LANG=en_US.UTF-8
 printf "\n"
 echo "Locale generation successful!"
+printf "\n"
+read -p "press enter to continue..."
 printf "\n"
 echo "#####################################################################"
 printf "\n"
