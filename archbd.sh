@@ -39,8 +39,7 @@ read -p "press enter to continue..."
 clear
 
 ## Unmounting devices in case if any devices are already mounted
-##umount /mnt/boot
-##umount -R /mnt
+umount -R /mnt
 
 
 ## Disk Partition
@@ -154,6 +153,89 @@ printf "\n"
 read -p "Succes! press enter to proceed..."
 clear
 
+#### Doing some basic stuff
+
+printf '\e[1;33m%-6s\e[m' "## Set your root password: ##"
+printf "\n"
+passwd
+printf "\n"
+read -p "press enter to continue..."
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Enter the computers hostname: ##"
+printf "\n"
+read $HOSTNAME
+echo $HOSTNAME > /etc/hostname
+printf "\n"
+echo " Done! "
+printf "\n"
+read -p "press enter to continue"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account: ##"
+printf "\n"
+echo "Enter the username:"
+printf "\n"
+read USERNAME
+useradd -m -G wheel $USERNAME
+sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
+printf "\n"
+echo "Enter the password for the user:"
+printf "\n"
+passwd $USERNAME
+printf "\n"
+echo "Success!"
+printf "\n"
+read -p "press enter to continue..."
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
+wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
+echo " $wireless_dev is found as your wireless device. Enabling... "
+arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
+printf "\n"
+echo " SUCCESS! "
+printf "\n"
+wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
+echo " $wired_dev is found as your lan device. Enabling... "
+arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
+echo " SUCCESS! "
+printf "\n"
+echo "Enabling Network manager service during boot..."
+arch-chroot /mnt systemctl enable NetworkManager.service
+echo " SUCCESS! "
+printf "\n"
+echo "Enabling other necessary services..."
+arch-chroot /mnt systemctl enable bluetooth.service
+arch-chroot /mnt systemctl enable ppp@${wired_dev}.service
+arch-chroot /mnt systemctl enable ntpd.service
+echo "DONE!"
+printf "\n"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
+sed -i '/en_US.UTF-8 UTF-8/s/^#//' /mnt/etc/locale.gen
+arch-chroot /mnt locale-gen
+arch-chroot /mnt localectl set-locale LANG=en_US.UTF-8
+printf "\n"
+echo "Locale generation successful!"
+printf "\n"
+echo "#####################################################################"
+printf "\n"
+printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
+printf "\n"
+tzselect
+timedatectl set-timezone 'Asia/Dhaka'
+arch-chroot /mnt timedatectl set-ntp true
+echo "SUCCESS!"
+printf "\n"
+read -p "press enter to continue..."
+clear
 
 
 
