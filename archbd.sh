@@ -82,13 +82,15 @@ clear
 
 
 #### Installing the base system 
-##echo "Now choose any mirror :"
-##printf "\n"
-##printf "\n"
-##echo "("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russian" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")"
-##printf "\n"
-##echo "Enter your choice :"
-##read COUNTRY 
+echo "Now choose any mirror :"
+printf "\n"
+printf "\n"
+echo "("Australia--AU" "Austria--AT" "Belarus--BY" "Belgium--BE" "Brazil--BR" "Bulgaria--BG" "Canada--CA" "Chile--CL" "China--CN" "Colombia--CO" "Czech Republic--CZ" "Denmark--DK" "Estonia--EE" "Finland--FI" "France--FR" "Germany--DE" "Greece--GR" "Hong Kong--HK" "Hungary--HU" "Indonesia--ID" "India--IN" "Ireland--IE" "Israel--IL" "Italy--IT" "Japan--JP" "Kazakhstan--KZ" "Korea--KR" "Latvia--LV" "Luxembourg--LU" "Macedonia--MK" "Netherlands--NL" "New Caledonia--NC" "New Zealand--NZ" "Norway--NO" "Poland--PL" "Portugal--PT" "Romania--RO" "Russian--RU" "Serbia--RS" "Singapore--SG" "Slovakia--SK" "South Africa--ZA" "Spain--ES" "Sri Lanka--LK" "Sweden--SE" "Switzerland--CH" "Taiwan--TW" "Turkey--TR" "Ukraine--UA" "United Kingdom--GB" "United States--US" "Uzbekistan--UZ" "Viet Nam--VN")"
+printf "\n"
+PS3="$prompt1"
+echo "Enter your country code:"
+read COUNTRY_CODE
+
 ##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 ##reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
 ##printf "\n"
