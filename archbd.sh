@@ -199,8 +199,7 @@ echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
 printf "\n"
-tzselect
-arch-chroot /mnt timedatectl set-ntp true
+arch-chroot /mnt tzselect >> /mnt/etc/localtime
 echo "SUCCESS!"
 printf "\n"
 read -p "press enter to continue..."
@@ -209,7 +208,7 @@ clear
 ## Generating the fstab
 printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 printf "\n"
-arch-chroot /mnt genfstab -U /mnt > /mnt/etc/fstab
+genfstab -U /mnt > /mnt/etc/fstab
 printf "\n"
 read -p "Success! press enter to continue..."
 clear
@@ -246,44 +245,6 @@ printf "\n"
 read -p "Succes! press enter to proceed..."
 clear
 
-##### Installing Desktop environment and necessary drivers
-printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
-printf "\n"
-sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-pacstrap /mnt yaourt xf86-video-vesa mesa xorg-server xorg-utils xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
-printf "\n"
-echo "Enabling login manager services..."
-arch-chroot /mnt systemctl enable lightdm.service
-echo "Done!"
-printf "\n"
-echo "Now choose your gpu to install it's driver :"
-OPTIONS="nvidia amd intel"
-      select opt in $OPTIONS; do
-            if [ "$opt" = "nvidia" ]; then
-                pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
-                exit
-               elif [ "$opt" = "amd" ]; then
-                pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
-                exit
-               elif [ "$opt" = "intel" ]; then
-                pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
-                exit
-             fi
-       done
-echo "All drivers are successfully installed!"
-printf "\n"
-read -p "press enter to continue..."
-clear
-
-
-#### Installing Some common softwares
-printf '\e[1;33m%-6s\e[m' "######### Would you mind to install some common software? I guess not! Let's do this: #########"
-printf "\n"
-pacstrap /mnt chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
-printf "\n"
-echo "Success!"
-read -p "press enter to continue..."
-clear
 
 
 ## Unmounting devices in case if any devices are already mounted
