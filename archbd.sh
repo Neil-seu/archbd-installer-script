@@ -91,21 +91,22 @@ PS3="$prompt1"
 echo "Enter your country code:"
 read COUNTRY_CODE
 printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
-
-
-##reflector --verbose --country '$COUNTRY' -l 60 --sort rate --save /etc/pacman.d/mirrorlist
-##printf "\n"
-##echo "Mirrorlist successfully generated!"  
-##printf "\n"
-##printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-##printf "\n"
-##cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-##sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-##rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-##printf "\n"
-##echo "Mirrorlist successfully generated!"
-##printf "\n"
+	url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
+	## making a temporary file where chosen mirror list will be placed and place it in a variable
+	tempfile = $(mktmp --suffix=-mirrorlist}
+	## Getting latest mirrorlist and saving to temp file
+	wget -qO- "$url" | sed 's/^#Server/Server/g' > "$tempfile"
+	## Backing up and place the new mirrorlist
+	mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+	mv -i "$tempfile" /etc/pacman.d/mirrorlist
+	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
+	rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+	rm /etc/pacman.d/mirrorlist.tmp
+printf "\n"
+echo "Mirrorlist successfully generated!"  
+printf "\n"
+read -p "press enter to continue..."
+clear
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools fakechroot ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
