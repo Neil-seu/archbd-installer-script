@@ -126,8 +126,8 @@ echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Enter the computers hostname: ##"
 printf "\n"
-read $HOSTNAME
-hostnamectl set-hostname $HOSTNAME
+read HOSTNAME
+echo "$HOSTNAME" > /mnt/etc/hostname
 printf "\n"
 echo " Done! "
 printf "\n"
@@ -140,8 +140,8 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-useradd -m -G wheel -s /bin/bash $USERNAME
-sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
+useradd -m -g users -G wheel -s /bin/bash $USERNAME
+sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
@@ -188,10 +188,10 @@ echo "#####################################################################"
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
-sed -i 's/#en_US.UTF-8/en-US.UTF-8/' /etc/locale.gen
-arch-chroot /mnt locale-gen
+sed -i 's/^#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
-localectl set-keymap --no-convert us
+localectl set-keymap --no-convert us > /etc/vconsole.conf
+arch-chroot /mnt locale-gen
 printf "\n"
 echo "Locale generation successful!"
 printf "\n"
@@ -201,7 +201,7 @@ echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
 printf "\n"
-arch-chroot /mnt tzselect > /etc/localtime
+arch-chroot /mnt tzselect >> /etc/localtime
 echo "SUCCESS!"
 printf "\n"
 read -p "press enter to continue..."
