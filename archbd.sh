@@ -140,12 +140,12 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-arch-chroot /mnt useradd -m -G wheel /bin/bash $USERNAME
+useradd -m -G wheel -s /bin/bash $USERNAME
 sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
-arch-chroot /mnt passwd $USERNAME
+passwd $USERNAME
 printf "\n"
 echo "Success!"
 printf "\n"
@@ -188,8 +188,10 @@ echo "#####################################################################"
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
-sed -i '/en_US.UTF-8 UTF-8/s/^#//' /mnt/etc/locale.gen
+sed -i 's/#en_US.UTF-8/en-US.UTF-8/' /etc/locale.gen
 arch-chroot /mnt locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+arch-chroot /mnt localectl set-keymap --no-convert us
 printf "\n"
 echo "Locale generation successful!"
 printf "\n"
