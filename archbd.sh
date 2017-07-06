@@ -23,12 +23,13 @@ read -p "press enter to continue..."
 ## Increasing the cowspace and importing the archlinux-keyring
 
 mount -o remount,size=2G /run/archiso/cowspace
-printf "\n \n"
+printf "\n"
 printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
+printf "\n"
 	  pacman-db-upgrade
 		pacman-key --init
 		pacman-key --populate archlinux
-    pacman-key --refresh-keys
+    	  pacman-key --refresh-keys
 printf '\e[1;32m%-6s\e[m' "Updated pacman keys successfully!" 
 printf "\n"		
 pacman -Syy archlinux-keyring git --noconfirm
@@ -72,7 +73,7 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "mounting root partition..."
 mount $DEVICE_NUMBER /mnt
 printf "\n"
-printf '\e[1;32m%-6s\e[m' "mount successful"
+printf '\e[1;32m%-6s\e[m' "mount successful!"
 printf "\n"
 printf '\e[1;32m%-6s\e[m' "### Success! ###"
 printf "\n"
@@ -135,7 +136,6 @@ read -p "press enter to continue..."
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
-##nano /etc/locale.gen
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 export LANG=en_US.UTF-8
@@ -178,6 +178,7 @@ echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
 wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
+printf "\n"
 echo " $wireless_dev is found as your wireless device. Enabling... "
 arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
 printf "\n"
@@ -223,7 +224,7 @@ clear
 
 ## Configuring mkinitcpio
 printf '\e[1;33m%-6s\e[m' "##  Now Configuring mkinitcpio... ##"
-printf "\n \n"
+printf "\n"
 arch-chroot /mnt mkinitcpio -p linux
 printf "\n"
 printf '\e[1;32m%-6s\e[m' " Done!"
@@ -262,10 +263,11 @@ read -p "press enter to open nano editor..."
 nano /etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 clear
-pacman -Syyu xf86-video-vesa mesa xorg xorg-twm xorg-xclock xorg-xinit xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+pacman -Syyu xf86-video-vesa mesa xorg xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
 systemctl enable lightdm.service
+printf "\n"
 echo "Done!"
 printf "\n"
 echo "Now choose your gpu to install it's driver :"
@@ -295,4 +297,3 @@ printf "\n"
 read -p "press enter to reboot and unplug your USB or any CD-DVD drive..."
 printf "\n"
 reboot
-
