@@ -18,7 +18,7 @@ printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Scri
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
 printf "\n"
-read -p "press enter to continue"
+read -p "press enter to continue..."
 
 ## Increasing the cowspace and importing the archlinux-keyring
 
