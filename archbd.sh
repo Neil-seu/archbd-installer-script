@@ -227,6 +227,7 @@ printf "\n \n"
 arch-chroot /mnt mkinitcpio -p linux
 printf "\n"
 printf '\e[1;32m%-6s\e[m' " Done!"
+printf "\n"
 read -p "press enter to continue..."
 clear
 
@@ -260,9 +261,9 @@ printf "\n"
 read -p "press enter to open nano editor..."
 nano /etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-pacman -Syyu xf86-video-vesa mesa xorg-server xorg-server-utils xorg-twm xorg-xclock xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+clear
+pacman -Syyu xf86-video-vesa mesa xorg-server xorg-twm xorg-xclock xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
-sed -i 's/^#exec startxfce4/exec startxfce4/' ~/.xinitrc
 echo "Enabling login manager services..."
 systemctl enable lightdm.service
 echo "Done!"
