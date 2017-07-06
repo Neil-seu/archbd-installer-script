@@ -162,7 +162,7 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-useradd -m -g users -G storage,power,wheel -s /bin/bash $USERNAME
+useradd -m -g users -G storage,power,wheel -s /usr/bin/bash $USERNAME
 sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
