@@ -131,7 +131,7 @@ echo "$HOSTNAME" > /mnt/etc/hostname
 printf "\n"
 echo " Done! "
 printf "\n"
-read -p "press enter to continue"
+read -p "press enter to continue..."
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
@@ -140,6 +140,7 @@ sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 export LANG=en_US.UTF-8
 localectl set-keymap --no-convert us > /etc/vconsole.conf
+echo KEYMAP=us >> /etc/vconsole.conf
 arch-chroot /mnt locale-gen
 printf "\n"
 echo "Locale generation successful!"
