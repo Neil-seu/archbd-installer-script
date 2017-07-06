@@ -137,7 +137,7 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
 ##nano /etc/locale.gen
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-echo LANG=en_US.UTF-8 > /etc/locale.conf
+echo LANG=en_US.UTF-8 UTF-8 > /etc/locale.conf
 localectl set-keymap --no-convert us > /etc/vconsole.conf
 arch-chroot /mnt locale-gen
 printf "\n"
