@@ -162,7 +162,7 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-useradd -m -g users -G wheel -s /bin/bash $USERNAME
+useradd -m -g users -G storage,power,wheel -s /bin/bash $USERNAME
 sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
@@ -259,8 +259,9 @@ printf "\n"
 read -p "press enter to open nano editor..."
 nano /etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-pacman -Syyu xf86-video-vesa mesa xorg-server xorg-utils xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+pacman -Syyu xf86-video-vesa mesa xorg-server xorg-server-utils xorg-twm xorg-xclock xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
+sed -i 's/^#exec startxfce4/exec startxfce4/' ~/.xinitrc
 echo "Enabling login manager services..."
 systemctl enable lightdm.service
 echo "Done!"
