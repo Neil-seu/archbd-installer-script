@@ -262,7 +262,7 @@ read -p "press enter to open nano editor..."
 nano /etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 clear
-pacman -Syyu xf86-video-vesa mesa xorg-server xorg-twm xorg-xclock xorg-xinit xterm xfce4 unrar unzip p7zip lzop cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+pacman -Syyu xf86-video-vesa mesa xorg xorg-twm xorg-xclock xorg-xinit xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
 systemctl enable lightdm.service
