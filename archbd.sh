@@ -289,6 +289,15 @@ printf "\n"
 read -p "press enter to continue..."
 clear
 
+#### Installing Some common softwares
+printf '\e[1;33m%-6s\e[m' "######### Would you mind to install some common software? Let's do this: #########"
+printf "\n"
+pacman -Syyu chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
+printf "\n"
+echo "Success!"
+read -p "press enter to continue..."
+clear
+
 ## Unmounting devices in case if any devices are already mounted
 umount -R /mnt
 printf '\e[1;32m%-6s\e[m' "###### All dirty work is done & devices are already unmounted! ######"
