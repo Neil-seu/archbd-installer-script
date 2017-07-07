@@ -270,17 +270,18 @@ systemctl enable lightdm.service
 printf "\n"
 echo "Done!"
 printf "\n"
+clear
 echo "Now choose your gpu to install it's driver :"
 OPTIONS="nvidia amd intel"
       select opt in $OPTIONS; do
             if [ "$opt" = "nvidia" ]; then
-                pacman -Syy lib32-mesa-libgl xf86-video-nouveau --noconfirm
+                pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
                 exit
                elif [ "$opt" = "amd" ]; then
-                pacman -Syy xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+                pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
                 exit
                elif [ "$opt" = "intel" ]; then
-                pacman -Syy xf86-video-intel lib32-mesa-libgl --noconfirm
+                pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
                 exit
              fi
        done
@@ -290,7 +291,7 @@ read -p "press enter to continue..."
 clear
 
 #### Installing Some common softwares
-printf '\e[1;33m%-6s\e[m' "######### Would you mind to install some common software? Let's do this: #########"
+printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
 pacman -Syyu chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
 printf "\n"
