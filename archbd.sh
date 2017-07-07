@@ -22,7 +22,7 @@ read -p "press enter to continue..."
 
 ## Increasing the cowspace and importing the archlinux-keyring
 
-mount -o remount,size=2G /run/archiso/cowspace
+mount -o remount,size=4G /run/archiso/cowspace
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
 printf "\n"
