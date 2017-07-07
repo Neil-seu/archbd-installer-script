@@ -136,11 +136,10 @@ read -p "press enter to continue..."
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
-sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-echo LANG=en_US.UTF-8 > /etc/locale.conf
-export LANG=en_US.UTF-8
-localectl set-keymap --no-convert us > /etc/vconsole.conf
-echo KEYMAP=us >> /etc/vconsole.conf
+sed -i 's/^#en_US\.UTF-8 UTF-8/en_US\.UTF-8 UTF-8/' /mnt/etc/locale.gen
+echo LANG=en_US.UTF-8 > /mnt/etc/locale.conf
+##export LANG=en_US.UTF-8
+echo KEYMAP=us >> /mnt/etc/vconsole.conf
 arch-chroot /mnt locale-gen
 printf "\n"
 echo "Locale generation successful!"
@@ -151,7 +150,7 @@ echo "#####################################################################"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Now select your timezone: ##"
 printf "\n"
-arch-chroot /mnt tzselect >> /etc/localtime
+arch-chroot /mnt tzselect >> /mnt/etc/localtime
 echo "SUCCESS!"
 printf "\n"
 read -p "press enter to continue..."
@@ -163,8 +162,8 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-useradd -m -g users -G storage,power,wheel -s /usr/bin/bash $USERNAME
-sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /etc/sudoers
+arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /mnt/usr/bin/bash $USERNAME
+sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
@@ -263,10 +262,10 @@ read -p "press enter to open nano editor..."
 nano /etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 clear
-pacman -Syyu xf86-video-vesa xorg xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+pacstrap /mnt xf86-video-vesa mesa xorg xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
-systemctl enable lightdm.service
+arch-chroot /mnt systemctl enable lightdm.service
 printf "\n"
 echo "Done!"
 printf "\n"
@@ -275,13 +274,13 @@ echo "Now choose your gpu to install it's driver :"
 OPTIONS="nvidia amd intel"
       select opt in $OPTIONS; do
             if [ "$opt" = "nvidia" ]; then
-                pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
+                pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
                 exit
                elif [ "$opt" = "amd" ]; then
-                pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+                pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
                 exit
                elif [ "$opt" = "intel" ]; then
-                pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
+                pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
                 exit
              fi
        done
@@ -293,7 +292,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-pacman -Syyu chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
+pacstrap /mnt chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
 printf "\n"
 echo "Success!"
 read -p "press enter to continue..."
