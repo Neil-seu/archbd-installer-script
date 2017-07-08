@@ -266,17 +266,21 @@ printf "\n"
 echo "Done!"
 printf "\n"
 clear
-echo "Now choose your gpu to install it's driver :"
-OPTIONS="nvidia amd intel"
-      select opt in $OPTIONS; do
-            if [ "$opt" = "nvidia" ]; then
-                pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
-               elif [ "$opt" = "amd" ]; then
-                pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
-               elif [ "$opt" = "intel" ]; then
-                pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
-             fi
-       done
+printf "Now choose your gpu to install it's driver: \n1. Nvidia\n2. AMD\3. Intel\n"
+read gpu
+	if ["$gpu" -eq 1]; then
+		echo "Selecting driver Nvidia..."
+		pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
+	elif ["$gpu" -eq 2]; then
+		echo "Selecting driver AMD..."
+		pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+	elif ["$gpu" -eq 3]; then
+		echo "Selecting driver Intel..."
+		 pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
+	else 
+		echo "Unknown parameter"
+	fi	
+     
 echo "All drivers are successfully installed!"
 printf "\n"
 read -p "press enter to continue..."
