@@ -138,7 +138,6 @@ printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
 sed -i 's/^#en_US\.UTF-8 UTF-8/en_US\.UTF-8 UTF-8/' /mnt/etc/locale.gen
 echo LANG=en_US.UTF-8 > /mnt/etc/locale.conf
-##export LANG=en_US.UTF-8
 echo KEYMAP=us >> /mnt/etc/vconsole.conf
 arch-chroot /mnt locale-gen
 printf "\n"
@@ -194,6 +193,7 @@ read -p "press enter to continue..."
 printf "\n"
 echo "Enabling Network manager service during boot..."
 arch-chroot /mnt systemctl enable NetworkManager.service
+printf "\n"
 echo " SUCCESS! "
 printf "\n"
 read -p "press enter to continue..."
@@ -230,7 +230,6 @@ printf '\e[1;32m%-6s\e[m' " Done!"
 printf "\n"
 read -p "press enter to continue..."
 clear
-
 
 
 ## Installation and configuring GRUB
@@ -292,6 +291,7 @@ printf "\n"
 pacstrap /mnt chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
 printf "\n"
 echo "Success!"
+printf "\n"
 read -p "press enter to continue..."
 clear
 
