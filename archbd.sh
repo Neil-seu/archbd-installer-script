@@ -266,7 +266,7 @@ printf "\n"
 echo "Done!"
 printf "\n"
 clear
-printf "Now choose your gpu to install it's driver: \n1. Nvidia\n2. AMD\3. Intel\n"
+printf "Now choose your gpu to install it's driver: \n1. Nvidia\n2. AMD\n3. Intel\n"
 read gpu
 	if ["$gpu" -eq 1]; then
 		echo "Selecting driver Nvidia..."
