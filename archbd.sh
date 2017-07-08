@@ -162,7 +162,7 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read USERNAME
-arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /mnt/usr/bin/bash $USERNAME
+arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /mnt/bin/bash $USERNAME
 sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
