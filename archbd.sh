@@ -45,14 +45,14 @@ umount -R /mnt
 
 ## Disk Partition
 
-printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
+printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. \n This script doesn't support uefi-gpt. So use with caution! ###"
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "Which one to do partition in full form like /dev/sdX. X means sda/sdb/sdc etc."
+printf '\e[1;33m%-6s\e[m' "Which one to do partition? Type it in full form like /dev/sdX.\n X means sda/sdb/sdc etc."
 printf "\n"
 printf "\n"
 echo "Enter your choice:"
