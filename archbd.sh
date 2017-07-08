@@ -156,13 +156,13 @@ printf '\e[1;33m%-6s\e[m' "## Add new user and set password for the user account
 printf "\n"
 echo "Enter the username:"
 printf "\n"
-read USERNAME
-arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /mnt/bin/bash $USERNAME
+read usr
+arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /mnt/bin/bash $usr
 sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
-arch-chroot /mnt passwd $USERNAME
+arch-chroot /mnt passwd $usr
 printf "\n"
 echo "Success!"
 printf "\n"
