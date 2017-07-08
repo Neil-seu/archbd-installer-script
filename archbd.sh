@@ -166,7 +166,7 @@ sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
-passwd $USERNAME
+arch-chroot /mnt passwd $USERNAME
 printf "\n"
 echo "Success!"
 printf "\n"
