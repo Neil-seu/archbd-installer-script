@@ -275,13 +275,10 @@ OPTIONS="nvidia amd intel"
       select opt in $OPTIONS; do
             if [ "$opt" = "nvidia" ]; then
                 pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
-                exit
                elif [ "$opt" = "amd" ]; then
                 pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
-                exit
                elif [ "$opt" = "intel" ]; then
                 pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
-                exit
              fi
        done
 echo "All drivers are successfully installed!"
