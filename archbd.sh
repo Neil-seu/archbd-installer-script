@@ -39,10 +39,6 @@ printf "\n"
 read -p "press enter to continue..."
 clear
 
-## Unmounting devices in case if any devices are already mounted
-umount -R /mnt
-
-
 ## Disk Partition
 
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. \n This script doesn't support uefi-gpt. So use with caution! ###"
