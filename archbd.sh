@@ -265,6 +265,7 @@ pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 l
 printf "\n"
 echo "Enabling login manager services..."
 arch-chroot /mnt systemctl enable lightdm.service
+sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
 printf "\n"
 echo "Done!"
 printf "\n"
