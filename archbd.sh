@@ -251,12 +251,10 @@ clear
 ##### Installing Desktop environment and necessary drivers
 printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "######### Uncomment the [multilib] section using nano editor #########"
-printf "\n"
-read -p "press enter to open nano editor..."
-nano /etc/pacman.conf
+sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
+sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-clear
+printf "\n"
 pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
