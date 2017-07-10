@@ -136,6 +136,7 @@ printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale lang
 sed -i 's/^#en_US\.UTF-8 UTF-8/en_US\.UTF-8 UTF-8/' /mnt/etc/locale.gen
 echo LANG=en_US.UTF-8 > /mnt/etc/locale.conf
 echo KEYMAP=us >> /mnt/etc/vconsole.conf
+printf "\n"
 arch-chroot /mnt locale-gen
 printf "\n"
 echo "Locale generation successful!"
