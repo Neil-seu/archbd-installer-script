@@ -164,10 +164,8 @@ sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
-##arch-chroot /mnt passwd -d $usr
-##arch-chroot -u $usr /mnt passwd $usr
-arch-chroot /mnt passwd -u $usr
-arch-chroot /mnt passwd $usr
+arch-chroot /mnt passwd -d $usr
+arch-chroot -u $usr /mnt passwd $usr
 printf "\n"
 echo "Success!"
 printf "\n"
@@ -216,7 +214,7 @@ clear
 ## Generating the fstab
 printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 printf "\n"
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U -p /mnt >> /mnt/etc/fstab
 printf "\n"
 read -p "Success! press enter to continue..."
 clear
