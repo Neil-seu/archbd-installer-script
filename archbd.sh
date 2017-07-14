@@ -163,8 +163,7 @@ arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /mnt/bin/bash $us
 sed -i 's/^#\%wheel ALL=(ALL) ALL/\%wheel ALL=(ALL) ALL/' /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
-read -rsp newpass
-arch-chroot /mnt echo "$usr:newpass" | chpasswd
+arch-chroot -u $usr /mnt passwd $usr
 printf "\n"
 echo "Success!"
 printf "\n"
