@@ -36,4 +36,8 @@ I tried to make the script easier as far as I could. I tried to make such way th
 <b> tariqulislamseu@gmail.com </b>
 </p>
 
+<p>
+<b> Special thanks to Muhammad Ariful Islaam and Dreamless Raqib vai as they helped me a lot to fix many bugs and gave many advices.</b>
+</p>
+
 </body>
