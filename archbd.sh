@@ -270,16 +270,17 @@ printf "Now choose your gpu to install it's driver: \n1. Nvidia\n2. AMD\n3. Inte
 printf "\n"
 printf "Enter the number:"
 read gpu
-	if ["$gpu" -eq 1]; then
+	if [ "$gpu" -eq "Nvidia" ]; then
 		pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
-	elif ["$gpu" -eq 2]; then
+	elif [ "$gpu" -eq "AMD" ]; then
 		pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
-	elif ["$gpu" -eq 3]; then
+	elif [ "$gpu" -eq "Intel" ]; then
 		pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
 	else 
 		echo "Unknown parameter"
-	fi	
-     
+	fi
+	
+printf "\n"     
 echo "All drivers are successfully installed!"
 printf "\n"
 read -p "press enter to continue..."
