@@ -257,7 +257,7 @@ sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
-pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
 arch-chroot /mnt systemctl enable lightdm.service
@@ -271,11 +271,11 @@ printf "\n"
 printf "Enter the number:"
 read gpu
 	if [ "$gpu" -eq 1 ]; then
-		pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
+		arch-chroot /mnt pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
 	elif [ "$gpu" -eq 2 ]; then
-		pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
 	elif [ "$gpu" -eq 3 ]; then
-		pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
 	else 
 		echo "Unknown parameter"
 	fi
