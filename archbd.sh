@@ -161,7 +161,7 @@ printf "\n"
 read usr
 arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /bin/bash $usr
 ##sed -i '/\%wheel ALL=(ALL) ALL/s/^#//g' /mnt/etc/sudoers
-echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+arch-chroot /mnt echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
@@ -260,7 +260,7 @@ sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
-arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg-driver xorg-xinit xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
 printf "\n"
 echo "Enabling login manager services..."
 arch-chroot /mnt systemctl enable lightdm.service
@@ -274,11 +274,11 @@ printf "\n"
 printf "Enter the number:"
 read gpu
 	if [ "$gpu" = 1 ]; then
-		arch-chroot /mnt pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
+		arch-chroot /mnt pacman -Syyu lib32-mesa-libgl xf86-video-nouveau xf86-video-dummy xf86-video-fbdev xf86-video-openchrome xf86-video-qxl xf86-video-sisusb xf86-video-vmware xf86-video-voodoo --noconfirm
 	elif [ "$gpu" = 2 ]; then
-		arch-chroot /mnt pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl xf86-video-dummy xf86-video-fbdev xf86-video-openchrome xf86-video-qxl xf86-video-sisusb xf86-video-vmware xf86-video-voodoo --noconfirm
 	elif [ "$gpu" = 3 ]; then
-		arch-chroot /mnt pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-intel lib32-mesa-libgl xf86-video-dummy xf86-video-fbdev xf86-video-openchrome xf86-video-qxl xf86-video-sisusb xf86-video-vmware xf86-video-voodoo --noconfirm
 	else 
 		echo "Unknown parameter"
 	fi
