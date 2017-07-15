@@ -165,6 +165,7 @@ printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
 arch-chroot /mnt passwd -d $usr
+printf "\n"
 arch-chroot -u $usr /mnt passwd $usr
 printf "\n"
 echo "Success!"
@@ -271,11 +272,11 @@ printf "Now choose your gpu to install it's driver: \n1. Nvidia\n2. AMD\n3. Inte
 printf "\n"
 printf "Enter the number:"
 read gpu
-	if [ "$gpu" -eq 1 ]; then
+	if [ "$gpu" = 1 ]; then
 		arch-chroot /mnt pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
-	elif [ "$gpu" -eq 2 ]; then
+	elif [ "$gpu" = 2 ]; then
 		arch-chroot /mnt pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
-	elif [ "$gpu" -eq 3 ]; then
+	elif [ "$gpu" = 3 ]; then
 		arch-chroot /mnt pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
 	else 
 		echo "Unknown parameter"
