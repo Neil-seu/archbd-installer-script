@@ -274,11 +274,11 @@ printf "\n"
 printf "Enter the number:"
 read gpu
 	if [ "$gpu" = 1 ]; then
-		arch-chroot /mnt pacman -Syyu lib32-mesa-libgl xf86-video-nouveau opengl --noconfirm
+		arch-chroot /mnt pacman -Syyu lib32-mesa-libgl xf86-video-nouveau --noconfirm
 	elif [ "$gpu" = 2 ]; then
-		arch-chroot /mnt pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl opengl --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
 	elif [ "$gpu" = 3 ]; then
-		arch-chroot /mnt pacman -Syyu xf86-video-intel lib32-mesa-libgl opengl --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-intel lib32-mesa-libgl --noconfirm
 	else 
 		echo "Unknown parameter"
 	fi
