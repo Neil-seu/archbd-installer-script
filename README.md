@@ -40,7 +40,7 @@ I tried to make the script easier as far as I could. I tried to make such way th
 
 
 <p>
-<b> Special thanks to Muhammad Ariful Islaam and Dreamless Raqib vai as they helped me a lot to fix many bugs and gave many advices.</b>
+<b> Special thanks to Muhammad Ariful Islaam and Dreamless Raqib vai as they helped me a lot to fix many bugs and gave many advices and also thanks to Tobias Muller as he provided some important packages and specially helped me to test the whole script to find bugs.</b>
 </p>
 
 </body>
