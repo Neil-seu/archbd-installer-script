@@ -269,7 +269,7 @@ sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
-printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n"
+printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n4. Deepin Desktop\n"
 printf "\n"
 printf "Enter the number:"
 read environment
@@ -279,6 +279,8 @@ read environment
 		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 3 ]; then
 		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
+	elif [ "$environment" = 4 ]; then
+		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
 	else
 		echo "Unknown Parameter"
 	fi
@@ -287,7 +289,7 @@ printf "### Success! ###"
 printf "\n"
 read -p "press enter to continue..."
 clear
-printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n"
+printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n4. Lightdm for deepin desktop\n"
 printf "\n"
 printf "Enter the number:"
 read number
@@ -306,6 +308,12 @@ read number
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable sddm.service
 		sed -i 's/^#exec startkde/exec startkde/' /mnt/home/$USERNAME/.xinitrc
+	elif [ "$number" = 4 ]; then
+		arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter --noconfirm		
+		echo "Enabling login manager services..."
+		arch-chroot /mnt systemctl enable lightdm.service
+		sed -i 's/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/g' /mnt/etc/lightdm/lightdm.conf
+		sed -i 's/^#exec startdde/exec startdde/' /mnt/home/$USERNAME/.xinitrc
 	else
 		echo "Unknown parameter"	
 	fi		
