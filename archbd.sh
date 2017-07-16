@@ -133,6 +133,7 @@ read -p "press enter to continue..."
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
+echo 'name_servers="8.8.8.8 8.8.4.4"' >> /mnt/etc/resolvconf.conf
 sed -i 's/^#en_US\.UTF-8 UTF-8/en_US\.UTF-8 UTF-8/' /mnt/etc/locale.gen
 echo LANG=en_US.UTF-8 > /mnt/etc/locale.conf
 echo KEYMAP=us >> /mnt/etc/vconsole.conf
@@ -159,9 +160,10 @@ printf "\n"
 echo "Enter the username:"
 printf "\n"
 read usr
-arch-chroot /mnt useradd -m -g users -G storage,power,wheel -s /bin/bash $usr
-##sed -i '/\%wheel ALL=(ALL) ALL/s/^#//g' /mnt/etc/sudoers
-arch-chroot /mnt echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+arch-chroot /mnt useradd -m -g users -G wheel -s /bin/bash $usr
+##sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
+echo '%wheel ALL=(ALL) ALL' >> /mnt/etc/sudoers
+echo 'root ALL=(ALL) ALL' >> /mnt/etc/sudoers
 printf "\n"
 echo "Enter the password for the user:"
 printf "\n"
@@ -246,7 +248,7 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-arch-chroot /mnt grub-install --recheck $DEVICE_NUMBER
+arch-chroot /mnt grub-install --target=i386-pc --recheck $DEVICE_NUMBER
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
