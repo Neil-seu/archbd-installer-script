@@ -282,7 +282,11 @@ read environment
 	else
 		echo "Unknown Parameter"
 	fi
-printf "\n"	
+printf "\n"
+printf "### Success! ###"
+printf "\n"
+read -p "press enter to continue..."
+clear
 printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n"
 printf "\n"
 printf "Enter the number:"
@@ -309,6 +313,7 @@ read number
 printf "\n"
 echo "Done!"
 printf "\n"
+read -p "press enter to continue..."
 clear
 printf "Now choose your gpu to install it's driver: \n1. Nvidia\n2. AMD\n3. Intel\n"
 printf "\n"
