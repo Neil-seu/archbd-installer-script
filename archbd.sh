@@ -208,18 +208,6 @@ echo "DONE!"
 printf "\n"
 read -p "press enter to continue..."
 printf "\n"
-printf "\n"
-echo "#####################################################################"
-printf "\n"
-printf "Installing yaourt...."
-printf "\n"
-cd /mnt
-curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
-tar -xvzf yaourt.tar.gz
-cd yaourt
-makepkg -si
-printf "\n"
-read -p "press enter to continue..."
 clear
 
 ## Generating the fstab
