@@ -262,11 +262,36 @@ sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
-arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 lightdm unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine lightdm-gtk-greeter --noconfirm
+printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n"
 printf "\n"
-echo "Enabling login manager services..."
-arch-chroot /mnt systemctl enable lightdm.service
-sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
+printf "Enter the number:"
+read environment
+	if [ "$environment" = 1 ]; then
+		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine --noconfirm
+	elif [ "$environment" = 2 ]; then
+		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
+	else
+		echo "Unknown Parameter"
+	fi
+printf "\n"	
+printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n"
+printf "\n"
+printf "Enter the number:"
+read number
+	if [ "$number" = 1 ]; then
+		arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter --noconfirm		
+		echo "Enabling login manager services..."
+		arch-chroot /mnt systemctl enable lightdm.service
+		sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
+	elif [ "$number" = 2 ]; then
+		arch-chroot /mnt pacman -S gdm --noconfirm
+		echo "Enabling login manager services..."
+		arch-chroot /mnt systemctl enable gdm.service
+		sed -i 's/^#exec gnome-session/exec gnome-session/' /mnt/home/$USERNAME/.xinitrc
+	else
+		echo "Unknown parameter"	
+	fi		
+	
 printf "\n"
 echo "Done!"
 printf "\n"
