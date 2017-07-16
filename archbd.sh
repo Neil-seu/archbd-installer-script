@@ -104,7 +104,7 @@ read -p "press enter to continue..."
 clear
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
-pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools fakechroot ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools git fakechroot ntp net-tools iw wireless_tools networkmanager wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 read -p " Done! press enter to continue..."
 clear
@@ -212,7 +212,13 @@ printf "\n"
 printf "\n"
 echo "#####################################################################"
 printf "\n"
+printf "Installing yaourt...."
 printf "\n"
+cd /mnt
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
+tar -xvzf yaourt.tar.gz
+cd yaourt
+makepkg -si
 clear
 
 ## Generating the fstab
@@ -262,7 +268,7 @@ sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
-printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n"
+printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n"
 printf "\n"
 printf "Enter the number:"
 read environment
@@ -270,11 +276,13 @@ read environment
 		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 2 ]; then
 		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
+	elif [ "$environment" = 3 ]; then
+		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
 	else
 		echo "Unknown Parameter"
 	fi
 printf "\n"	
-printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n"
+printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n"
 printf "\n"
 printf "Enter the number:"
 read number
@@ -288,6 +296,11 @@ read number
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable gdm.service
 		sed -i 's/^#exec gnome-session/exec gnome-session/' /mnt/home/$USERNAME/.xinitrc
+	elif [ "$number" = 3 ]; then
+		arch-chroot /mnt pacman -S sddm --noconfirm
+		echo "Enabling login manager services..."
+		arch-chroot /mnt systemctl enable sddm.service
+		sed -i 's/^#exec startkde/exec startkde/' /mnt/home/$USERNAME/.xinitrc
 	else
 		echo "Unknown parameter"	
 	fi		
