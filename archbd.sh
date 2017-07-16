@@ -288,6 +288,7 @@ read environment
 	else
 		echo "Unknown Parameter"
 	fi
+	
 printf "\n"
 printf "### Success! ###"
 printf "\n"
