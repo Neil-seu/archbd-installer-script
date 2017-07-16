@@ -161,7 +161,6 @@ echo "Enter the username:"
 printf "\n"
 read usr
 arch-chroot /mnt useradd -m -g users -G wheel -s /bin/bash $usr
-##sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /mnt/etc/sudoers
 echo '%wheel ALL=(ALL) ALL' >> /mnt/etc/sudoers
 echo 'root ALL=(ALL) ALL' >> /mnt/etc/sudoers
 printf "\n"
