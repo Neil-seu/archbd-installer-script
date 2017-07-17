@@ -273,7 +273,7 @@ read environment
 	elif [ "$environment" = 4 ]; then
 		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
 	elif [ "$environment" = 5 ]; then
-		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm cinnamon --noconfirm
+		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm cinnamon gnome-extra --noconfirm
 	elif [ "$environment" = 6 ]; then
 		arch-chroot /mnt pacman -Syyu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm mate mate-extra --noconfirm
 	else
@@ -303,23 +303,7 @@ read number
 		arch-chroot /mnt pacman -S sddm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable sddm.service
-		##sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc
-	##elif [ "$number" = 4 ]; then
-		##arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter --noconfirm		
-		##echo "Enabling login manager services..."
-		##arch-chroot /mnt systemctl enable lightdm.service
-		##sed -i 's/^#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/g' /mnt/etc/lightdm/lightdm.conf
-		##sed -i 's/^#exec startdde/exec startdde/' /mnt/home/$USERNAME/.xinitrc
-	##elif [ "$number" = 5 ]; then
-		##arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter --noconfirm
-		##echo "Enabling login manager services..."
-		##arch-chroot /mnt systemctl enable lightdm.service
-		##sed -i -e '$a\exec cinnamon-session' /mnt/home/$USERNAME/.xinitrc
-	##elif [ "$number" = 5 ]; then
-		##arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter --noconfirm
-		##echo "Enabling login manager services..."
-		##arch-chroot /mnt systemctl enable lightdm.service
-		##sed -i -e '$a\exec mate-session' /mnt/home/$USERNAME/.xinitrc	
+		##sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc	
 	else
 		echo "Unknown parameter"	
 	fi		
