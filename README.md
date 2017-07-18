@@ -32,7 +32,7 @@ then follow the instruction :)
 
 <h1> Features </h1>
 <p>
-I tried to make the script easier as far as I could. I tried to make such way that user almost have nothing to do anything manually. This installer is initially supported only bios-mbr scheme. so in partition editor i used cfdisk. And nowadays, swap is almost not necessary so that I intensionally skip the swap option to make the script lighter. In the base installation, I tried to add all necessary system libraries and packages so that user have nothing to worry about to install those later. In software, I initially add few softwares and xfce4 as default desktop environment. I'll consider to add more desktop environment later. :)
+I tried to make the script easier as far as I could. I tried to make such way that user almost have nothing to do anything manually. This installer is initially supported only bios-mbr scheme. so in partition editor i used cfdisk. And nowadays, swap is almost not necessary so that I intensionally skip the swap option to make the script lighter. In the base installation, I tried to add all necessary system libraries and packages so that user have nothing to worry about to install those later. In software, I initially add few softwares and xfce, gnome, deepin, lxqt, lxde, mate, cinnamon, kde-plasma as desktop environment. :)
 </p>
 
 <h1> Contact with me </h1>
