@@ -329,7 +329,7 @@ read gpu
 		arch-chroot /mnt pacman -Syu lib32-mesa-libgl xf86-video-nouveau --noconfirm
 	elif [ "$gpu" = 2 ]; then
 		arch-chroot /mnt pacman -R mesa-libgl --noconfirm
-		arch-chroot /mnt pacman -Syu nvidia nvidia-libgl lib32-nvidia-utils lib32-nvidia-libgl lib32-mesa-demos libva-vdpau-driver --noconfirm
+		arch-chroot /mnt pacman -Syu nvidia nvidia-libgl nvdock lib32-nvidia-utils lib32-nvidia-libgl lib32-mesa-demos libva-vdpau-driver --noconfirm
 		printf "\n"
 		echo "Enabling Nvidia persistance service..."
 		printf "\n"
