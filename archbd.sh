@@ -321,22 +321,15 @@ echo "Done!"
 printf "\n"
 read -p "press enter to continue..."
 clear
-printf "Now choose your gpu to install it's driver: \n1. Nvidia open-source driver\n2. Nvidia Proprietary Driver\n3. AMD open-source driver\n4. Intel\n"
+printf "Now choose your gpu to install it's driver: \n1. Nvidia open-source driver\n2. AMD open-source driver\n3. Intel\n"
 printf "\n"
 printf "Enter the number:"
 read gpu
 	if [ "$gpu" = 1 ]; then
 		arch-chroot /mnt pacman -Syu lib32-mesa-libgl xf86-video-nouveau --noconfirm
 	elif [ "$gpu" = 2 ]; then
-		arch-chroot /mnt pacman -R mesa-libgl --noconfirm
-		arch-chroot /mnt pacman -Syu nvidia nvidia-libgl nvdock lib32-nvidia-utils lib32-nvidia-libgl lib32-mesa-demos libva-vdpau-driver --noconfirm
-		printf "\n"
-		echo "Enabling Nvidia persistance service..."
-		printf "\n"
-		arch-chroot /mnt systemctl enable nvidia-persistenced.service
-	elif [ "$gpu" = 3 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
-	elif [ "$gpu" = 4 ]; then
+	elif [ "$gpu" = 3 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-intel lib32-mesa-libgl --noconfirm
 	else 
 		echo "Unknown parameter"
