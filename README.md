@@ -15,6 +15,9 @@
 You can use this link to download the installer using wget while in root terminal:
 wget https://raw.githubusercontent.com/Neil-seu/archbd-installer-script/master/archbd.sh
 
+or use this short link:
+wget https://goo.gl/wVCYre
+
 You can always find my project at:
 https://github.com/Neil-seu/archbd-installer-script
 </p>
