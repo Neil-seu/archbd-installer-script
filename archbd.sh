@@ -318,22 +318,22 @@ printf "\n"
 printf "Enter the number:"
 read number
 	if [ "$number" = 1 ]; then
-		arch-chroot /mnt pacman -S lightdm lightdm-gtk-greeter --noconfirm		
+		pacstrap /mnt lightdm lightdm-gtk-greeter --noconfirm		
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable lightdm.service
 		##sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
 	elif [ "$number" = 2 ]; then
-		arch-chroot /mnt pacman -S gdm --noconfirm
+		pacstrap /mnt gdm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable gdm.service
 		##sed -i -e '$a\exec gnome-session' /mnt/home/$USERNAME/.xinitrc
 	elif [ "$number" = 3 ]; then
-		arch-chroot /mnt pacman -S sddm --noconfirm
+		pacstrap /mnt sddm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable sddm.service
 		##sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc	
 	elif [ "$number" = 4 ]; then
-		arch-chroot /mnt pacman -S lxdm archlinux-lxdm-theme --noconfirm
+		pacstrap /mnt lxdm archlinux-lxdm-theme --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable lxdm
 	else
