@@ -292,21 +292,21 @@ printf "\n"
 printf "Enter the number:"
 read environment
 	if [ "$environment" = 1 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 2 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 3 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
 	elif [ "$environment" = 4 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
 	elif [ "$environment" = 5 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm cinnamon gnome-extra --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm cinnamon gnome-extra --noconfirm
 	elif [ "$environment" = 6 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm mate mate-extra --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm mate mate-extra --noconfirm
 	elif [ "$environment" = 7 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxqt breeze-icons sddm connman --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxqt breeze-icons sddm connman --noconfirm
 	elif [ "$environment" = 8 ]; then
-		pacstrap /mnt xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm	
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm	
 	else
 		echo "Unknown Parameter"
 	fi
@@ -321,22 +321,22 @@ printf "\n"
 printf "Enter the number:"
 read number
 	if [ "$number" = 1 ]; then
-		pacstrap /mnt lightdm lightdm-gtk-greeter --noconfirm		
+		arch-chroot /mnt pacman -Syu lightdm lightdm-gtk-greeter --noconfirm		
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable lightdm.service
 		##sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
 	elif [ "$number" = 2 ]; then
-		pacstrap /mnt gdm --noconfirm
+		arch-chroot /mnt pacman -Syu gdm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable gdm.service
 		##sed -i -e '$a\exec gnome-session' /mnt/home/$USERNAME/.xinitrc
 	elif [ "$number" = 3 ]; then
-		pacstrap /mnt sddm --noconfirm
+		arch-chroot /mnt pacman -Syu sddm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable sddm.service
 		##sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc	
 	elif [ "$number" = 4 ]; then
-		pacstrap /mnt lxdm archlinux-lxdm-theme --noconfirm
+		arch-chroot /mnt pacman -Syu lxdm archlinux-lxdm-theme --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable lxdm
 	else
@@ -353,11 +353,11 @@ printf "\n"
 printf "Enter the number:"
 read gpu
 	if [ "$gpu" = 1 ]; then
-		pacstrap /mnt lib32-mesa-libgl xf86-video-nouveau --noconfirm
+		arch-chroot /mnt pacman -Syu lib32-mesa-libgl xf86-video-nouveau --noconfirm
 	elif [ "$gpu" = 2 ]; then
-		pacstrap /mnt xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-amdgpu xf86-video-ati lib32-mesa-libgl --noconfirm
 	elif [ "$gpu" = 3 ]; then
-		pacstrap /mnt xf86-video-intel lib32-mesa-libgl --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-intel lib32-mesa-libgl --noconfirm
 	else 
 		echo "Unknown parameter"
 	fi
@@ -371,7 +371,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-pacstrap /mnt chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
+arch-chroot /mnt pacman -Syu chromium firefox deluge codeblocks gimp gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird --noconfirm
 printf "\n"
 echo "Success!"
 printf "\n"
