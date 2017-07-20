@@ -41,6 +41,7 @@ clear
 
 ## Unmounting devices in case if any devices are already mounted
 umount -R /mnt
+clear
 
 ## Disk Partition
 
