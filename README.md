@@ -19,12 +19,13 @@ wget https://raw.githubusercontent.com/Neil-seu/archbd-installer-script/master/a
 <p>
 Short form:<br> wget -O archbd.sh http://tiny.cc/3likmy
 </p>
-You can always find my project at:
+You can always find my project at:<br>
 https://github.com/Neil-seu/archbd-installer-script
 </p>
 
 <h1>How to use it</h1>
-<p>After downloading just run
+<p>
+After downloading just run<br>
 <b>sh archbd.sh</b>
 
 then follow the instruction :)
