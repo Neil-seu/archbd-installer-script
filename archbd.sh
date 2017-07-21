@@ -108,7 +108,7 @@ read -p "press enter to continue..."
 clear
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
-pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools git fakechroot ntp net-tools iw wireless_tools networkmanager network-manager-applet wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools git ntfs-3g lzop fakechroot ntp net-tools iw wireless_tools networkmanager network-manager-applet wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 read -p " Done! press enter to continue..."
 clear
@@ -189,17 +189,19 @@ read interface
 		printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
 		
 		wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
-		
+		echo " $wireless_dev is found as your wireless device. Enabling... "
+		arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
 		printf "\n"
 		pacstrap /mnt networkmanager network-manager-applet dnsmasq nm-connection-editor gnome-keyring networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 		printf "\n"
 		echo "Enabling Network manager service during boot..."
 		printf "\n"
 		arch-chroot /mnt systemctl enable NetworkManager.service
-		
-		echo " $wireless_dev is found as your wireless device. Enabling... "
-		arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
-		
+		printf "\n"		
+		printf "\n"
+		wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
+		echo " $wired_dev is found as your lan device. Enabling... "
+		arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
 		printf "\n"
 		echo " SUCCESS! "
 		printf "\n"
@@ -209,7 +211,10 @@ read interface
 		printf "\n"
 		pacstrap /mnt wicd wicd-gtk
 		printf "\n"
-		
+		wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
+		echo " $wireless_dev is found as your wireless device. Enabling... "
+		arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
+		printf "\n"
 		wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
 		echo " $wired_dev is found as your lan device. Enabling... "
 		arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
