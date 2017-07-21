@@ -290,7 +290,7 @@ printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #####
 printf "\n"
 sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
-sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+##sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
 printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n4. Deepin Desktop\n5. Cinnamon Desktop\n6. Mate Desktop\n7. LXQT Desktop\n8. LXDE Desktop\n"
 printf "\n"
