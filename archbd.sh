@@ -316,7 +316,7 @@ printf "### Success! ###"
 printf "\n"
 read -p "press enter to continue..."
 clear
-printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n4. LXDM\n"
+printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n"
 printf "\n"
 printf "Enter the number:"
 read number
@@ -335,10 +335,6 @@ read number
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable sddm.service
 		##sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc	
-	elif [ "$number" = 4 ]; then
-		arch-chroot /mnt pacman -Syu lxdm archlinux-lxdm-theme --noconfirm
-		echo "Enabling login manager services..."
-		arch-chroot /mnt systemctl enable lxdm
 	else
 		echo "Unknown parameter"	
 	fi		
