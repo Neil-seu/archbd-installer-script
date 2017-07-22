@@ -81,8 +81,7 @@ clear
 
 
 #### Installing the base system 
-echo "Now Ranking mirrorlist, Please wait... :"
-printf "\n"
+printf '\e[1;33m%-6s\e[m' "Now Ranking mirrorlist, Please wait... "
 printf "\n"
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 	sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
