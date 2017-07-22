@@ -188,9 +188,9 @@ read interface
 	if [ "$interface" = 1 ]; then
 		printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
 		printf "\n"
-		wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
-		echo " $wireless_dev is found as your wireless device. Enabling... "
-		arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
+		##wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
+		##echo " $wireless_dev is found as your wireless device. Enabling... "
+		##arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
 		printf "\n"
 		pacstrap /mnt networkmanager network-manager-applet dnsmasq nm-connection-editor gnome-keyring networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 		printf "\n"
@@ -199,9 +199,9 @@ read interface
 		arch-chroot /mnt systemctl enable NetworkManager.service
 		printf "\n"		
 		printf "\n"
-		wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
-		echo " $wired_dev is found as your lan device. Enabling... "
-		arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
+		##wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
+		##echo " $wired_dev is found as your lan device. Enabling... "
+		##arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
 		printf "\n"
 		echo " SUCCESS! "
 		printf "\n"
@@ -211,13 +211,13 @@ read interface
 		printf "\n"
 		pacstrap /mnt wicd wicd-gtk
 		printf "\n"
-		wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
-		echo " $wireless_dev is found as your wireless device. Enabling... "
-		arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
+		##wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
+		##echo " $wireless_dev is found as your wireless device. Enabling... "
+		##arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
 		printf "\n"
-		wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
-		echo " $wired_dev is found as your lan device. Enabling... "
-		arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
+		##wired_dev=`ip link | grep "ens\|eno\|enp" | awk '{print $2}' | sed 's/://'`
+		##echo " $wired_dev is found as your lan device. Enabling... "
+		##arch-chroot /mnt systemctl enable dhcpcd@${wired_dev}.service
 		echo "Enabling Wicd service during boot..."
 		printf "\n"
 		arch-chroot /mnt systemctl enable wicd
@@ -291,6 +291,7 @@ printf "\n"
 sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+sed -i 's/^#\[testing]/\[testing]/g' /mnt/etc/pacman.conf
 chmod 644 /mnt/etc/pacman.d/mirrorlist
 chmod 644 /mnt/etc/pacman.conf
 printf "\n"
