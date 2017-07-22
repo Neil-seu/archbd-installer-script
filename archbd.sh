@@ -3,7 +3,6 @@
 ### Arch Installer Srcipt
 ###
 ### Copyright (C) 2017 Md. Tariqul Islam Neil
-### short link: https://goo.gl/PgF5ik
 ###
 ### By: Neil (Neil-seu)
 ### Email: tariqulislamseu@gmail.com
@@ -187,7 +186,7 @@ printf "Enter the number:"
 read interface
 	if [ "$interface" = 1 ]; then
 		printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
-		
+		printf "\n"
 		wireless_dev=`ip link | grep wl | awk '{print $2}' | sed 's/://'`
 		echo " $wireless_dev is found as your wireless device. Enabling... "
 		arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
@@ -278,7 +277,7 @@ printf "\n"
 echo "Enter your choice:"
 printf "\n"
 read DEVICE_NUMBER
-arch-chroot /mnt grub-install --target=i386-pc --recheck --debug $DEVICE_NUMBER
+arch-chroot /mnt grub-install --target=i386-pc --recheck $DEVICE_NUMBER
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
@@ -290,7 +289,7 @@ printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #####
 printf "\n"
 sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
-##sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 printf "\n"
 printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n4. Deepin Desktop\n5. Cinnamon Desktop\n6. Mate Desktop\n7. LXQT Desktop\n8. LXDE Desktop\n"
 printf "\n"
