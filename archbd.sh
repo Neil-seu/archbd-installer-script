@@ -84,10 +84,10 @@ clear
 echo "Now Ranking mirrorlist, Please wait... :"
 printf "\n"
 printf "\n"
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-rm /etc/pacman.d/mirrorlist.backup
+	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+	sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
+	rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+	rm /etc/pacman.d/mirrorlist.backup
 printf "\n"
 printf "\n"
 printf '\e[1;32m%-6s\e[m' "##  Mirrorlist Successfully Generated! ##" 
