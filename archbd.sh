@@ -108,7 +108,7 @@ read -p "press enter to continue..."
 clear
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
-pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools networkmanager network-manager-applet wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 read -p " Done! press enter to continue..."
 clear
