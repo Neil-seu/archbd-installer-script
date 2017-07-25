@@ -31,7 +31,7 @@ printf "\n"
     	  pacman-key --refresh-keys
 printf '\e[1;32m%-6s\e[m' "Updated pacman keys successfully!" 
 printf "\n"		
-pacman -Syy archlinux-keyring reflector --noconfirm
+pacman -Syy archlinux-keyring --noconfirm
 printf "\n"
 printf '\e[1;32m%-6s\e[m' "### Success! ###"
 printf "\n"
