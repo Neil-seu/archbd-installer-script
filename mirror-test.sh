@@ -29,9 +29,10 @@ printf "\n"
 		cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 		rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
 		rm /etc/pacman.d/mirrorlist.tmp
+	fi	
 printf "\n"
 echo "Mirror Updated Successfully!"
 read -p "Press enter to refresh database..."
 printf "\n"
 pacman -Syy
-
+exit
