@@ -1,7 +1,7 @@
 echo "Now choose any mirror :"
 printf "\n"
 printf "\n"
-printf "\n
+countries=(
 1. ALL			11. Colombia--CO		21. Indonesia--ID		31. Macedonia--MK  		41. Singapore--SG   		51. United Kingdom--GB
 2. Australia--AU	12. Czech Republic--CZ		22. India--IN			32. Netherlands--NL		42. Slovakia--SK		52. United States--US
 3. Austria--AT 		13. Denmark--DK			23. Ireland--IE			33. New Caledonia--NC		43. South Africa--ZA		53. Uzbekistan--UZ
@@ -12,7 +12,9 @@ printf "\n
 8. Canada--CA		18. Greece--GR			28. Korea--KR			38. Romania--RO			48. Taiwan--TW
 9. Chile--CL		19. Hong Kong--HK		29. Latvia--LV			39. Russian--RU			49. Turkey--TR
 10. China--CN		20. Hungary--HU			30. Luxembourg--LU		40. Serbia--RS			50. Ukraine--UA
- | more "
+)
+echo ${countries[@]}
+printf "\n"
 printf "\n"
 echo "Enter your country code:"
 read COUNTRY_CODE
