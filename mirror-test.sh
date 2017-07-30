@@ -1,7 +1,18 @@
 echo "Now choose any mirror :"
 printf "\n"
 printf "\n"
-echo "("ALL" || "Australia--AU" || "Austria--AT" || "Belarus--BY" || "Belgium--BE" || "Brazil--BR" || "Bulgaria--BG" || "Canada--CA" || "Chile--CL" || "China--CN" || "Colombia--CO" || "Czech Republic--CZ" || "Denmark--DK" || "Estonia--EE" || "Finland--FI" || "France--FR" || "Germany--DE" || "Greece--GR" || "Hong Kong--HK" || "Hungary--HU" || "Indonesia--ID" || "India--IN" || "Ireland--IE" || "Israel--IL" || "Italy--IT" || "Japan--JP" || "Kazakhstan--KZ" || "Korea--KR" || "Latvia--LV" || "Luxembourg--LU" || "Macedonia--MK" || "Netherlands--NL" || "New Caledonia--NC" || "New Zealand--NZ" || "Norway--NO" || "Poland--PL" || "Portugal--PT" || "Romania--RO" || "Russian--RU" || "Serbia--RS" || "Singapore--SG" || "Slovakia--SK" || "South Africa--ZA" || "Spain--ES" || "Sri Lanka--LK" || "Sweden--SE" || "Switzerland--CH" || "Taiwan--TW" || "Turkey--TR" || "Ukraine--UA" || "United Kingdom--GB" || "United States--US" || "Uzbekistan--UZ" || "VietNam--VN")"
+printf "\n
+1. ALL			11. Colombia--CO		21. Indonesia--ID		31. Macedonia--MK  		41. Singapore--SG   		51. United Kingdom--GB
+2. Australia--AU	12. Czech Republic--CZ		22. India--IN			32. Netherlands--NL		42. Slovakia--SK		52. United States--US
+3. Austria--AT 		13. Denmark--DK			23. Ireland--IE			33. New Caledonia--NC		43. South Africa--ZA		53. Uzbekistan--UZ
+4. Belarus--BY		14. Estonia--EE			24. Israel--IL			34. New Zealand--NZ		44. Spain--ES			54. VietNam--VN
+5. Belgium--BE		15. Finland--FI			25. Italy--IT			35. Norway--NO			45. Sri Lanka--LK
+6. Brazil--BR		16. France--FR			26. Japan--JP			36. Poland--PL			46. Sweden--SE
+7. Bulgaria--BG		17. Germany--DE			27. Kazakhstan--KZ		37. Portugal--PT		47. Switzerland--CH
+8. Canada--CA		18. Greece--GR			28. Korea--KR			38. Romania--RO			48. Taiwan--TW
+9. Chile--CL		19. Hong Kong--HK		29. Latvia--LV			39. Russian--RU			49. Turkey--TR
+10. China--CN		20. Hungary--HU			30. Luxembourg--LU		40. Serbia--RS			50. Ukraine--UA
+"
 printf "\n"
 echo "Enter your country code:"
 read COUNTRY_CODE
