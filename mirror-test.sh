@@ -12,7 +12,7 @@ printf "\n
 8. Canada--CA		18. Greece--GR			28. Korea--KR			38. Romania--RO			48. Taiwan--TW
 9. Chile--CL		19. Hong Kong--HK		29. Latvia--LV			39. Russian--RU			49. Turkey--TR
 10. China--CN		20. Hungary--HU			30. Luxembourg--LU		40. Serbia--RS			50. Ukraine--UA
-"
+ | more "
 printf "\n"
 echo "Enter your country code:"
 read COUNTRY_CODE
