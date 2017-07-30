@@ -6,8 +6,9 @@ printf "\n"
 echo "Enter your country code:"
 read COUNTRY_CODE
 printf "\n"	
-	if [ "$COUNTRY_CODE" == "ALL" ]; then
+	if [[ "$COUNTRY_CODE" == *"ALL"* ]]; then
 		printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+		rm /etc/pacman.d/mirrorlist.bak
 		url="https://www.archlinux.org/mirrorlist/?country=all&use_mirror_status=on"
 		tempfile=$(mktemp --suffix=-mirrorlist)
 		wget -qO- "$url" | sed 's/^#Server/Server/g' > "$tempfile"
