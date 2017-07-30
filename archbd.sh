@@ -44,10 +44,12 @@ clear
 
 ## Disk Partition
 
-printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. \n This script doesn't support uefi-gpt. So use with caution! ###"
+printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
+printf '\n'
+printf '\n'
 lsblk -o name,mountpoint,label,size,uuid
 printf "\n"
 printf "\n"
@@ -375,7 +377,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-arch-chroot /mnt pacman -Syu chromium firefox deluge codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
+arch-chroot /mnt pacman -Syu chromium firefox yaourt deluge codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
 printf "\n"
 echo "Success!"
 printf "\n"
