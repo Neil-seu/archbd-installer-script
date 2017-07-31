@@ -86,9 +86,13 @@ clear
 echo "Now choose any mirror :"
 printf "\n"
 printf "\n"
-echo "("Australia--AU" || "Austria--AT" || "Belarus--BY" || "Belgium--BE" || "Brazil--BR" || "Bulgaria--BG" || "Canada--CA" || "Chile--CL" || "China--CN" || "Colombia--CO" || "Czech Republic--CZ" || "Denmark--DK" || "Estonia--EE" || "Finland--FI" || "France--FR" || "Germany--DE" || "Greece--GR" || "Hong Kong--HK" || "Hungary--HU" || "Indonesia--ID" || "India--IN" || "Ireland--IE" || "Israel--IL" || "Italy--IT" || "Japan--JP" || "Kazakhstan--KZ" || "Korea--KR" || "Latvia--LV" || "Luxembourg--LU" || "Macedonia--MK" || "Netherlands--NL" || "New Caledonia--NC" || "New Zealand--NZ" || "Norway--NO" || "Poland--PL" || "Portugal--PT" || "Romania--RO" || "Russian--RU" || "Serbia--RS" || "Singapore--SG" || "Slovakia--SK" || "South Africa--ZA" || "Spain--ES" || "Sri Lanka--LK" || "Sweden--SE" || "Switzerland--CH" || "Taiwan--TW" || "Turkey--TR" || "Ukraine--UA" || "United Kingdom--GB" || "United States--US" || "Uzbekistan--UZ" || "VietNam--VN")"
+countries=(" 1. Australia--AU 2. Austria--AT 3. Belarus--BY 4. Belgium--BE 5. Brazil--BR 6. Bulgaria--BG 7. Canada--CA 8. Chile--CL 9. China--CN 10. Colombia--CO 11. Czech Republic--CZ 12. Denmark--DK 13. Estonia--EE 14. Finland--FI 15. France--FR 16. Germany--DE 17. Greece--GR 18. Hong Kong--HK 19. Hungary--HU 20. Indonesia--ID 21. India--IN 22. Ireland--IE 23. Israel--IL 24. Italy--IT 25. Japan--JP 26. Kazakhstan--KZ 27. Korea--KR 28. Latvia--LV 29. Luxembourg--LU 30. Macedonia--MK 31. Netherlands--NL 32. New Caledonia--NC 33. New Zealand--NZ 34. Norway--NO 35. Poland--PL 36. Portugal--PT 37. Romania--RO 38. Russian--RU 39. Serbia--RS 40. Singapore--SG 41. Slovakia--SK 42. South Africa--ZA 43. Spain--ES 44. Sri Lanka--LK 45. Sweden--SE 46. Switzerland--CH 47. Taiwan--TW 48. Turkey--TR 49. Ukraine--UA 50. United Kingdom--GB 51. United States--US 52. Uzbekistan--UZ 53. VietNam--VN " )
+printf "\n"
+echo -e "$countries" | column -t
+printf "\n"
 printf "\n"
 echo "Enter your country code:"
+printf "\n"
 read COUNTRY_CODE
 printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 	url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
