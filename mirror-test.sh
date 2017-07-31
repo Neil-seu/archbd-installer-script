@@ -3,7 +3,7 @@ printf "\n"
 printf "\n"
 countries=(" 1. Australia--AU 2. Austria--AT 3. Belarus--BY 4. Belgium--BE 5. Brazil--BR 6. Bulgaria--BG 7. Canada--CA 8. Chile--CL 9. China--CN 10. Colombia--CO 11. Czech Republic--CZ 12. Denmark--DK 13. Estonia--EE 14. Finland--FI 15. France--FR 16. Germany--DE 17. Greece--GR 18. Hong Kong--HK 19. Hungary--HU 20. Indonesia--ID 21. India--IN 22. Ireland--IE 23. Israel--IL 24. Italy--IT 25. Japan--JP 26. Kazakhstan--KZ 27. Korea--KR 28. Latvia--LV 29. Luxembourg--LU 30. Macedonia--MK 31. Netherlands--NL 32. New Caledonia--NC 33. New Zealand--NZ 34. Norway--NO 35. Poland--PL 36. Portugal--PT 37. Romania--RO 38. Russian--RU 39. Serbia--RS 40. Singapore--SG 41. Slovakia--SK 42. South Africa--ZA 43. Spain--ES 44. Sri Lanka--LK 45. Sweden--SE 46. Switzerland--CH 47. Taiwan--TW 48. Turkey--TR 49. Ukraine--UA 50. United Kingdom--GB 51. United States--US 52. Uzbekistan--UZ 53. VietNam--VN " )
 for names in "${countries[@]}"; do
-	echo -en "$names\t"
+	echo -en "$names"
 done | column
 printf "\n"
 printf "\n"
