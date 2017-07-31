@@ -95,7 +95,6 @@ echo "Enter your country code:"
 printf "\n"
 read COUNTRY_CODE
 printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-        rm /etc/pacman.d/mirrorlist.bak
 	url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
 	## making a temporary file where chosen mirror list will be placed and place it in a variable
 	tempfile=$(mktemp --suffix=-mirrorlist)
