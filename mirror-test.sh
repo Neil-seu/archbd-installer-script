@@ -2,7 +2,7 @@
 printf "Do you want to configure mirrorlist?(y/n)"
 printf "\n"
 read choice
-	if [ "$choice" -eq "y" ]; then
+	if [ "$choice" == "y" ]; then
 echo "Now choose any mirror :"
 printf "\n"
 printf "\n"
