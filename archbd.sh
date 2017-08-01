@@ -13,11 +13,17 @@
 ### License: GPL v3.0
 ###############################################################
 clear
-printf '\e[1;33m%-6s\e[m' "################## Welcome to the Arch Installer Script ######################"
+printf '\e[1;33m%-6s\e[m'	"------------------------------------------------------------------------------"
+printf '\e[1;33m%-6s\e[m' 	"-------------------- Welcome to the Arch Installer Script --------------------"
+printf '\e[1;33m%-6s\e[m'	"------------------------------------------------------------------------------"
 printf "\n"
-printf '\e[1;33m%-6s\e[m' "### To increase the root space, this script will automatically trigger the execution ###"
+printf "\n"
+printf '\e[1;33m%-6s\e[m'	"----------------------------------------------------------------------------------------"
+printf '\e[1;33m%-6s\e[m' 	"--- To increase the root space, this script will automatically trigger the execution ---"
+printf '\e[1;33m%-6s\e[m'	"----------------------------------------------------------------------------------------"
 printf "\n"
 read -p "press enter to continue..."
+
 
 ## Increasing the cowspace and importing the archlinux-keyring
 
@@ -120,7 +126,8 @@ printf "\n"
 	
 	elif [[ "$choice" =~ ^([nN][oO]|[nN])+$ ]]; then
 		break	
-	fi	
+	fi
+clear	
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
 pacstrap /mnt base base-devel parted btrfs-progs gtk-engines f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
