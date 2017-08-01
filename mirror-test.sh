@@ -2,7 +2,8 @@
 printf "Do you want to configure mirrorlist?(y/n)"
 printf "\n"
 read choice
-	if [[ "$choice" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+	if [[ "$choice" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
 echo "Now choose any mirror :"
 printf "\n"
 printf "\n"
