@@ -47,7 +47,7 @@ printf "\n"
 pacman -Syy
 
 else
-	exit 1
+	exit 0
 fi	
 
 echo "It worked!!"
