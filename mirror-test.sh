@@ -49,3 +49,5 @@ pacman -Syy
 else
 	exit 1
 fi	
+
+cfdisk /dev/sda
