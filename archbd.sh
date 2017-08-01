@@ -83,18 +83,23 @@ clear
 
 
 #### Installing the base system 
-echo "Now choose any mirror :"
+printf "Do you want to configure mirrorlist?(y/n)"
 printf "\n"
+read choice
 printf "\n"
-countries=(" 1. Australia--AU 2. Austria--AT 3. Belarus--BY 4. Belgium--BE 5. Brazil--BR 6. Bulgaria--BG 7. Canada--CA 8. Chile--CL 9. China--CN 10. Colombia--CO 11. Czech Republic--CZ 12. Denmark--DK 13. Estonia--EE 14. Finland--FI 15. France--FR 16. Germany--DE 17. Greece--GR 18. Hong Kong--HK 19. Hungary--HU 20. Indonesia--ID 21. India--IN 22. Ireland--IE 23. Israel--IL 24. Italy--IT 25. Japan--JP 26. Kazakhstan--KZ 27. Korea--KR 28. Latvia--LV 29. Luxembourg--LU 30. Macedonia--MK 31. Netherlands--NL 32. New Caledonia--NC 33. New Zealand--NZ 34. Norway--NO 35. Poland--PL 36. Portugal--PT 37. Romania--RO 38. Russian--RU 39. Serbia--RS 40. Singapore--SG 41. Slovakia--SK 42. South Africa--ZA 43. Spain--ES 44. Sri Lanka--LK 45. Sweden--SE 46. Switzerland--CH 47. Taiwan--TW 48. Turkey--TR 49. Ukraine--UA 50. United Kingdom--GB 51. United States--US 52. Uzbekistan--UZ 53. VietNam--VN " )
-printf "\n"
-echo -e "$countries" | column -t -s ':'
-printf "\n"
-printf "\n"
-echo "Enter your country code:"
-printf "\n"
-read COUNTRY_CODE
-printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
+	if [[ "$choice" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+	echo "Now choose any mirror :"
+	printf "\n"
+	printf "\n"
+	countries=(" 1. Australia--AU 2. Austria--AT 3. Belarus--BY 4. Belgium--BE 5. Brazil--BR 6. Bulgaria--BG 7. Canada--CA 8. Chile--CL 9. China--CN 10. Colombia--CO 11. Czech Republic--CZ 12. Denmark--DK 13. Estonia--EE 14. Finland--FI 15. France--FR 16. Germany--DE 17. Greece--GR 18. Hong Kong--HK 19. Hungary--HU 20. Indonesia--ID 21. India--IN 22. Ireland--IE 23. Israel--IL 24. Italy--IT 25. Japan--JP 26. Kazakhstan--KZ 27. Korea--KR 28. Latvia--LV 29. Luxembourg--LU 30. Macedonia--MK 31. Netherlands--NL 32. New Caledonia--NC 33. New Zealand--NZ 34. Norway--NO 35. Poland--PL 36. Portugal--PT 37. Romania--RO 38. Russian--RU 39. Serbia--RS 40. Singapore--SG 41. Slovakia--SK 42. South Africa--ZA 43. Spain--ES 44. Sri Lanka--LK 45. Sweden--SE 46. Switzerland--CH 47. Taiwan--TW 48. Turkey--TR 49. Ukraine--UA 50. United Kingdom--GB 51. United States--US 52. Uzbekistan--UZ 53. VietNam--VN " )
+	printf "\n"
+	echo -e "$countries" | column -t -s ':'
+	printf "\n"
+	printf "\n"
+	echo "Enter your country code:"
+	printf "\n"
+	read COUNTRY_CODE
+	printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 	url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
 	## making a temporary file where chosen mirror list will be placed and place it in a variable
 	tempfile=$(mktemp --suffix=-mirrorlist)
@@ -106,12 +111,16 @@ printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please 
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 	rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
 	rm /etc/pacman.d/mirrorlist.tmp
-printf "\n"
-printf "\n"
-printf '\e[1;32m%-6s\e[m' "##  Mirrorlist Successfully Generated! ##" 
-printf "\n"
-read -p "press enter to continue..."
-clear
+	printf "\n"
+	printf "\n"
+	printf '\e[1;32m%-6s\e[m' "##  Mirrorlist Successfully Generated! ##" 
+	printf "\n"
+	read -p "press enter to continue..."
+	clear
+	
+	else
+		exit 1
+	fi	
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
 pacstrap /mnt base base-devel parted btrfs-progs gtk-engines f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
