@@ -118,8 +118,8 @@ printf "\n"
 	read -p "press enter to continue..."
 	clear
 	
-	else
-		exit 1
+	elif [[ "$choice" =~ ^([nN][oO]|[nN])+$ ]]; then
+		break	
 	fi	
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
