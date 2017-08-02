@@ -51,7 +51,8 @@ echo "Mirror Updated Successfully!"
 read -p "Press enter to refresh database..."
 printf "\n"
 pacman -Syy
-
+printf "\n"
+echo " Bye Bye! "
 else
 	echo "Sorry! "
 	break
