@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 printf "Do you want to configure mirrorlist?(y/n)"
 printf "\n"
 read choice
