@@ -52,7 +52,8 @@ printf "\n"
 pacman -Syy
 
 else
-	exit 0
+	echo "Sorry! "
+	break
 fi	
 
-echo "It worked!!"
+exit
