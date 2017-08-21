@@ -5,9 +5,9 @@ response=$?
 clear
 case $response in
     0) mount -o remount,size=4G /run/archiso/cowspace;;
-       printf "\n";;
+       printf "\n"
        printf '\e[1;33m%-6s\e[m' "Updating pacman keys....";;
-       printf "\n";;
+       printf "\n"
 	   pacman-db-upgrade;;
 	   pacman-key --init;;
 	   pacman-key --populate archlinux;;
@@ -16,7 +16,7 @@ case $response in
        sleep 3;;
        clear;;
        pacman -Syy archlinux-keyring --noconfirm;;
-       printf "\n";;
+       printf "\n"
        dialog --infobox "Successful!" 10 20;;
        sleep 3;;
        clear;;
