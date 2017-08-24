@@ -3,8 +3,9 @@ clear
 dialog --backtitle "Archbd Installer Script" --yesno "Welcome to Arch Installer. Proceed?" 10 30 
 response=$?
 clear
-case $response in
-    0) mount -o remount,size=4G /run/archiso/cowspace;
+if [[ "$response" -eq "Yes" ]]
+    then
+       mount -o remount,size=4G /run/archiso/cowspace;
        printf "\n";
        printf '\e[1;33m%-6s\e[m' "Updating pacman keys....";
        printf "\n";
@@ -20,5 +21,6 @@ case $response in
        dialog --infobox "Successful!" 10 20;
        sleep 3;
        clear;
-    1) exit;
-esac
+    else
+       exit;
+fi
