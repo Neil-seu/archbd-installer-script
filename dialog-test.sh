@@ -7,15 +7,22 @@ if [[ "$response" -eq "Yes" ]]
     then
        mount -o remount,size=4G /run/archiso/cowspace
        printf "\n"
-       printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
-       printf "\n"
-	   pacman-db-upgrade
-	   pacman-key --init
-	   pacman-key --populate archlinux
-       pacman-key --refresh-keys
-       dialog --backtitle "Archbd Installer Script" --infobox "Updated pacman keys successfully!" 10 30
-       sleep 3
-       clear
+       dialog --backtitle "Archbd Installer Script" --yesno "Do you want to refresh pacman keys (recommended)?" 10 30
+       response=$?
+       if [[ "$response" -eq "Yes" ]]
+       	   then
+       		printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
+       		printf "\n"
+	   	pacman-db-upgrade
+	   	pacman-key --init
+	   	pacman-key --populate archlinux
+       		pacman-key --refresh-keys
+       		dialog --backtitle "Archbd Installer Script" --infobox "Updated pacman keys successfully!" 10 30
+       		sleep 3
+       		clear
+	   else
+	   	break
+	fi	
        pacman -Syy archlinux-keyring --noconfirm
        printf "\n"
        dialog --backtitle "Archbd Installer Script" --infobox "Successful!" 10 20
@@ -28,6 +35,7 @@ fi
 dialog --backtitle "Archbd Installer Script" --infobox "Unmounting devices in case if any devices are already mounted. \
 	Please wait..." 10 40
 	umount -R /mnt
+	sleep 3
 	clear
 
 dialog --backtitle "Archbd Installer Script" --yesno "Now opening the cfdisk for bios-mbr scheme. \
@@ -66,12 +74,16 @@ dialog --backtitle "Archbd Installer Script" --yesno "Now opening the cfdisk for
 		printf "\n"
 		printf '\e[1;32m%-6s\e[m' "mount successful!"
 		printf "\n"
-		printf '\e[1;32m%-6s\e[m' "### Success! ###"
-		printf "\n"
-		read -p "press enter to continue..."
+		dialog --backtitle "Archbd Installer Script" --infobox "Partition Successfully configured!" 10 30
+		sleep 3
 		clear
 	else
 		break
 	fi
 	
 	
+dialog --backtitle "Archbd Installer Script" --yesno "Do you want to configure mirrorlist?" 10 30
+	response=$?
+	clear
+	if [[ "$response" -eq "Yes" ]] then
+		
