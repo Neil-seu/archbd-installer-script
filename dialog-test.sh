@@ -19,6 +19,6 @@ case $response in
        printf "\n";
        dialog --infobox "Successful!" 10 20;
        sleep 3;
-       clear;
+       clear
     1) exit;
 esac
