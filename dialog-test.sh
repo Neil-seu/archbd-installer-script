@@ -20,7 +20,5 @@ case $response in
        dialog --infobox "Successful!" 10 20;
        sleep 3;
        clear;
-    1  dialog --infobox "Exiting..." 10 20;
-       sleep 3;
-       exit;
+    1  exit;
 esac
