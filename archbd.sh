@@ -16,7 +16,8 @@ clear
 printf '\e[1;33m%-6s\e[m'"########## Welcome to the Arch Installer Script ##########"
 printf "\n"
 printf "\n"
-printf '\e[1;33m%-6s\e[m'"####To increase the root space, this script will automatically trigger the execution####"
+printf '\e[1;33m%-6s\e[m'"To increase the root space, this script will automatically trigger the execution"
+printf "\n"
 printf "\n"
 read -p "press enter to continue..."
 
