@@ -13,36 +13,42 @@
 ### License: GPL v3.0
 ###############################################################
 clear
-printf '\e[1;33m%-6s\e[m'"########## Welcome to the Arch Installer Script ##########"
-printf "\n"
-printf "\n"
-printf '\e[1;33m%-6s\e[m'"To increase the root space, this script will automatically trigger the execution"
-printf "\n"
-printf "\n"
-read -p "press enter to continue..."
-
-
-## Increasing the cowspace and importing the archlinux-keyring
-
-mount -o remount,size=4G /run/archiso/cowspace
-printf "\n"
-printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
-printf "\n"
-	  pacman-db-upgrade
-		pacman-key --init
-		pacman-key --populate archlinux
-    	  pacman-key --refresh-keys
-printf '\e[1;32m%-6s\e[m' "Updated pacman keys successfully!" 
-printf "\n"		
-pacman -Syy archlinux-keyring --noconfirm
-printf "\n"
-printf '\e[1;32m%-6s\e[m' "### Success! ###"
-printf "\n"
-read -p "press enter to continue..."
+dialog --backtitle "Archbd Installer Script" --yesno "Welcome to Arch Installer. Proceed?" 10 30 
+response=$?
 clear
+if [[ "$response" -eq "Yes" ]]
+    then
+       mount -o remount,size=4G /run/archiso/cowspace
+       printf "\n"
+       dialog --backtitle "Archbd Installer Script" --yesno "Do you want to refresh pacman keys (recommended)?" 10 30
+       response=$?
+       if [[ "$response" -eq "Yes" ]]
+       	   then
+       		printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
+       		printf "\n"
+	   	pacman-db-upgrade
+	   	pacman-key --init
+	   	pacman-key --populate archlinux
+       		pacman-key --refresh-keys
+       		dialog --backtitle "Archbd Installer Script" --infobox "Updated pacman keys successfully!" 10 30
+       		sleep 3
+       		clear
+	   else
+	   	break
+	fi	
+       pacman -Syy archlinux-keyring --noconfirm
+       printf "\n"
+       dialog --backtitle "Archbd Installer Script" --infobox "Successful!" 10 20
+       sleep 3
+       clear
+    else
+       break
+fi
 
-## Unmounting devices in case if any devices are already mounted
-umount -R /mnt
+dialog --backtitle "Archbd Installer Script" --infobox "Unmounting devices in case if any devices are already mounted. \
+	Please wait..." 10 40
+	umount -R /mnt
+	sleep 3
 clear
 
 ## Disk Partition
