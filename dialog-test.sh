@@ -11,6 +11,7 @@ if [[ "$response" -eq "Yes" ]]
        response=$?
        if [[ "$response" -eq "Yes" ]]
        	   then
+	   	clear
        		printf '\e[1;33m%-6s\e[m' "Updating pacman keys...."
        		printf "\n"
 	   	pacman-db-upgrade
