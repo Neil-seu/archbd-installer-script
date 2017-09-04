@@ -415,7 +415,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-arch-chroot /mnt pacman -Syu chromium firefox evince yaourt deluge wget lolcat sublime-text-dev codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
+arch-chroot /mnt pacman -Syu chromium powerline-fonts firefox evince yaourt deluge wget lolcat sublime-text-dev codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
 printf "\n"
 echo "Success!"
 printf "\n"
