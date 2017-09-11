@@ -365,23 +365,23 @@ read number
 		arch-chroot /mnt pacman -Syu lightdm lightdm-gtk-greeter --noconfirm		
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable lightdm.service
-		sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
+		#sed -i 's/^#exec startxfce4/exec startxfce4/' /mnt/home/$USERNAME/.xinitrc
 	elif [ "$number" = 2 ]; then
 		arch-chroot /mnt pacman -Syu gdm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable gdm.service
-		sed -i -e '$a\exec gnome-session' /mnt/home/$USERNAME/.xinitrc
+		#sed -i -e '$a\exec gnome-session' /mnt/home/$USERNAME/.xinitrc
 	elif [ "$number" = 3 ]; then
 		arch-chroot /mnt pacman -Syu sddm --noconfirm
 		echo "Enabling login manager services..."
 		arch-chroot /mnt systemctl enable sddm.service
-		sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc	
+		#sed -i -e '$a\exec startkde' /mnt/home/$USERNAME/.xinitrc	
 	elif [ "$number" = 4 ]; then
 		arch-chroot /mnt pacman -Syu lightdm lightdm-gtk-greeter --noconfirm		
 		echo "Enabling login manager services..."
 		sed -i 's/^#greeter-session\=example-gtk-gnome/greeter-session\=lightdm-deepin-greeter/g' /mnt/etc/lightdm/lightdm.conf
 		arch-chroot /mnt systemctl enable lightdm.service
-		sed -i -e '$a\exec startdde' /mnt/home/$USERNAME/.xinitrc
+		#sed -i -e '$a\exec startdde' /mnt/home/$USERNAME/.xinitrc
 	else
 		echo "Unknown parameter"
 		break
