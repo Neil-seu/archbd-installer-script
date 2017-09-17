@@ -224,7 +224,7 @@ read interface
 		##echo " $wireless_dev is found as your wireless device. Enabling... "
 		##arch-chroot /mnt systemctl enable dhcpcd@${wireless_dev}.service
 		printf "\n"
-		pacstrap /mnt networkmanager network-manager-applet dnsmasq nm-connection-editor gnome-keyring networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
+		pacstrap /mnt networkmanager network-manager-applet dnsmasq nm-connection-editor networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 		printf "\n"
 		echo "Enabling Network manager service during boot..."
 		printf "\n"
