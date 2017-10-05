@@ -3,6 +3,8 @@
 	#####################################
 	######### Mirror Ranking ############
 	#####################################
+	
+	mirror_rank() {
 
 	dialog --backtitle "Archbd Installer Script" --yesno "Do you want to configure mirrorlist?" 10 30
 	response=$?
@@ -851,4 +853,4 @@
 			break
 	fi		
 
-	exit
+	}
