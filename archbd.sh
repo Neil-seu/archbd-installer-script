@@ -52,6 +52,9 @@ dialog --backtitle "Archbd Installer Script" --infobox "Unmounting devices in ca
 	sleep 3
 clear
 
+mirror_rank
+
+
 ## Disk Partition
 
 printf '\e[1;33m%-6s\e[m' "### Now opening the cfdisk for bios-mbr scheme. This script doesn't support uefi-gpt. So use with caution! ###"
@@ -93,51 +96,7 @@ clear
 
 
 #### Installing the base system 
-clear
-printf "Do you want to configure mirrorlist?(y/n)"
-printf "\n"
-read choice
-	if [[ "$choice" =~ ^([yY][eE][sS]|[yY])+$ ]]
-	then
-		echo "Now choose any mirror :"
-		printf "\n"
-		printf "\n"
-		array=(ALL Australia--AU Austria--AT Belarus--BY Belgium--BE Brazil--BR Bulgaria--BG Canada--CA Chile--CL China--CN Colombia--CO Czech-Republic--CZ Denmark--DK Estonia--EE Finland--FI France--FR Germany--DE Greece--GR Hong Kong--HK Hungary--HU Indonesia--ID India--IN Ireland--IE Israel--IL Italy--IT Japan--JP Kazakhstan--KZ Korea--KR Latvia--LV Luxembourg--LU Macedonia--MK Netherlands--NL New-Caledonia--NC New-Zealand--NZ Norway--NO Poland--PL Portugal--PT Romania--RO Russian--RU Serbia--RS Singapore--SG Slovakia--SK SouthAfrica--ZA Spain--ES SriLanka--LK Sweden--SE Switzerland--CH Taiwan--TW Turkey--TR Ukraine--UA United-Kingdom--GB United-States--US Uzbekistan--UZ VietNam--VN)
-		arraycount=${#array[@]}
-		for (( i=0; i < ${arraycount}; ++i)); do
-			position1=$(( $i + 1 ))
-			position2=$(( $i + 2 ))
-			printf "%5d: %-25s%5d: %-25s\n" "${position1}" "${array[$i]}" "${position2}" "${array[$i + 1]}"
-    			((i++))
-		done
-		printf "\n"
-		printf "\n"
-		echo "Enter your country code:"
-		printf "\n"
-		read COUNTRY_CODE
-		printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
-		url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
-		## making a temporary file where chosen mirror list will be placed and place it in a variable
-		tempfile=$(mktemp --suffix=-mirrorlist)
-		## Getting latest mirrorlist and saving to temp file
-		wget -qO- "$url" | sed 's/^#Server/Server/g' > "$tempfile"
-		## Backing up and place the new mirrorlist
-		mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-		mv -i "$tempfile" /etc/pacman.d/mirrorlist
-		cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
-		rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
-		rm /etc/pacman.d/mirrorlist.tmp
-		printf "\n"
-		printf "\n"
-		printf '\e[1;32m%-6s\e[m' "##  Mirrorlist Successfully Generated! ##" 
-		printf "\n"
-		read -p "press enter to continue..."
-		clear
 	
-	elif [[ "$choice" =~ ^([nN][oO]|[nN])+$ ]]; then
-		break	
-	fi
-clear	
 printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other important stuff... ##"
 printf "\n"
 pacstrap /mnt base base-devel linux-headers parted btrfs-progs gtk-engines gtk-engine-murrine f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
