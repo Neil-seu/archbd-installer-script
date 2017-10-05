@@ -1,0 +1,18 @@
+##
+## Arch Linux repository mirrorlist
+## Filtered by mirror score from mirror status page
+## Generated on 2017-10-05
+##
+
+## Singapore
+#Server = https://sgp.mirror.pkgbuild.com/$repo/os/$arch
+## Singapore
+#Server = http://download.nus.edu.sg/mirror/arch/$repo/os/$arch
+## Singapore
+#Server = http://mirror.nus.edu.sg/archlinux/$repo/os/$arch
+## Singapore
+#Server = http://mirror.0x.sg/archlinux/$repo/os/$arch
+## Singapore
+#Server = https://download.nus.edu.sg/mirror/arch/$repo/os/$arch
+## Singapore
+#Server = https://mirror.0x.sg/archlinux/$repo/os/$arch
