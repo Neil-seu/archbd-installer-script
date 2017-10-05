@@ -97,6 +97,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors -n 10 /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -110,6 +111,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -123,6 +125,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -136,6 +139,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -149,6 +153,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -162,6 +167,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -175,6 +181,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -188,6 +195,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -201,6 +209,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -214,6 +223,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -227,6 +237,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -240,6 +251,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -253,6 +265,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -266,6 +279,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -279,6 +293,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -292,6 +307,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -305,6 +321,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -318,6 +335,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -331,6 +349,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -344,6 +363,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -357,6 +377,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -370,6 +391,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -383,6 +405,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -396,6 +419,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -409,6 +433,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -422,6 +447,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -435,6 +461,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -448,6 +475,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -461,6 +489,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -474,6 +503,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -487,6 +517,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -500,6 +531,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -513,6 +545,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -526,6 +559,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -539,6 +573,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -552,6 +587,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -565,6 +601,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -578,6 +615,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -591,6 +629,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -604,6 +643,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -617,6 +657,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -630,6 +671,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -643,6 +685,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -656,6 +699,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -669,6 +713,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -682,6 +727,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -695,6 +741,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -708,6 +755,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -721,6 +769,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -734,6 +783,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -747,6 +797,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -760,6 +811,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -773,6 +825,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
@@ -786,6 +839,7 @@
 				mv -i "$tempfile" /etc/pacman.d/mirrorlist
 				cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 				rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+				chmod +r /etc/pacman.d/mirrorlist
 				rm /etc/pacman.d/mirrorlist.tmp
 				dialog --backtitle "Archbd Installer Script" --infobox "Mirror successfully generated!" 10 30
 				sleep 3
