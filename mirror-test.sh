@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [ "$(id -u)" != "0" ]; then
+    echo "Sorry, you are not root."
+    exit 1
+fi
+
 clear
 printf "Do you want to configure mirrorlist?(y/n)"
 printf "\n"
