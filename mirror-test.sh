@@ -37,6 +37,7 @@ printf "\n"
 		mv -i "$tempfile" /etc/pacman.d/mirrorlist
 		cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 		rankmirrors -n 10 /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+		chmod +r /etc/pacman.d/mirrorlist
 		rm /etc/pacman.d/mirrorlist.tmp
 	else	
 		printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
@@ -50,6 +51,7 @@ printf "\n"
 		mv -i "$tempfile" /etc/pacman.d/mirrorlist
 		cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.tmp
 		rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
+		chmod +r /etc/pacman.d/mirrorlist
 		rm /etc/pacman.d/mirrorlist.tmp
 	fi	
 printf "\n"
