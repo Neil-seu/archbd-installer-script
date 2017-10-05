@@ -12,6 +12,14 @@
 ###
 ### License: GPL v3.0
 ###############################################################
+
+# check if the system is in root account
+
+if [[ "$(id -u)" != "0" ]]; then
+    	echo "Sorry, you are not root. Use 'sudo' or login as root account and try again."
+    	exit 1
+fi
+
 clear
 dialog --backtitle "Archbd Installer Script" --yesno "Welcome to Arch Installer. Proceed?" 10 30 
 response=$?
