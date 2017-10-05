@@ -54,14 +54,14 @@ if [[ "$response" -eq "Yes" ]]
        break
 fi
 
-dialog --backtitle "Archbd Installer Script" --infobox "Unmounting devices in case if any devices are already mounted. \
-	Please wait..." 10 40
-	umount -R /mnt
-	sleep 3
+#dialog --backtitle "Archbd Installer Script" --infobox "Unmounting devices in case if any devices are already mounted. \
+#	Please wait..." 10 40
+#	umount -R /mnt
+#	sleep 3
 clear
 
 mirror_rank
-
+clear
 
 ## Disk Partition
 
