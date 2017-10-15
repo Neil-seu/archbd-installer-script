@@ -76,6 +76,7 @@ for (( i=0; i < ${arraycount}; ++i)); do
 	printf "%5d: %-25s%5d: %-25s\n" "${position1}" "${array[$i]}" "${position2}" "${array[$i + 1]}"
     ((i++))
 done
+fi
 printf "\n"
 printf "\n"
 echo "Enter your country code:"
