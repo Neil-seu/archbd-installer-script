@@ -44,7 +44,8 @@ if [[ "$response" -eq "Yes" ]]
        		clear
 	   else
 	   	break
-	fi	
+	fi
+	clear
        pacman -Syy archlinux-keyring --noconfirm
        printf "\n"
        dialog --backtitle "Archbd Installer Script" --infobox "Successful!" 10 20
