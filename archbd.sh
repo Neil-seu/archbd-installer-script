@@ -139,6 +139,7 @@ printf "\n"
 echo "Enter your choice:"
 read DEVICE_NUMBER
 printf '\e[1;33m%-6s\e[m' "formatting..."
+wipefs -a $DEVICE_NUMBER
 mkfs.ext4 $DEVICE_NUMBER
 printf '\e[1;32m%-6s\e[m' "format successful!"
 printf "\n"
