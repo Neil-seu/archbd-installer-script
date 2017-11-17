@@ -431,6 +431,15 @@ printf "\n"
 read -p "press enter to continue..."
 clear
 
+### Installing some midea codecs directly imported from Feliz arch installer
+printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
+printf "\n"
+pacstrap /mnt a52dec autofs faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis libxv wavpack x264 gstreamer gst-plugins-base gst-plugins-good pavucontrol pulseaudio pulseaudio-alsa libdvdcss dvd+rw-tools dvdauthor dvgrab
+printf "\n"
+echo "Success!"
+sleep 2
+clear
+
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
