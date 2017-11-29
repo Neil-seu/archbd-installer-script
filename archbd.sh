@@ -377,27 +377,27 @@ read environment
 		echo "\n"
 		printf '\e[1;33m%-6s\e[m' "Configuring feliz openbox desktop..."
 		echo "\n"
-		cp -f /felizob/lxdm.conf /mnt/etc/lxdm/
+		cp -f felizob/lxdm.conf /mnt/etc/lxdm/
 		arch-chroot /mnt systemctl -f enable lxdm.service
 		arch-chroot /mnt mkdir -p /home/$usr/.config/openbox/
 		arch-chroot /mnt mkdir -p /home/$usr/.config/pcmanfm/default/
 		arch-chroot /mnt mkdir -p /home/$usr/.config/lxpanel/default/panels/
 		arch-chroot /mnt mkdir -p /home/$usr/.config/libfm/
-		cp -r /felizob/themes /mnt/usr/share/themes/
-		cp -r /felizob/themes /mnt/home/$usr/.themes
-		cp -f /felizob/conkyrc /mnt/home/$usr/.conkyrc
-		cp -f /felizob/compton.conf /mnt/home/$usr/.compton.conf
-		cp -f /felizob/face.png /mnt/home/$usr/.face
-		cp -f /felizob/autostart /mnt/home/$usr/.config/openbox/
-		cp -f /felizob/menu.xml /mnt/home/$usr/.config/openbox/
-		cp -f /felizob/rc.xml /mnt/home/$usr/.config/openbox/
-		cp -f /felizob/panel /mnt/home/$usr/.config/lxpanel/default/panels/
-		cp -f /felizob/feliz.png /mnt/usr/share/icons/
-		cp -f /felizob/wallpaper.jpg /mnt/home/$usr/Pictures/
-		cp -f /felizob/wallpaper.jpg /mnt/usr/share
-		cp -f /felizob/libfm.conf /mnt/home/$usr/.config/libfm/
-		cp -f /felizob/config /mnt/home/$usr/.config/lxpanel/default/
-		cp -f /felizob/desktop-items /mnt/home/$usr/.config/pcmanfm/default/desktop-items-0.conf
+		cp -r felizob/themes /mnt/usr/share/themes/
+		cp -r felizob/themes /mnt/home/$usr/.themes
+		cp -f felizob/conkyrc /mnt/home/$usr/.conkyrc
+		cp -f felizob/compton.conf /mnt/home/$usr/.compton.conf
+		cp -f felizob/face.png /mnt/home/$usr/.face
+		cp -f felizob/autostart /mnt/home/$usr/.config/openbox/
+		cp -f felizob/menu.xml /mnt/home/$usr/.config/openbox/
+		cp -f felizob/rc.xml /mnt/home/$usr/.config/openbox/
+		cp -f felizob/panel /mnt/home/$usr/.config/lxpanel/default/panels/
+		cp -f felizob/feliz.png /mnt/usr/share/icons/
+		cp -f felizob/wallpaper.jpg /mnt/home/$usr/Pictures/
+		cp -f felizob/wallpaper.jpg /mnt/usr/share
+		cp -f felizob/libfm.conf /mnt/home/$usr/.config/libfm/
+		cp -f felizob/config /mnt/home/$usr/.config/lxpanel/default/
+		cp -f felizob/desktop-items /mnt/home/$usr/.config/pcmanfm/default/desktop-items-0.conf
 		## Setting the ownership
 		arch-chroot /mnt chown -R $usr:users /home/$usr/
 	else
