@@ -346,7 +346,7 @@ sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[arch-anywhere]\nServer = https://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-sed -i 's/^#\[testing]/\[testing]/g' /mnt/etc/pacman.conf
+#sed -i 's/^#\[testing]/\[testing]/g' /mnt/etc/pacman.conf
 #chmod 644 /mnt/etc/pacman.d/mirrorlist
 #chmod 644 /mnt/etc/pacman.conf
 printf "\n"
