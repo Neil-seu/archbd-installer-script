@@ -13,8 +13,8 @@
 <h1>How to get it</h1>
 <p>
 You can use this link to download the installer using wget while in root terminal:<br>
-wget https://goo.gl/DwQGZ8
-
+wget -O archbd-init.sh https://goo.gl/DwQGZ8
+sh archbd-init.sh
 <p>
 <p>
 Short form:<br> wget -O archbd.sh http://tiny.cc/3likmy
