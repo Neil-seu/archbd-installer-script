@@ -13,7 +13,7 @@
 <h1>How to get it</h1>
 <p>
 You can use this link to download the installer using wget while in root terminal:<br>
-wget https://raw.githubusercontent.com/Neil-seu/archbd-installer-script/master/archbd.sh
+wget https://goo.gl/DwQGZ8
 
 <p>
 <p>
