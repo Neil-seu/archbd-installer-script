@@ -94,6 +94,7 @@ printf "\n"
 		rankmirrors -n 10 /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
 		chmod +r /etc/pacman.d/mirrorlist
 		rm /etc/pacman.d/mirrorlist.tmp
+		nano /etc/pacman.d/mirrorlist
 	else	
 		printf '\e[1;33m%-6s\e[m' "##  Configuring and ranking arch mirror list. Please wait... ##"
 		url="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
@@ -108,6 +109,7 @@ printf "\n"
 		rankmirrors /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
 		chmod +r /etc/pacman.d/mirrorlist
 		rm /etc/pacman.d/mirrorlist.tmp
+		nano /etc/pacman.d/mirrorlist
 	fi	
 printf "\n"
 echo "Mirror Updated Successfully!"
@@ -150,7 +152,7 @@ printf '\e[1;32m%-6s\e[m' "mount successful!"
 printf "\n"
 printf '\e[1;32m%-6s\e[m' "### Success! ###"
 printf "\n"
-read -p "press enter to continue..."
+sleep 3
 clear
 
 
@@ -160,7 +162,8 @@ printf '\e[1;33m%-6s\e[m' "##  Now installing the base system and other importan
 printf "\n"
 pacstrap /mnt base base-devel linux-headers parted btrfs-progs gtk-engines gtk-engine-murrine f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
-read -p " Done! press enter to continue..."
+echo "Base installed successfully!"
+sleep 2
 clear
 
 
@@ -172,7 +175,7 @@ printf '\e[1;33m%-6s\e[m' "## Set your root password: ##"
 printf "\n"
 arch-chroot /mnt passwd
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 printf "\n"
 echo "#####################################################################"
 printf "\n"
@@ -183,7 +186,7 @@ echo "$HOSTNAME" > /mnt/etc/hostname
 printf "\n"
 echo " Done! "
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 printf "\n"
 printf "\n"
 printf '\e[1;33m%-6s\e[m' "## Setting your locale and generating the locale language: ##"
@@ -196,7 +199,7 @@ arch-chroot /mnt locale-gen
 printf "\n"
 echo "Locale generation successful!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 printf "\n"
 echo "#####################################################################"
 printf "\n"
@@ -205,7 +208,7 @@ printf "\n"
 arch-chroot /mnt tzselect >> /mnt/etc/localtime
 echo "SUCCESS!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 printf "\n"
 echo "#####################################################################"
 printf "\n"
@@ -226,7 +229,7 @@ arch-chroot -u $usr /mnt passwd $usr
 printf "\n"
 echo "Success!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 printf "\n"
 echo "#####################################################################"
 printf "\n"
@@ -255,7 +258,7 @@ read interface
 		printf "\n"
 		echo " SUCCESS! "
 		printf "\n"
-		read -p "press enter to continue..."
+		sleep 3
 	elif [ "$interface" = 2 ]; then	
 		printf '\e[1;33m%-6s\e[m' "## Now detecting and enabling your network devices: ##"
 		printf "\n"
@@ -274,7 +277,7 @@ read interface
 		printf "\n"
 		echo " SUCCESS! "
 		printf "\n"
-		read -p "press enter to continue..."
+		sleep 3
 	fi	
 	
 printf "\n"
@@ -291,7 +294,7 @@ arch-chroot /mnt systemctl enable bluetooth.service
 ##arch-chroot /mnt systemctl enable ntpd.service
 echo "DONE!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 printf "\n"
 clear
 
@@ -300,7 +303,7 @@ printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 printf "\n"
 genfstab -U -p /mnt >> /mnt/etc/fstab
 printf "\n"
-read -p "Success! press enter to continue..."
+sleep 2
 clear
 
 
@@ -311,7 +314,7 @@ arch-chroot /mnt mkinitcpio -p linux
 printf "\n"
 printf '\e[1;32m%-6s\e[m' " Done!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 clear
 
 
@@ -332,7 +335,8 @@ arch-chroot /mnt grub-install --target=i386-pc --recheck $DEVICE_NUMBER
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
-read -p "Succes! press enter to proceed..."
+echo "Grub installed successfully!"
+sleep 2
 clear
 
 ##### Installing Desktop environment and necessary drivers
@@ -366,8 +370,36 @@ read environment
 		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxqt breeze-icons sddm connman --noconfirm
 	elif [ "$environment" = 8 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm
+		
+	### This is directly imported from feliz arch installer. So all credit goes to feliz. :) ###	
 	elif [ "$environment" = 9 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxdm openbox obmenu obconf lxde-icon-theme leafpad lxappearance lxinput lxpanel lxrandr lxsession lxtask lxterminal pcmanfm compton conky gpicview xscreensaver --noconfirm
+		echo "\n"
+		printf '\e[1;33m%-6s\e[m' "Configuring feliz openbox desktop..."
+		echo "\n"
+		cp -f /felizob/lxdm.conf /mnt/etc/lxdm/
+		arch-chroot /mnt systemctl -f enable lxdm.service
+		arch-chroot /mnt mkdir -p /home/$usr/.config/openbox/
+		arch-chroot /mnt mkdir -p /home/$usr/.config/pcmanfm/default/
+		arch-chroot /mnt mkdir -p /home/$usr/.config/lxpanel/default/panels/
+		arch-chroot /mnt mkdir -p /home/$usr/.config/libfm/
+		cp -r /felizob/themes /mnt/usr/share/themes/
+		cp -r /felizob/themes /mnt/home/$usr/.themes
+		cp -f /felizob/conkyrc /mnt/home/$usr/.conkyrc
+		cp -f /felizob/compton.conf /mnt/home/$usr/.compton.conf
+		cp -f /felizob/face.png /mnt/home/$usr/.face
+		cp -f /felizob/autostart /mnt/home/$usr/.config/openbox/
+		cp -f /felizob/menu.xml /mnt/home/$usr/.config/openbox/
+		cp -f /felizob/rc.xml /mnt/home/$usr/.config/openbox/
+		cp -f /felizob/panel /mnt/home/$usr/.config/lxpanel/default/panels/
+		cp -f /felizob/feliz.png /mnt/usr/share/icons/
+		cp -f /felizob/wallpaper.jpg /mnt/home/$usr/Pictures/
+		cp -f /felizob/wallpaper.jpg /mnt/usr/share
+		cp -f /felizob/libfm.conf /mnt/home/$usr/.config/libfm/
+		cp -f /felizob/config /mnt/home/$usr/.config/lxpanel/default/
+		cp -f /felizob/desktop-items /mnt/home/$usr/.config/pcmanfm/default/desktop-items-0.conf
+		## Setting the ownership
+		arch-chroot /mnt chown -R $usr:users /home/$usr/
 	else
 		echo "Unknown Parameter"
 	fi
@@ -375,7 +407,7 @@ read environment
 printf "\n"
 printf "### Success! ###"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 clear
 printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n4. Deepin (requires deepin desktop)\n5. None(this step is okay if you install felizob)"
 printf "\n"
@@ -412,7 +444,7 @@ read number
 printf "\n"
 echo "Done!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 clear
 printf "Now choose your gpu to install it's driver: \n1. Nvidia open-source driver\n2. AMD open-source driver\n3. Intel\n"
 printf "\n"
@@ -432,7 +464,7 @@ read gpu
 printf "\n"     
 echo "All drivers are successfully installed!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 clear
 
 ### Installing some midea codecs directly imported from Feliz arch installer
@@ -451,7 +483,7 @@ arch-chroot /mnt pacman -Syu chromium google-chrome vivaldi atril pepper-flash c
 printf "\n"
 echo "Success!"
 printf "\n"
-read -p "press enter to continue..."
+sleep 2
 clear
 
 ## Unmounting devices in case if any devices are already mounted
