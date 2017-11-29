@@ -346,7 +346,7 @@ sed -i 's/^#\[testing]/\[testing]/g' /mnt/etc/pacman.conf
 #chmod 644 /mnt/etc/pacman.d/mirrorlist
 #chmod 644 /mnt/etc/pacman.conf
 printf "\n"
-printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n4. Deepin Desktop\n5. Cinnamon Desktop\n6. Mate Desktop\n7. LXQT Desktop\n8. LXDE Desktop\n"
+printf "Now choose your Desktop Environment: \n1. Xfce Desktop\n2. Gnome Desktop\n3. KDE Plasma Desktop\n4. Deepin Desktop\n5. Cinnamon Desktop\n6. Mate Desktop\n7. LXQT Desktop\n8. LXDE Desktop\n9. Feliz openbox Desktop"
 printf "\n"
 printf "Enter the number:"
 read environment
@@ -365,7 +365,9 @@ read environment
 	elif [ "$environment" = 7 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxqt breeze-icons sddm connman --noconfirm
 	elif [ "$environment" = 8 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm	
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm
+	elif [ "$environment" = 9 ]; then
+		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxdm openbox obmenu obconf lxde-icon-theme leafpad lxappearance lxinput lxpanel lxrandr lxsession lxtask lxterminal pcmanfm compton conky gpicview xscreensaver --noconfirm
 	else
 		echo "Unknown Parameter"
 	fi
@@ -375,7 +377,7 @@ printf "### Success! ###"
 printf "\n"
 read -p "press enter to continue..."
 clear
-printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n4. Deepin (requires deepin desktop)"
+printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n4. Deepin (requires deepin desktop)\n5. None(this step is okay if you install felizob)"
 printf "\n"
 printf "Enter the number:"
 read number
@@ -400,6 +402,8 @@ read number
 		sed -i 's/^#greeter-session\=example-gtk-gnome/greeter-session\=lightdm-deepin-greeter/g' /mnt/etc/lightdm/lightdm.conf
 		arch-chroot /mnt systemctl enable lightdm.service
 		#sed -i -e '$a\exec startdde' /mnt/home/$USERNAME/.xinitrc
+	elif [ "$number" = 5 ]; then
+		break
 	else
 		echo "Unknown parameter"
 		break
