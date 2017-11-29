@@ -13,12 +13,9 @@
 <h1>How to get it</h1>
 <p>
 You can use this link to download the installer using wget while in root terminal:<br>
-wget -O archbd-init.sh https://goo.gl/DwQGZ8
-sh archbd-init.sh
+wget -O archbd-init.sh https://goo.gl/DwQGZ8 && sh archbd-init.sh
 <p>
-<p>
-Short form:<br> wget -O archbd.sh http://tiny.cc/3likmy
-</p>
+
 You can always find my project at:<br>
 https://github.com/Neil-seu/archbd-installer-script
 </p>
