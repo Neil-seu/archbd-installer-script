@@ -10,7 +10,7 @@
 <li>2. Must be logged in as root</li>
 </p>
 
-<h1>How to get it</h1>
+<h1>How to get and use it</h1>
 <p>
 You can use this link to download the installer using wget while in root terminal:<br>
 wget -O archbd-init.sh https://goo.gl/DwQGZ8 && sh archbd-init.sh
@@ -20,11 +20,7 @@ You can always find my project at:<br>
 https://github.com/Neil-seu/archbd-installer-script
 </p>
 
-<h1>How to use it</h1>
 <p>
-After downloading just run<br>
-<b>sh archbd.sh</b>
-
 then follow the instruction :)
 </p>
 
