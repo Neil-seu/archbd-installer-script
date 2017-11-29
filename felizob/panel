@@ -1,0 +1,197 @@
+# lxpanel <profile> config file. Manually editing is not recommended.
+# Use preference dialog in lxpanel to adjust config when you can.
+
+Global {
+  edge=top
+  allign=left
+  margin=0
+  widthtype=percent
+  width=80
+  height=35
+  transparent=1
+  tintcolor=#4D4D4D
+  alpha=123
+  setdocktype=1
+  setpartialstrut=1
+  usefontcolor=1
+  fontcolor=#ffffff
+  usefontsize=0
+  fontsize=10
+  background=0
+  backgroundfile=/usr/share/wallpaper.jpg
+  align=center
+  iconsize=35
+}
+Plugin {
+  type=menu
+  Config {
+    #image= <path/to/.face>
+    system {
+    }
+    separator {
+    }
+    item {
+      command=run
+    }
+    separator {
+    }
+    item {
+      image=gnome-logout
+      command=logout
+    }
+  image=/usr/share/icons/feliz.png
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=separator
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=dclock
+  Config {
+    ClockFmt=%A %d %B %R
+    TooltipFmt=%A %x
+    BoldFont=0
+    IconOnly=0
+    CenterText=0
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=2
+  }
+  expand=1
+}
+Plugin {
+  type=separator
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=launchbar
+  Config {
+    Button {
+      id=midori.desktop
+    }
+    Button {
+      id=pcmanfm.desktop
+    }
+    Button {
+      id=lxterminal.desktop
+    }
+    Button {
+      id=leafpad.desktop
+    }
+    Button {
+      id=gnome-terminal.desktop
+    }
+    Button {
+      id=firefox.desktop
+    }
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=43
+  }
+  expand=1
+}
+Plugin {
+  type=separator
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=taskbar
+  expand=1
+  Config {
+    tooltips=1
+    IconsOnly=-1
+    AcceptSkipPager=1
+    ShowIconified=1
+    ShowMapped=1
+    ShowAllDesks=-1
+    UseMouseWheel=1
+    UseUrgencyHint=1
+    FlatButton=0
+    MaxTaskWidth=150
+    spacing=1
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=separator
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=pager
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=4
+  }
+  expand=1
+}
+Plugin {
+  type=separator
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+  }
+  expand=1
+}
+Plugin {
+  type=cpu
+  Config {
+  }
+}
+Plugin {
+  type=tray
+  Config {
+  }
+}
