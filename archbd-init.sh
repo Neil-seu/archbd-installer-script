@@ -123,7 +123,7 @@ ErrorReport() {
 #
 
 # Declare & initialise variables
-Backtitle="ArchBD Installation script"
+Backtitle="Archlinux Install by ArchBD Installation script"
 PingTest=""                               # Throwaway variable
 Chosen="cli"                              # Set default ui in case of error
 Counter=0                                 # Set counter
