@@ -408,7 +408,7 @@ read environment
 printf "\n"
 printf "### Success! ###"
 printf "\n"
-sleep 2
+read -p "Success! press enter to continue..."
 clear
 printf "Now choose your default login manager: \n1. Lightdm\n2. GDM\n3. SDDM\n4. Deepin (requires deepin desktop)\n5. None(this step is okay if you install felizob)"
 printf "\n"
