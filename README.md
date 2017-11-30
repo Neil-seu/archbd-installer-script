@@ -13,7 +13,7 @@
 <h1>How to get and use it</h1>
 <p>
 You can use this link to download the installer using wget while in root terminal:<br>
-wget http://tiny.cc/archbd-init && sh archbd-init.sh
+wget -O archbd-init.sh https://goo.gl/WH3Urp && sh archbd-init.sh
 <p>
 
 You can always find my project at:<br>
