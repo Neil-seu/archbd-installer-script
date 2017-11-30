@@ -398,7 +398,7 @@ read environment
 		cp -f felizob/rc.xml /mnt/home/$usr/.config/openbox/
 		cp -f felizob/panel /mnt/home/$usr/.config/lxpanel/default/panels/
 		cp -f felizob/feliz.png /mnt/usr/share/icons/
-		cp -f felizob/wallpaper.jpg /mnt/home/$usr/Pictures/
+		#cp -f felizob/wallpaper.jpg /mnt/home/$usr/Pictures/
 		cp -f felizob/wallpaper.jpg /mnt/usr/share
 		cp -f felizob/libfm.conf /mnt/home/$usr/.config/libfm/
 		cp -f felizob/config /mnt/home/$usr/.config/lxpanel/default/
