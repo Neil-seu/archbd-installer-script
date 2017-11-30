@@ -381,7 +381,10 @@ read environment
 		cp -f felizob/lxdm.conf /mnt/etc/lxdm/
 		arch-chroot /mnt systemctl -f enable lxdm.service
 		arch-chroot /mnt mkdir -p /home/$usr/.config/openbox/
+		arch-chroot /mnt mkdir -p /home/$usr/.config/pcmanfm/
 		arch-chroot /mnt mkdir -p /home/$usr/.config/pcmanfm/default/
+		arch-chroot /mnt mkdir -p /home/$usr/.config/lxpanel/
+		arch-chroot /mnt mkdir -p /home/$usr/.config/lxpanel/default/
 		arch-chroot /mnt mkdir -p /home/$usr/.config/lxpanel/default/panels/
 		arch-chroot /mnt mkdir -p /home/$usr/.config/libfm/
 		cp -r felizob/themes /mnt/usr/share/themes/
