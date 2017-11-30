@@ -342,8 +342,9 @@ clear
 ##### Installing Desktop environment and necessary drivers
 printf '\e[1;33m%-6s\e[m' "######### Now Installing a Desktop environment: #########"
 printf "\n"
-sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
-sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
+#sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
+#sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
+echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sed -i -e '$a\\n[arch-anywhere]\nServer = https://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sudo sed -i 's/^#Color$/Color/;s/^#TotalDownload$/TotalDownload/;s/^#CheckSpace$/CheckSpace/;s/^#VerbosePkgLists$/VerbosePkgLists/;/^VerbosePkgLists$/ a ILoveCandy' /mnt/etc/pacman.conf
