@@ -357,25 +357,25 @@ printf "\n"
 printf "Enter the number:"
 read environment
 	if [ "$environment" = 1 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm xfce4 unrar unzip p7zip cpio xarchiver xfce4-goodies gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 2 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 3 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
 	elif [ "$environment" = 4 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
 	elif [ "$environment" = 5 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm cinnamon gnome-extra --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm cinnamon gnome-extra --noconfirm
 	elif [ "$environment" = 6 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm mate mate-extra --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm mate mate-extra --noconfirm
 	elif [ "$environment" = 7 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxqt breeze-icons sddm connman --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm lxqt breeze-icons sddm connman --noconfirm
 	elif [ "$environment" = 8 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm lxde --noconfirm
 		
 	### This is directly imported from feliz arch installer. So all credit goes to feliz. :) ###	
 	elif [ "$environment" = 9 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa xorg xorg-xinit xorg-twm xorg-xclock xterm lxdm openbox obmenu obconf lxde-icon-theme leafpad lxappearance lxinput lxpanel lxrandr lxsession lxtask lxterminal pcmanfm compton conky gpicview xscreensaver --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm lxdm openbox obmenu obconf lxde-icon-theme leafpad lxappearance lxinput lxpanel lxrandr lxsession lxtask lxterminal pcmanfm compton conky gpicview xscreensaver --noconfirm
 		echo "\n"
 		printf '\e[1;33m%-6s\e[m' "Configuring feliz openbox desktop..."
 		echo "\n"
