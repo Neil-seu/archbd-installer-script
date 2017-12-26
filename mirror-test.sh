@@ -14,7 +14,7 @@ then
 echo "Now choose any mirror :"
 printf "\n"
 printf "\n"
-array=(ALL Australia--AU Austria--AT Belarus--BY Belgium--BE Brazil--BR Bulgaria--BG Canada--CA Chile--CL China--CN Colombia--CO Czech-Republic--CZ Denmark--DK Estonia--EE Finland--FI France--FR Germany--DE Greece--GR Hong Kong--HK Hungary--HU Indonesia--ID India--IN Ireland--IE Israel--IL Italy--IT Japan--JP Kazakhstan--KZ Korea--KR Latvia--LV Luxembourg--LU Macedonia--MK Netherlands--NL New-Caledonia--NC New-Zealand--NZ Norway--NO Poland--PL Portugal--PT Romania--RO Russian--RU Serbia--RS Singapore--SG Slovakia--SK SouthAfrica--ZA Spain--ES SriLanka--LK Sweden--SE Switzerland--CH Taiwan--TW Turkey--TR Ukraine--UA United-Kingdom--GB United-States--US Uzbekistan--UZ VietNam--VN)
+array=(ALL Australia--AU Austria--AT Bangladesh--BN Belarus--BY Belgium--BE Brazil--BR Bulgaria--BG Canada--CA Chile--CL China--CN Colombia--CO Czech-Republic--CZ Denmark--DK Estonia--EE Finland--FI France--FR Germany--DE Greece--GR Hong Kong--HK Hungary--HU Indonesia--ID India--IN Ireland--IE Israel--IL Italy--IT Japan--JP Kazakhstan--KZ Korea--KR Latvia--LV Luxembourg--LU Macedonia--MK Netherlands--NL New-Caledonia--NC New-Zealand--NZ Norway--NO Poland--PL Portugal--PT Romania--RO Russian--RU Serbia--RS Singapore--SG Slovakia--SK SouthAfrica--ZA Spain--ES SriLanka--LK Sweden--SE Switzerland--CH Taiwan--TW Turkey--TR Ukraine--UA United-Kingdom--GB United-States--US Uzbekistan--UZ VietNam--VN)
 arraycount=${#array[@]}
 for (( i=0; i < ${arraycount}; ++i)); do
 	position1=$(( $i + 1 ))
