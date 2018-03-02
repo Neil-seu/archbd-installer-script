@@ -346,7 +346,6 @@ printf "\n"
 #sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
 sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
-sed -i -e '$a\\n[arch-anywhere]\nServer = https://arch-anywhere.org/repo/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sudo sed -i 's/^#Color$/Color/;s/^#TotalDownload$/TotalDownload/;s/^#CheckSpace$/CheckSpace/;s/^#VerbosePkgLists$/VerbosePkgLists/;/^VerbosePkgLists$/ a ILoveCandy' /mnt/etc/pacman.conf
 #sed -i 's/^#\[testing]/\[testing]/g' /mnt/etc/pacman.conf
 #chmod 644 /mnt/etc/pacman.d/mirrorlist
@@ -484,7 +483,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-arch-chroot /mnt pacman -Syu chromium google-chrome ttf-liberation vivaldi atril pepper-flash cool-retro-term flashplugin powerline-fonts zsh zsh-syntax-highlighting firefox ttf-inconsolata noto-fonts ttf-roboto adapta-gtk-theme evince yaourt deluge wget lolcat sublime-text-dev codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
+arch-chroot /mnt pacman -Syu chromium ttf-liberation atril pepper-flash cool-retro-term flashplugin powerline-fonts zsh zsh-syntax-highlighting firefox ttf-inconsolata noto-fonts ttf-roboto adapta-gtk-theme evince yaourt deluge wget lolcat sublime-text-dev codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
 printf "\n"
 echo "Success!"
 printf "\n"
