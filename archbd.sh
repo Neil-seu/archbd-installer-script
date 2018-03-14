@@ -360,7 +360,7 @@ read environment
 	elif [ "$environment" = 2 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm gnome gnome-extra gnome-shell gtk-engine-murrine --noconfirm
 	elif [ "$environment" = 3 ]; then
-		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications plasma-wayland-session --noconfirm
+		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm plasma plasma-desktop kde-applications --noconfirm
 	elif [ "$environment" = 4 ]; then
 		arch-chroot /mnt pacman -Syu xf86-video-vesa arj lha lrzip lzip unarj xorg xorg-xinit xorg-twm xorg-xclock xterm deepin deepin-extra --noconfirm
 	elif [ "$environment" = 5 ]; then
@@ -483,7 +483,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-arch-chroot /mnt pacman -Syu chromium ttf-liberation atril pepper-flash cool-retro-term flashplugin powerline-fonts zsh zsh-syntax-highlighting firefox ttf-inconsolata noto-fonts ttf-roboto adapta-gtk-theme evince yaourt deluge wget lolcat sublime-text-dev codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm
+arch-chroot /mnt pacman -Syu chromium ttf-liberation atril pepper-flash cool-retro-term flashplugin powerline-fonts zsh zsh-syntax-highlighting firefox ttf-inconsolata noto-fonts ttf-roboto adapta-gtk-theme evince yaourt deluge wget lolcat codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm --needed
 printf "\n"
 echo "Success!"
 printf "\n"
