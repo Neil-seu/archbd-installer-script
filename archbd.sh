@@ -133,7 +133,7 @@ echo "Enter your choice:"
 read DEVICE_NUMBER
 cfdisk $DEVICE_NUMBER
 clear
-printf '\e[1;33m%-6s\e[m' "To format and mount, choose your partition in full form like /dev/sdX() you have just created from the list below :"
+printf '\e[1;33m%-6s\e[m' "To format and mount, choose your root partition in full form like /dev/sdX() you have just created from the list below :"
 printf "\n"
 printf "\n"
 lsblk -o name,mountpoint,label,size,uuid
@@ -169,7 +169,7 @@ read choice
 		printf '\e[1;32m%-6s\e[m' "format successful!"
 		printf "\n"
 		printf '\e[1;33m%-6s\e[m' "Activating swap partition..."
-		swapon $DEVICE_NUMBER /mnt
+		swapon $DEVICE_NUMBER
 		printf "\n"
 		printf '\e[1;32m%-6s\e[m' "Swap activated!"
 	else
@@ -179,7 +179,7 @@ printf "\n"
 printf "\n"
 printf '\e[1;32m%-6s\e[m' "### Partition Successfully configured! ###"
 printf "\n"
-sleep 3
+read -p "press enter to continue..."
 clear
 
 
