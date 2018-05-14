@@ -150,7 +150,34 @@ mount $DEVICE_NUMBER /mnt
 printf "\n"
 printf '\e[1;32m%-6s\e[m' "mount successful!"
 printf "\n"
-printf '\e[1;32m%-6s\e[m' "### Success! ###"
+printf "Do you have swap partition?(y/n)"
+printf "\n"
+read choice
+	if [[ "$choice" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+		printf "\n"
+		printf '\e[1;33m%-6s\e[m' "List of your internal or external devices : "
+		printf '\n'
+		printf '\n'
+		lsblk -o name,mountpoint,label,size,uuid
+		printf "\n"
+		printf '\e[1;33m%-6s\e[m' "Type the swap partition in full form like /dev/sdX.\n X means sda/sdb/sdc etc."
+		printf "\n"
+		echo "Enter your choice:"
+		read DEVICE_NUMBER
+		printf '\e[1;33m%-6s\e[m' "formatting..."
+		mkswap $DEVICE_NUMBER
+		printf '\e[1;32m%-6s\e[m' "format successful!"
+		printf "\n"
+		printf '\e[1;33m%-6s\e[m' "Activating swap partition..."
+		swapon $DEVICE_NUMBER
+		printf "\n"
+		printf '\e[1;32m%-6s\e[m' "Swap activated!"
+	else
+		break
+	fi	
+printf "\n"
+printf "\n"
+printf '\e[1;32m%-6s\e[m' "### Partition Successfully configured! ###"
 printf "\n"
 sleep 3
 clear
