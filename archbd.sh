@@ -169,7 +169,7 @@ read choice
 		printf '\e[1;32m%-6s\e[m' "format successful!"
 		printf "\n"
 		printf '\e[1;33m%-6s\e[m' "Activating swap partition..."
-		swapon $DEVICE_NUMBER
+		swapon $DEVICE_NUMBER /mnt
 		printf "\n"
 		printf '\e[1;32m%-6s\e[m' "Swap activated!"
 	else
