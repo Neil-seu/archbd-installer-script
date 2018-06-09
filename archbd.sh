@@ -196,7 +196,16 @@ printf "\n"
 read -p "press enter to continue..."
 clear
 
-
+## Checking if the OS is running on virtualbox
+graphics=$(lspci | grep -i "vga" | sed 's/.*://' | sed 's/(.*//' | sed 's/^[ \t]*//')
+if [[ $(echo $graphics | grep -i 'virtualbox') != "" ]]; then
+	printf '\e[1;32m%-6s\e[m' "### Virtualbox Detected! Installing virtualbox utilities... ###"
+	printf "\n"
+	pacstrap /mnt virtualbox-guest-utils virtualbox-guest-modules-arch
+fi
+printf "\n"
+read -p "press enter to continue..."
+clear
 
 
 #### Doing some basic stuff
