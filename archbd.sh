@@ -76,6 +76,8 @@ for (( i=0; i < ${arraycount}; ++i)); do
 	printf "%5d: %-25s%5d: %-25s\n" "${position1}" "${array[$i]}" "${position2}" "${array[$i + 1]}"
     ((i++))
 done
+else 
+	break
 fi
 printf "\n"
 printf "\n"
@@ -190,7 +192,8 @@ printf "\n"
 pacstrap /mnt base base-devel linux-headers parted btrfs-progs gtk-engines gtk-engine-murrine f2fs-tools git ntfs-3g fakechroot ntp net-tools iw wireless_tools wpa_actiond wpa_supplicant dialog alsa-utils espeakup rp-pppoe pavucontrol bluez bluez-utils pulseaudio-bluetooth brltty
 printf "\n"
 echo "Base installed successfully!"
-sleep 2
+printf "\n"
+read -p "press enter to continue..."
 clear
 
 
@@ -314,15 +317,15 @@ printf "\n"
 ##echo " SUCCESS! "
 ##printf "\n"
 ##read -p "press enter to continue..."
-printf "\n"
-echo "Enabling other necessary services..."
-arch-chroot /mnt systemctl enable bluetooth.service
+#printf "\n"
+#echo "Enabling other necessary services..."
+#arch-chroot /mnt systemctl enable bluetooth.service
 ##arch-chroot /mnt systemctl enable ppp@${wired_dev}.service
 ##arch-chroot /mnt systemctl enable ntpd.service
-echo "DONE!"
-printf "\n"
-sleep 2
-printf "\n"
+#echo "DONE!"
+#printf "\n"
+#sleep 2
+#printf "\n"
 clear
 
 ## Generating the fstab
@@ -330,7 +333,7 @@ printf '\e[1;33m%-6s\e[m' "##  Now generating the fstab, hold on... ##"
 printf "\n"
 genfstab -U -p /mnt >> /mnt/etc/fstab
 printf "\n"
-sleep 2
+read -p "press enter to continue..."
 clear
 
 
@@ -341,7 +344,7 @@ arch-chroot /mnt mkinitcpio -p linux
 printf "\n"
 printf '\e[1;32m%-6s\e[m' " Done!"
 printf "\n"
-sleep 2
+read -p "press enter to continue..."
 clear
 
 
@@ -363,7 +366,8 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 printf "\n"
 printf "\n"
 echo "Grub installed successfully!"
-sleep 2
+printf "\n"
+read -p "press enter to continue..."
 clear
 
 ##### Installing Desktop environment and necessary drivers
@@ -433,6 +437,7 @@ read environment
 		arch-chroot /mnt chown -R $usr:users /home/$usr/
 	else
 		echo "Unknown Parameter"
+		break
 	fi
 	
 printf "\n"
@@ -475,7 +480,7 @@ read number
 printf "\n"
 echo "Done!"
 printf "\n"
-sleep 2
+read -p "press enter to continue..."
 clear
 printf "Now choose your gpu to install it's driver: \n1. Nvidia open-source driver\n2. AMD open-source driver\n3. Intel\n"
 printf "\n"
@@ -495,7 +500,7 @@ read gpu
 printf "\n"     
 echo "All drivers are successfully installed!"
 printf "\n"
-sleep 2
+read -p "press enter to continue..."
 clear
 
 ### Installing some midea codecs directly imported from Feliz arch installer
@@ -504,7 +509,8 @@ printf "\n"
 pacstrap /mnt a52dec autofs faac faad2 flac lame libdca libdv libmad libmpeg2 libtheora libvorbis libxv wavpack x264 gstreamer gst-plugins-base gst-plugins-good pavucontrol pulseaudio pulseaudio-alsa libdvdcss dvd+rw-tools dvdauthor dvgrab
 printf "\n"
 echo "Success!"
-sleep 2
+printf "\n"
+read -p "press enter to continue..."
 clear
 
 #### Installing Some common softwares
@@ -514,7 +520,7 @@ arch-chroot /mnt pacman -Syu chromium atom ttf-liberation atril pepper-flash coo
 printf "\n"
 echo "Success!"
 printf "\n"
-sleep 2
+read -p "press enter to continue..."
 clear
 
 ## Unmounting devices in case if any devices are already mounted
