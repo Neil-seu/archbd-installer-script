@@ -202,10 +202,13 @@ if [[ $(echo $graphics | grep -i 'virtualbox') != "" ]]; then
 	printf '\e[1;32m%-6s\e[m' "### Virtualbox Detected! Installing virtualbox utilities... ###"
 	printf "\n"
 	pacstrap /mnt virtualbox-guest-utils virtualbox-guest-modules-arch
+	printf "\n"
+	read -p "press enter to continue..."
+	clear
+else
+	break
 fi
-printf "\n"
-read -p "press enter to continue..."
-clear
+
 
 
 #### Doing some basic stuff
@@ -385,7 +388,7 @@ printf "\n"
 #sed -i '/\[multilib]/s/^#//g' /mnt/etc/pacman.conf
 #sed -i '/Include \= \/etc\/pacman\.d\/mirrorlist/s/^#//g' /mnt/etc/pacman.conf
 echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
-sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
+#sed -i -e '$a\\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /mnt/etc/pacman.conf
 sudo sed -i 's/^#Color$/Color/;s/^#TotalDownload$/TotalDownload/;s/^#CheckSpace$/CheckSpace/;s/^#VerbosePkgLists$/VerbosePkgLists/;/^VerbosePkgLists$/ a ILoveCandy' /mnt/etc/pacman.conf
 #sed -i 's/^#\[testing]/\[testing]/g' /mnt/etc/pacman.conf
 #chmod 644 /mnt/etc/pacman.d/mirrorlist
@@ -525,7 +528,7 @@ clear
 #### Installing Some common softwares
 printf '\e[1;33m%-6s\e[m' "######### Let's install some common software: #########"
 printf "\n"
-arch-chroot /mnt pacman -Syu chromium atom ttf-liberation atril pepper-flash cool-retro-term flashplugin powerline-fonts zsh zsh-syntax-highlighting firefox ttf-inconsolata noto-fonts ttf-roboto adapta-gtk-theme evince yaourt deluge wget lolcat codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm --needed
+arch-chroot /mnt pacman -Syu chromium atom ttf-liberation atril pepper-flash cool-retro-term flashplugin powerline-fonts zsh zsh-syntax-highlighting firefox ttf-inconsolata noto-fonts ttf-roboto adapta-gtk-theme evince deluge wget lolcat codeblocks gimp screenfetch gpick vlc smplayer smplayer-skins simplescreenrecorder gparted htop libreoffice-fresh bleachbit thunderbird bc rsync mlocate bash-completion pkgstats arch-wiki-lite tlp zip unzip unrar p7zip lzop cpio xdg-user-dirs-gtk ttf-bitstream-vera dosfstools exfat-utils f2fs-tools fuse fuse-exfat autofs mtpfs gvfs gvfs-goa gvfs-afc gvfs-mtp gvfs-google --noconfirm --needed
 printf "\n"
 echo "Success!"
 printf "\n"
