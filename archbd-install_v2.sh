@@ -13,13 +13,17 @@
 
 set -Eeuo pipefail
 LOG=/tmp/archbd-install.log
-trap 'printf "\n\e[1;31mFailed on line %s. Installation stopped (log: %s).\e[0m\n" "$LINENO" "$LOG" >&2' ERR
+trap 'printf "\n\e[1;31mFailed in %s (line %s). Installation stopped.\e[0m\nRead the full log:  less -R %s\nThen run the same command again; it unmounts and starts over cleanly.\n" "${FUNCNAME[0]:-main}" "$LINENO" "$LOG" >&2' ERR
 
 # ---------------------------------------------------------------- defaults --
 DEFAULT_TIMEZONE="Asia/Dhaka"
 DEFAULT_LOCALE="en_US.UTF-8"
 DEFAULT_KEYMAP="us"
+DEFAULT_MIRROR_COUNTRIES="BD,IN,SG"   # nearby countries; type 'all' at the prompt for worldwide
 ESP_SIZE="512MiB"
+# Extra mirrors to try first, e.g. in a config file:
+#   PREFERRED_MIRRORS=("https://mirror.example.org/archlinux")
+PREFERRED_MIRRORS=()
 
 # ----------------------------------------------------------------- helpers --
 c()    { printf '\e[1;%sm%s\e[0m\n' "$1" "$2"; }
@@ -94,6 +98,7 @@ make_fs() {    # make_fs FS DEVICE LABEL
         xfs)   mkfs.xfs  -f -L "$3" "$2" ;;
         *)     die "Unsupported filesystem: $1" ;;
     esac
+    udevadm settle   # let udev notice the new filesystem before anything mounts it
 }
 
 mount_opts() { # mount_opts FS
@@ -166,7 +171,8 @@ gather_system() {
         die "Unknown keymap: $KEYMAP"
     fi
 
-    get MIRROR_COUNTRIES "Mirror country code(s), comma-separated, blank = worldwide" ""
+    get MIRROR_COUNTRIES "Mirror countries (codes, comma-separated; 'all' = worldwide)" "$DEFAULT_MIRROR_COUNTRIES"
+    if [[ ${MIRROR_COUNTRIES,,} == all ]]; then MIRROR_COUNTRIES=""; fi
 
     echo
     info "Desktop environment:"
@@ -329,6 +335,7 @@ show_summary() {
     printf '  %-14s %s\n' "Timezone:"    "$TIMEZONE"
     printf '  %-14s %s\n' "Desktop:"     "$DE"
     printf '  %-14s %s\n' "Filesystem:"  "$FS_TYPE"
+    printf '  %-14s %s\n' "Mirrors:"     "${MIRROR_COUNTRIES:-worldwide}"
     if [[ $WIPE_DISK == y ]]; then
         warn "ERASE EVERYTHING on $INSTALL_DISK:"
         [[ $BOOT_MODE == uefi ]] && printf '      %s  EFI System (%s, FAT32)\n' "$EFI_PART" "$ESP_SIZE"
@@ -356,15 +363,95 @@ show_summary() {
 }
 
 # --------------------------------------------------- mirrors and keyring ----
-mirrors_and_keyring() {
-    info "Ranking mirrors with reflector..."
-    local args=(--protocol https --latest 20 --sort rate --save /etc/pacman.d/mirrorlist)
+# How the mirror step works, in plain words:
+#   1. Mirrors close to you are tried first. For some countries we know the
+#      official local mirrors (builtin_mirrors_for); you can add your own with
+#      PREFERRED_MIRRORS=(...) in the config file.
+#   2. Each one gets a quick check of a few seconds: does it answer, and was it
+#      synced in the last 24 hours? (every mirror publishes a 'lastsync' file)
+#   3. The ones that pass go to the top of the mirrorlist, and the ISO's own
+#      mirrors stay below them as a backup. pacman falls through the list in
+#      order, so a failing mirror never stops the install.
+#   4. If no nearby mirror passes, reflector builds a list from the official
+#      status data, sorted by mirror score (no downloads, so it is quick).
+#      Set MIRROR_SORT=rate in the config for reflector's slow real speed test.
+builtin_mirrors_for() {   # builtin_mirrors_for COUNTRY_CODE_OR_NAME
+    case ${1^^} in
+        BD|BANGLADESH) echo "https://mirror.xeonbd.com/archlinux https://mirror.limda.net/archlinux" ;;
+    esac
+}
+
+probe_mirror() {   # probe_mirror BASE_URL -> prints "reply_seconds minutes_since_sync", or fails
+    local url=${1%/} body ts secs now age
+    body=$(curl -fsS --connect-timeout 3 --max-time 6 -w '\n%{time_total}' "$url/lastsync" 2>/dev/null) || return 1
+    ts=$(head -n1 <<<"$body")
+    secs=$(tail -n1 <<<"$body")
+    [[ $ts =~ ^[0-9]+$ ]] || return 1
+    now=$(date +%s)
+    age=$(( now - ts ))
+    if (( age < 0 )); then age=0; fi
+    (( age <= 86400 )) || return 1
+    printf '%s %s\n' "$secs" "$(( age / 60 ))"
+}
+
+reflector_fallback() {
+    local sort=${MIRROR_SORT:-score}
+    local -a args=(--protocol https --age 24 --completion-percentage 90 --number 10
+                   --connection-timeout 3 --download-timeout 3 --sort "$sort"
+                   --save /etc/pacman.d/mirrorlist)
+    if [[ $sort == rate ]]; then args+=(--latest 20); fi
     if [[ -n $MIRROR_COUNTRIES ]]; then args+=(--country "$MIRROR_COUNTRIES"); fi
-    if reflector "${args[@]}"; then
-        ok "Mirrorlist updated."
+    echo "  Asking reflector (sorted by '$sort', gives up after 90 s)..."
+    if timeout 90 reflector "${args[@]}"; then
+        ok "Mirrorlist created by reflector."
     else
-        warn "reflector failed; keeping the existing mirrorlist."
+        warn "reflector failed or timed out; keeping the ISO's mirror list."
     fi
+}
+
+mirrors_and_keyring() {
+    info "Choosing mirrors..."
+    local list=/etc/pacman.d/mirrorlist iso_copy=/etc/pacman.d/mirrorlist.iso
+    cp -n "$list" "$iso_copy" 2>/dev/null || true
+
+    local -a candidates=() codes=() timed=() sorted=()
+    local url code res secs age
+
+    for url in "${PREFERRED_MIRRORS[@]}"; do
+        if [[ -n $url ]]; then candidates+=("$url"); fi
+    done
+    IFS=',' read -ra codes <<<"$MIRROR_COUNTRIES"
+    for code in "${codes[@]}"; do
+        code=${code// /}
+        # shellcheck disable=SC2046
+        for url in $(builtin_mirrors_for "$code"); do candidates+=("$url"); done
+    done
+
+    if (( ${#candidates[@]} )); then
+        echo "  Checking nearby mirrors (must answer and be synced within 24 h):"
+        for url in "${candidates[@]}"; do
+            if res=$(probe_mirror "$url"); then
+                read -r secs age <<<"$res"
+                printf '    OK    %-42s answered in %ss, synced %s min ago\n' "$url" "$secs" "$age"
+                timed+=("$secs $url")
+            else
+                printf '    SKIP  %-42s no answer, or out of date\n' "$url"
+            fi
+        done
+    fi
+
+    if (( ${#timed[@]} )); then
+        mapfile -t sorted < <(printf '%s\n' "${timed[@]}" | sort -n | cut -d' ' -f2-)
+        {
+            echo "# Written by archbd-install.sh: nearby mirrors first, ISO mirrors as backup"
+            for url in "${sorted[@]}"; do echo "Server = ${url%/}/\$repo/os/\$arch"; done
+            grep -m5 '^Server' "$iso_copy" || true
+        } > "$list"
+        ok "Using ${#sorted[@]} nearby mirror(s) first, ISO mirrors as backup."
+    else
+        reflector_fallback
+    fi
+
     info "Refreshing the keyring..."
     pacman -Sy --noconfirm archlinux-keyring
 }
@@ -399,20 +486,22 @@ EOF
     wipefs -a "$ROOT_PART"
     make_fs "$FS_TYPE" "$ROOT_PART" archroot
 
+    # Always mount with an explicit -t: auto-detection can fail right after mkfs
+    # (stale udev data) and then mount guesses types one by one and gives up.
     if [[ $FS_TYPE == btrfs ]]; then
-        mount "$ROOT_PART" /mnt
+        mount -t btrfs "$ROOT_PART" /mnt
         for sv in @ @log @pkg @snapshots; do btrfs subvolume create "/mnt/$sv"; done
         if [[ -z $HOME_PART ]]; then btrfs subvolume create /mnt/@home; fi
         umount /mnt
 
-        mount -o "$opts,subvol=@" "$ROOT_PART" /mnt
+        mount -t btrfs -o "$opts,subvol=@" "$ROOT_PART" /mnt
         mkdir -p /mnt/home /mnt/var/log /mnt/var/cache/pacman/pkg /mnt/.snapshots
-        mount -o "$opts,subvol=@log"       "$ROOT_PART" /mnt/var/log
-        mount -o "$opts,subvol=@pkg"       "$ROOT_PART" /mnt/var/cache/pacman/pkg
-        mount -o "$opts,subvol=@snapshots" "$ROOT_PART" /mnt/.snapshots
-        if [[ -z $HOME_PART ]]; then mount -o "$opts,subvol=@home" "$ROOT_PART" /mnt/home; fi
+        mount -t btrfs -o "$opts,subvol=@log"       "$ROOT_PART" /mnt/var/log
+        mount -t btrfs -o "$opts,subvol=@pkg"       "$ROOT_PART" /mnt/var/cache/pacman/pkg
+        mount -t btrfs -o "$opts,subvol=@snapshots" "$ROOT_PART" /mnt/.snapshots
+        if [[ -z $HOME_PART ]]; then mount -t btrfs -o "$opts,subvol=@home" "$ROOT_PART" /mnt/home; fi
     else
-        mount -o "$opts" "$ROOT_PART" /mnt
+        mount -t "$FS_TYPE" -o "$opts" "$ROOT_PART" /mnt
         mkdir -p /mnt/home
     fi
 
@@ -420,16 +509,22 @@ EOF
         if [[ $FORMAT_HOME == y ]]; then
             wipefs -a "$HOME_PART"
             make_fs "$FS_TYPE" "$HOME_PART" archhome
-            mount -o "$opts" "$HOME_PART" /mnt/home
+            mount -t "$FS_TYPE" -o "$opts" "$HOME_PART" /mnt/home
         else
-            mount -o noatime "$HOME_PART" /mnt/home
+            local home_fs
+            home_fs=$(blkid -p -o value -s TYPE "$HOME_PART" || true)
+            [[ -n $home_fs ]] || die "Cannot detect a filesystem on $HOME_PART (format it, or check it first)."
+            mount -t "$home_fs" -o noatime "$HOME_PART" /mnt/home
         fi
     fi
 
     if [[ $BOOT_MODE == uefi ]]; then
-        if [[ $FORMAT_EFI == y ]]; then mkfs.fat -F32 "$EFI_PART"; fi
+        if [[ $FORMAT_EFI == y ]]; then
+            mkfs.fat -F32 "$EFI_PART"
+            udevadm settle
+        fi
         mkdir -p /mnt/boot/efi
-        mount "$EFI_PART" /mnt/boot/efi
+        mount -t vfat "$EFI_PART" /mnt/boot/efi
     fi
 
     if [[ -n $SWAP_PART ]]; then
@@ -593,7 +688,7 @@ pacman -Sy --noconfirm
 # --- keep the installed system's mirrors fresh (reflector.timer)
 mkdir -p /etc/xdg/reflector
 {
-    printf '%s\n' --save /etc/pacman.d/mirrorlist --protocol https --latest 20 --sort rate
+    printf '%s\n' --save /etc/pacman.d/mirrorlist --protocol https --age 24 --completion-percentage 90 --number 10 --sort score
     if [[ -n $MIRROR_COUNTRIES ]]; then printf '%s\n' --country "$MIRROR_COUNTRIES"; fi
 } > /etc/xdg/reflector/reflector.conf
 
