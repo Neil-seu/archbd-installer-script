@@ -1,4 +1,4 @@
-cat << 'EOF' > archbd-install-v5.sh
+#cat << 'EOF' > archbd-install-v5.sh
 #!/usr/bin/env bash
 # archbd-install-v5.sh - Arch Linux installer (UEFI + BIOS)
 
@@ -1079,4 +1079,4 @@ main() {
 if [[ ${BASH_SOURCE[0]} == "$0" ]]; then
     main "$@"
 fi
-EOF
+#EOF
