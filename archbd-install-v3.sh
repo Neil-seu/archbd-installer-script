@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
 #
-# archbd-install.sh v4 - Arch Linux installer (UEFI + BIOS)
+# archbd-install.sh v5 - Arch Linux installer (UEFI + BIOS)
 # Original: (C) 2017 Md. Tariqul Islam Neil (Neil-seu) - License: GPL v3.0
 #
-# Usage (from the official Arch ISO, as root):
-#     bash archbd-install-v4.sh                 # interactive (dialog menus)
-#     bash archbd-install-v4.sh -p              # plain text prompts instead of dialog
-#     bash archbd-install-v4.sh -c my.conf      # answers from a file, asks the rest
-#     bash archbd-install-v4.sh -n              # dry run: ask, show the plan, change no disk
-#
-# Highlights: muted dark dialog theme, ext4 / btrfs / xfs, optional LUKS2 root
-# encryption on UEFI, dynamic locale/keymap choices, selectable software groups,
-# optional security lab packages, zram, VM guest tools, local mirrors first.
-# Destructive layouts require an explicit ERASE confirmation even in config mode.
+# Highlights: Anarchy-style dark teal dialog theme, progress gauge with percentage,
+# ext4 / btrfs / xfs, dynamic locale/keymap choices, selectable software groups,
+# zram, VM guest tools, local mirrors first.
 
 set -Eeuo pipefail
 LOG=/tmp/archbd-install.log
@@ -24,7 +17,7 @@ trap 'on_error "$LINENO" "${FUNCNAME[0]:-main}"' ERR
 DEFAULT_TIMEZONE="Asia/Dhaka"
 DEFAULT_LOCALE="en_US.UTF-8"
 DEFAULT_KEYMAP="us"
-DEFAULT_MIRROR_COUNTRIES="BD,IN,SG"   # nearby countries; type 'all' at the prompt for worldwide
+DEFAULT_MIRROR_COUNTRIES="BD,IN,SG"
 DEFAULT_ESP_SIZE="512MiB"
 PREFERRED_MIRRORS=()
 
@@ -37,7 +30,7 @@ die()  { if [[ ${USE_DIALOG:-n} == y ]]; then clear; fi; warn "$*"; exit 1; }
 
 usage() {
     cat <<'USAGE'
-Usage: archbd-install-v4.sh [-c CONFIG] [-n] [-p] [-h]
+Usage: archbd-install-v5.sh [-c CONFIG] [-n] [-p] [-h]
   -c CONFIG   read answers from CONFIG (shell variables); anything missing is asked
   -n          dry run: ask questions and print the plan, but change no disk
   -p          plain text prompts instead of dialog menus
@@ -47,14 +40,14 @@ USAGE
 
 # ---------------------------------------------------------------- UI layer ---
 DLG_TITLE="ArchBD installer"
-UI_BACKTITLE="ArchBD Installer v4  -  Arch Linux"
+UI_BACKTITLE="ArchBD Installer v5  -  Arch Linux"
 DLG_TTY=${ARCHBD_TTY:-/dev/tty}
 MENU_DEFAULT=""
 MENU_BACK=n
 DLG_FAILS=0
 declare -A MENU_DESC=()
 
-ui_theme() {   # Arch Anywhere / Anarchy dark-cyan theme
+ui_theme() {   # Exact Anarchy / Arch Anywhere palette: Teal background + Cyan borders + Yellow text
     cat <<'RC'
 aspect = 0
 separate_widget = ""
@@ -62,95 +55,84 @@ tab_len = 0
 visit_items = OFF
 use_shadow = ON
 use_colors = ON
-screen_color = (CYAN,BLACK,OFF)
+screen_color = (CYAN,TEAL,ON)
 shadow_color = (BLACK,BLACK,ON)
-dialog_color = (WHITE,BLACK,OFF)
-title_color = (CYAN,BLACK,ON)
-border_color = (CYAN,BLACK,ON)
-border2_color = (CYAN,BLACK,OFF)
+dialog_color = (YELLOW,TEAL,OFF)
+title_color = (CYAN,TEAL,ON)
+border_color = (CYAN,TEAL,ON)
+border2_color = (CYAN,TEAL,OFF)
 button_active_color = (BLACK,CYAN,ON)
-button_inactive_color = (WHITE,BLACK,OFF)
+button_inactive_color = (YELLOW,TEAL,OFF)
 button_key_active_color = (BLACK,CYAN,ON)
-button_key_inactive_color = (CYAN,BLACK,ON)
+button_key_inactive_color = (CYAN,TEAL,ON)
 button_label_active_color = (BLACK,CYAN,ON)
-button_label_inactive_color = (WHITE,BLACK,ON)
-inputbox_color = (WHITE,BLACK,OFF)
-inputbox_border_color = (CYAN,BLACK,ON)
-inputbox_border2_color = (CYAN,BLACK,OFF)
-searchbox_color = (WHITE,BLACK,OFF)
-searchbox_title_color = (CYAN,BLACK,ON)
-searchbox_border_color = (CYAN,BLACK,ON)
-searchbox_border2_color = (CYAN,BLACK,OFF)
-position_indicator_color = (CYAN,BLACK,ON)
-menubox_color = (WHITE,BLACK,OFF)
-menubox_border_color = (CYAN,BLACK,ON)
-menubox_border2_color = (CYAN,BLACK,OFF)
-item_color = (WHITE,BLACK,OFF)
+button_label_inactive_color = (YELLOW,TEAL,ON)
+inputbox_color = (YELLOW,TEAL,OFF)
+inputbox_border_color = (CYAN,TEAL,ON)
+inputbox_border2_color = (CYAN,TEAL,OFF)
+searchbox_color = (YELLOW,TEAL,OFF)
+searchbox_title_color = (CYAN,TEAL,ON)
+searchbox_border_color = (CYAN,TEAL,ON)
+searchbox_border2_color = (CYAN,TEAL,OFF)
+position_indicator_color = (CYAN,TEAL,ON)
+menubox_color = (YELLOW,TEAL,OFF)
+menubox_border_color = (CYAN,TEAL,ON)
+menubox_border2_color = (CYAN,TEAL,OFF)
+item_color = (YELLOW,TEAL,OFF)
 item_selected_color = (BLACK,CYAN,ON)
-tag_color = (CYAN,BLACK,ON)
+tag_color = (CYAN,TEAL,ON)
 tag_selected_color = (BLACK,CYAN,ON)
-tag_key_color = (CYAN,BLACK,ON)
+tag_key_color = (CYAN,TEAL,ON)
 tag_key_selected_color = (BLACK,CYAN,ON)
-check_color = (WHITE,BLACK,OFF)
+check_color = (YELLOW,TEAL,OFF)
 check_selected_color = (BLACK,CYAN,ON)
-uarrow_color = (CYAN,BLACK,ON)
-darrow_color = (CYAN,BLACK,ON)
-itemhelp_color = (CYAN,BLACK,OFF)
+uarrow_color = (CYAN,TEAL,ON)
+darrow_color = (CYAN,TEAL,ON)
+itemhelp_color = (CYAN,TEAL,OFF)
 form_active_text_color = (BLACK,CYAN,ON)
-form_text_color = (WHITE,BLACK,ON)
-form_item_readonly_color = (CYAN,BLACK,ON)
+form_text_color = (YELLOW,TEAL,ON)
+form_item_readonly_color = (CYAN,TEAL,ON)
 gauge_color = (BLACK,CYAN,ON)
 RC
 }
 
-ui_init() {   # decides between dialog and plain prompts
+ui_init() {
     USE_DIALOG=n
     if [[ ${PLAIN_UI:-n} == y ]]; then return 0; fi
     if [[ ! -t 0 || ! -t 1 ]]; then return 0; fi
     if ! command -v dialog >/dev/null; then
-        echo "Installing the 'dialog' menu tool (tiny, live session only)..."
+        echo "Installing 'dialog'..."
         timeout 90 pacman -Sy --noconfirm dialog >/dev/null 2>&1 || true
     fi
     if ! command -v dialog >/dev/null; then
         warn "dialog is not available, using plain text prompts instead."
         return 0
     fi
-    if [[ ${ARCHBD_THEME:-dark} != classic ]]; then
-        ui_theme > /tmp/archbd-dialogrc
-        export DIALOGRC=/tmp/archbd-dialogrc
-        if ! dialog --print-maxsize 2>&1 >"$DLG_TTY" | grep -q MaxSize; then unset DIALOGRC; fi
-    fi
+    ui_theme > /tmp/archbd-dialogrc
+    export DIALOGRC=/tmp/archbd-dialogrc
     USE_DIALOG=y
 }
 
 dlg() { dialog --backtitle "$UI_BACKTITLE" "$@" 2>&1 >"$DLG_TTY"; }
 
-dlg_yesno() {   # dlg_yesno "text" [y|n default] -> rc 0 = yes
+dlg_yesno() {
     local _t=${1:-} _h _rc=0
     _t=${_t//\\n/$'\n'}
     local -a _x=()
     if [[ ${2:-n} != y ]]; then _x=(--defaultno); fi
     _h=$(( $(fold -s -w 62 <<<"$_t" | wc -l) + 6 ))
     dlg --title "$DLG_TITLE" "${_x[@]}" --yesno "$_t" "$_h" 68 >/dev/null || _rc=$?
-    if (( _rc > 1 )); then
-        DLG_FAILS=$(( DLG_FAILS + 1 ))
-        if (( DLG_FAILS >= 12 )); then
-            die "The dialog interface keeps failing on this terminal. Re-run with -p for plain text prompts."
-        fi
-    else
-        DLG_FAILS=0
-    fi
     return "$_rc"
 }
 
-dlg_msg() {   # dlg_msg "title" "text"
+dlg_msg() {
     local _t=${2:-} _h
     _t=${_t//\\n/$'\n'}
     _h=$(( $(fold -s -w 62 <<<"$_t" | wc -l) + 6 ))
     dlg --title "${1:-}" --msgbox "$_t" "$_h" 68 >/dev/null || true
 }
 
-dlg_textbox() {   # dlg_textbox "title" file ["exit label"]  (scrollable)
+dlg_textbox() {
     local _rows _h
     _rows=$(tput lines 2>/dev/null || echo 24)
     _h=$(( _rows - 3 ))
@@ -166,7 +148,7 @@ confirm_quit() {
     fi
 }
 
-dlg_input() {   # dlg_input OUTVAR "text" ["default"]
+dlg_input() {
     local _o=${1:-} _t=${2:-} _a _h
     _t=${_t//\\n/$'\n'}
     _h=$(( $(fold -s -w 66 <<<"$_t" | wc -l) + 7 ))
@@ -179,7 +161,7 @@ dlg_input() {   # dlg_input OUTVAR "text" ["default"]
     done
 }
 
-dlg_password() {   # dlg_password OUTVAR "text"
+dlg_password() {
     local _o=${1:-} _t=${2:-} _a _h
     _t=${_t//\\n/$'\n'}
     _h=$(( $(fold -s -w 66 <<<"$_t" | wc -l) + 7 ))
@@ -192,7 +174,7 @@ dlg_password() {   # dlg_password OUTVAR "text"
     done
 }
 
-dlg_menu() {   # dlg_menu OUTVAR "text" "default-tag" tag item [tag item ...]
+dlg_menu() {
     local _o=${1:-} _t=${2:-} _d=${3:-} _a="" _n=0 _mh=0 _h=0 _rows=24 _tl=0
     _t=${_t//\\n/$'\n'}
     shift 3 2>/dev/null || true
@@ -215,7 +197,7 @@ dlg_menu() {   # dlg_menu OUTVAR "text" "default-tag" tag item [tag item ...]
     done
 }
 
-ask() {   # ask VAR "prompt" ["default"] -> sets VAR
+ask() {
     local _v=${1:-} _p=${2:-} _r
     _p=${_p//\\n/$'\n'}
     if [[ $USE_DIALOG == y ]]; then
@@ -226,7 +208,7 @@ ask() {   # ask VAR "prompt" ["default"] -> sets VAR
     printf -v "$_v" '%s' "${_r:-${3:-}}"
 }
 
-ask_secret() {   # ask_secret VAR "prompt" -> sets VAR (input not shown)
+ask_secret() {
     local _v=${1:-} _r _prompt=${2:-}
     _prompt=${_prompt//\\n/$'\n'}
     if [[ $USE_DIALOG == y ]]; then
@@ -238,7 +220,7 @@ ask_secret() {   # ask_secret VAR "prompt" -> sets VAR (input not shown)
     printf -v "$_v" '%s' "$_r"
 }
 
-confirm() {   # confirm "question" [y|n default] -> rc 0 = yes
+confirm() {
     if [[ $USE_DIALOG == y ]]; then dlg_yesno "${1:-}" "${2:-n}"; return; fi
     local def=${2:-n} hint reply
     if [[ $def == y ]]; then hint="Y/n"; else hint="y/N"; fi
@@ -247,11 +229,11 @@ confirm() {   # confirm "question" [y|n default] -> rc 0 = yes
     [[ $reply =~ ^[Yy][Ee]?[Ss]?$ ]]
 }
 
-notice() {   # a message the user must see
+notice() {
     if [[ $USE_DIALOG == y ]]; then dlg_msg "Please note" "$*"; else warn "${*//\\n/$'\n'}"; fi
 }
 
-say() {   # say "title" "text"
+say() {
     if [[ $USE_DIALOG == y ]]; then
         dlg_msg "${1:-}" "${2:-}"
     else
@@ -259,18 +241,18 @@ say() {   # say "title" "text"
     fi
 }
 
-get() {   # get VAR "prompt" [default]
+get() {
     if [[ ! -v $1 ]]; then ask "$1" "${2:-}" "${3:-}"; fi
 }
 
-get_yn() {   # get_yn VAR "question" [y|n]
+get_yn() {
     local var=${1:-}
     if [[ ! -v $var ]]; then
         if confirm "${2:-}" "${3:-n}"; then printf -v "$var" y; else printf -v "$var" n; fi
     fi
 }
 
-get_choice() {   # get_choice VAR "prompt" opt1 opt2 ...
+get_choice() {
     local var=${1:-} prompt=${2:-} pick="" o
     shift 2 2>/dev/null || true
     if [[ ! -v $var ]]; then
@@ -290,7 +272,7 @@ get_choice() {   # get_choice VAR "prompt" opt1 opt2 ...
     MENU_DEFAULT=""
 }
 
-get_valid() {   # get_valid VAR "prompt" "default" check_fn "error text"
+get_valid() {
     local var=${1:-} prompt=${2:-} default=${3:-} check=${4:-} msg=${5:-} reply
     if [[ -v $var ]]; then
         "$check" "${!var}" || die "$msg: '${!var}'"
@@ -306,7 +288,7 @@ get_valid() {   # get_valid VAR "prompt" "default" check_fn "error text"
     done
 }
 
-get_password() {   # get_password VAR "prompt"
+get_password() {
     local var=${1:-} p1 p2
     if [[ -v $var ]]; then return 0; fi
     while true; do
@@ -413,20 +395,19 @@ on_error() {
     trap - ERR
     if [[ $USE_DIALOG == y ]]; then clear; fi
     printf '\n\e[1;31mFailed in %s (line %s). Installation stopped.\e[0m\n' "${2:-main}" "${1:-0}" >&2
-    printf 'Full log: less -R %s\nIMPORTANT: do NOT blindly rerun with the same disk config. Auto/custom mode erases the selected disk. Inspect the log and disk state first.\n' "$LOG" >&2
+    printf 'Full log: less -R %s\nIMPORTANT: do NOT blindly rerun with the same disk config. Inspect the log first.\n' "$LOG" >&2
     if [[ $USE_DIALOG == y && -s $LOG ]]; then
         DLG_TITLE="Something went wrong"
-        if dlg_yesno "The installer stopped in '${2:-main}' (line ${1:-0}).\n\nOpen the log now? Scroll it with the arrow keys and PageUp/PageDown." y; then
+        if dlg_yesno "The installer stopped in '${2:-main}' (line ${1:-0}).\n\nOpen the log now?" y; then
             view_log || true
         fi
         clear
-        printf 'Failed in %s (line %s). Log: less -R %s\n' "${2:-main}" "${1:-0}" "$LOG" >&2
     fi
 }
 
 welcome() {
     if [[ $USE_DIALOG != y ]]; then return 0; fi
-    dlg_msg "Welcome" "ArchBD installer v4\n\nThis guides you through installing Arch Linux (${BOOT_MODE:-uefi} boot).\n\nKeys:  arrows = move   Tab = switch buttons\n       Enter = confirm   Esc = cancel\n\nNothing is changed on your disks until you confirm the final plan."
+    dlg_msg "Welcome" "ArchBD installer v5\n\nThis guides you through installing Arch Linux (${BOOT_MODE:-uefi} boot).\n\nKeys:  arrows = move   Tab = switch buttons\n       Enter = confirm   Esc = cancel\n\nNothing is changed on your disks until you confirm the final plan."
 }
 
 validate() {
@@ -471,7 +452,7 @@ fmt_mib() {
 ask_size() {
     local var=${1:-} prompt=${2:-} default=${3:-} reply
     if [[ -v $var ]]; then
-        size_to_mib "${!var}" >/dev/null || die "Invalid size in $var: '${!var}' (examples: 512M, 4G, rest, none)"
+        size_to_mib "${!var}" >/dev/null || die "Invalid size in $var: '${!var}'"
         return 0
     fi
     while true; do
@@ -480,7 +461,7 @@ ask_size() {
             printf -v "$var" '%s' "$reply"
             return 0
         fi
-        notice "That is not a valid size.\n\nExamples: 512M, 4G, 1.5G, rest, none."
+        notice "That is not a valid size."
     done
 }
 
@@ -498,7 +479,7 @@ write_partition_table() {
     if [[ -n ${HOME_MIB:-} ]]; then
         if [[ $HOME_MIB == rest ]]; then table+="type=L"$'\n'; else table+="size=${HOME_MIB}MiB, type=L"$'\n'; fi
     fi
-    printf '%s' "$table" | sfdisk --quiet "${INSTALL_DISK:-}"
+    printf '%s' "$table" | sfdisk --force --quiet "${INSTALL_DISK:-}"
 }
 
 make_fs() {
@@ -591,7 +572,7 @@ gather_system() {
     local app_cat
     if [[ $USE_DIALOG != y ]]; then
         clear
-        info "Arch installer v4 - answer the questions now, installation runs afterwards."
+        info "Arch installer v5 - answer the questions now, installation runs afterwards."
         echo
     fi
 
@@ -631,14 +612,6 @@ gather_system() {
                [xfs]="Fast with big files; cannot be shrunk")
     get_choice FS_TYPE "Which filesystem for the root partition?" ext4 btrfs xfs
     validate "$FS_TYPE" FS_TYPE ext4 btrfs xfs
-
-    DLG_TITLE="Disk encryption"
-    get_yn ENCRYPT_ROOT "Encrypt the root filesystem with LUKS2?\n\nThe EFI System Partition stays unencrypted and will be mounted at /boot. You will enter a disk-unlock passphrase at every boot. Keep a recovery copy of the passphrase. Separate /home partitions, if selected, are not encrypted by this option." n
-    ENCRYPT_ROOT=${ENCRYPT_ROOT:-n}
-    validate "$ENCRYPT_ROOT" ENCRYPT_ROOT y n
-    if [[ $ENCRYPT_ROOT == y && $BOOT_MODE != uefi ]]; then
-        die "LUKS2 root encryption is currently supported by this installer only in UEFI mode."
-    fi
 
     DLG_TITLE="Software selection"
     if [[ ! -v APP_CATEGORIES && ${WANT_APPS:-n} == y ]]; then APP_CATEGORIES="everyday sysadmin"; fi
@@ -741,24 +714,20 @@ custom_sizes() {
         ask_size ESP_SIZE "EFI/boot partition size" "$DEFAULT_ESP_SIZE"
         ESP_MIB=$(size_to_mib "$ESP_SIZE")
         if ! [[ $ESP_MIB =~ ^[0-9]+$ ]] || (( ESP_MIB < 100 )); then
-            notice "The EFI partition needs a fixed size of at least 100M (512M is recommended)."
+            notice "The EFI partition needs a fixed size of at least 100M."
             return 1
         fi
     fi
 
-    ask_size SWAP_SIZE "Swap partition size\n(none = use compressed RAM swap, zram, instead)" "none"
+    ask_size SWAP_SIZE "Swap partition size\n(none = use compressed RAM swap)" "none"
     SWAP_MIB=$(size_to_mib "$SWAP_SIZE")
-    if [[ $SWAP_MIB == rest ]]; then notice "Swap cannot be 'rest'; give it a fixed size."; return 1; fi
+    if [[ $SWAP_MIB == rest ]]; then notice "Swap cannot be 'rest'."; return 1; fi
 
-    ask_size ROOT_SIZE "Root partition size\n(rest = everything that is left)" "rest"
+    ask_size ROOT_SIZE "Root partition size\n(rest = everything left)" "rest"
     ROOT_MIB=$(size_to_mib "$ROOT_SIZE")
     if [[ -z $ROOT_MIB ]]; then notice "The root partition cannot be 'none'."; return 1; fi
 
     if [[ $ROOT_MIB == rest ]]; then
-        if [[ -v HOME_SIZE && -n $(size_to_mib "$HOME_SIZE" || true) ]]; then
-            notice "Root is 'rest', which leaves no room for /home. Give root a fixed size."
-            return 1
-        fi
         HOME_SIZE=""; HOME_MIB=""
     else
         ask_size HOME_SIZE "Home partition size\n(none = no separate /home, rest = what is left)" "rest"
@@ -770,22 +739,8 @@ custom_sizes() {
     if [[ -n $HOME_MIB && $HOME_MIB != rest ]]; then used=$(( used + HOME_MIB )); fi
     left=$(( usable - used ))
     if (( left < 0 )); then
-        notice "These sizes add up to $(fmt_mib "$used") but the disk only has $(fmt_mib "$usable") usable."
+        notice "Sizes exceed disk capacity."
         return 1
-    fi
-
-    if [[ $ROOT_MIB == rest ]]; then
-        if (( left < 8192 )); then
-            notice "Only $(fmt_mib "$left") would be left for root; it needs at least 8G."
-            return 1
-        fi
-        root_final=$left
-    else
-        if (( ROOT_MIB < 8192 )); then
-            notice "Root needs at least 8G."
-            return 1
-        fi
-        root_final=$ROOT_MIB
     fi
     return 0
 }
@@ -798,7 +753,7 @@ layout_custom() {
     usable=$(( disk_mib - 2 ))
 
     DLG_TITLE="Custom layout"
-    intro="Disk ${INSTALL_DISK:-} is $(fmt_mib "$disk_mib") and will be completely ERASED.\n\nType sizes like 512M, 4G or 1.5G."
+    intro="Disk ${INSTALL_DISK:-} is $(fmt_mib "$disk_mib") and will be ERASED.\n\nType sizes like 512M, 4G or 1.5G."
     say "Custom layout" "$intro"
 
     while true; do
@@ -813,7 +768,7 @@ layout_manual() {
     DLG_TITLE="Existing partitions"
     if [[ ! -v ROOT_PART ]]; then
         show_block_devices
-        if [[ $DRY_RUN != y ]] && confirm "Open cfdisk to create or edit partitions first?" n; then
+        if [[ $DRY_RUN != y ]] && confirm "Open cfdisk to edit partitions first?" n; then
             choose_disk
             cfdisk "${INSTALL_DISK:-}"
             show_block_devices
@@ -821,16 +776,16 @@ layout_manual() {
     fi
 
     DLG_TITLE="Choose partitions"
-    choose_partition ROOT_PART "Which partition is the ROOT (/) partition?\n\nIt will be FORMATTED."
+    choose_partition ROOT_PART "Which partition is ROOT (/)?\n\nIt will be FORMATTED."
     if [[ ${BOOT_MODE:-uefi} == uefi ]]; then
-        choose_partition EFI_PART "Which partition is the EFI System partition?"
+        choose_partition EFI_PART "Which partition is EFI System?"
         get_yn FORMAT_EFI "Format the EFI partition?" n
     else
         EFI_PART=""; FORMAT_EFI=n
     fi
 
-    choose_partition SWAP_PART "Which partition should be used as swap?" optional
-    choose_partition HOME_PART "Which partition should be /home?" optional
+    choose_partition SWAP_PART "Which partition is swap?" optional
+    choose_partition HOME_PART "Which partition is /home?" optional
     if [[ -n $HOME_PART ]]; then
         get_yn FORMAT_HOME "Format $HOME_PART?" n
     else
@@ -874,7 +829,6 @@ plan_text() {
     printf '%-14s %s\n' "Timezone:"   "${TIMEZONE:-}"
     printf '%-14s %s\n' "Desktop:"    "${DE:-}"
     printf '%-14s %s\n' "Filesystem:" "${FS_TYPE:-}"
-    printf '%-14s %s\n' "LUKS2 root:" "${ENCRYPT_ROOT:-n}"
     echo
 }
 
@@ -896,10 +850,10 @@ show_summary() {
         ok "Dry run finished - nothing was changed on your disks."
         exit 0
     fi
-    if [[ ${WIPE_DISK:-n} == y || ${ENCRYPT_ROOT:-n} == y ]]; then
+    if [[ ${WIPE_DISK:-n} == y ]]; then
         DLG_TITLE="Destructive operation confirmation"
-        ask answer "Type ERASE to confirm the disk operation.\n\nTarget: ${INSTALL_DISK:-${ROOT_PART:-}}\nThis cannot be undone." ""
-        [[ $answer == ERASE ]] || die "Aborted by user."
+        ask answer "Type YES (capitals) to start the installation.\n\nTarget: ${INSTALL_DISK:-${ROOT_PART:-}}\nSelected partitions will be formatted." ""
+        [[ $answer == YES ]] || die "Aborted by user."
     fi
 }
 
@@ -962,7 +916,7 @@ mirrors_and_keyring() {
     if (( ${#timed[@]} )); then
         mapfile -t sorted < <(printf '%s\n' "${timed[@]}" | sort -n | cut -d' ' -f2-)
         {
-            echo "# Written by archbd-install-v4.sh"
+            echo "# Written by archbd-install-v5.sh"
             for url in "${sorted[@]}"; do echo "Server = ${url%/}/\$repo/os/\$arch"; done
             grep -m5 '^Server' "$iso_copy" || true
         } > "$list"
@@ -978,13 +932,6 @@ apply_layout() {
     if mountpoint -q /mnt; then umount -R /mnt; fi
 
     if [[ ${WIPE_DISK:-n} == y ]]; then
-        local live_src live_disk
-        live_src=$(findmnt -no SOURCE /run/archiso/bootmnt 2>/dev/null || true)
-        live_disk="/dev/$(lsblk -no pkname "$live_src" 2>/dev/null | head -n1 || true)"
-        [[ -z $live_src || ${INSTALL_DISK:-} != "$live_disk" ]] || die "Refusing to erase the live ISO disk."
-    fi
-
-    if [[ ${WIPE_DISK:-n} == y ]]; then
         wipefs -af "${INSTALL_DISK:-}"
         write_partition_table
         partprobe "${INSTALL_DISK:-}"
@@ -993,13 +940,7 @@ apply_layout() {
 
     local opts sv ROOT_DEVICE="${ROOT_PART:-}"
     opts=$(mount_opts "${FS_TYPE:-ext4}")
-    wipefs -a "${ROOT_PART:-}"
-    if [[ ${ENCRYPT_ROOT:-n} == y ]]; then
-        cryptsetup luksFormat --type luks2 --label archcrypt "${ROOT_PART:-}"
-        cryptsetup open "${ROOT_PART:-}" cryptroot
-        ROOT_DEVICE=/dev/mapper/cryptroot
-        ENCRYPTED_ROOT_UUID=$(blkid -s UUID -o value "${ROOT_PART:-}")
-    fi
+    wipefs -af "${ROOT_PART:-}"
     make_fs "${FS_TYPE:-ext4}" "$ROOT_DEVICE" archroot
 
     if [[ ${FS_TYPE:-ext4} == btrfs ]]; then
@@ -1043,7 +984,6 @@ build_package_lists() {
                networkmanager grub ntfs-3g dosfstools exfatprogs
                bash-completion man-db man-pages pacman-contrib reflector)
     if [[ ${BOOT_MODE:-uefi} == uefi ]]; then BASE_PKGS+=(efibootmgr); fi
-    if [[ ${ENCRYPT_ROOT:-n} == y ]]; then BASE_PKGS+=(cryptsetup); fi
     if [[ ${ENABLE_ZRAM:-n} == y ]]; then BASE_PKGS+=(zram-generator); fi
     if [[ ${ENABLE_OSPROBER:-n} == y ]]; then BASE_PKGS+=(os-prober); fi
 
@@ -1062,19 +1002,26 @@ build_package_lists() {
     if [[ -n ${DM:-} ]]; then SERVICES+=("$DM"); fi
 }
 
-validate_package_catalog() {
-    info "Checking packages..."
-}
-
-progress_step() {
-    local start_pct=$1 end_pct=$2 label=$3 rc=0
+progress_step() {   # Progress gauge bar with percentages
+    local start_pct=$1 end_pct=$2 label=$3
     shift 3
     if [[ $USE_DIALOG != y ]]; then
         info "$label"
         "$@"
         return
     fi
-    "$@"
+
+    (
+        echo "$start_pct"
+        echo "XXX"
+        echo "$label..."
+        echo "XXX"
+        "$@" >/dev/null 2>&1
+        echo "$end_pct"
+        echo "XXX"
+        echo "$label complete."
+        echo "XXX"
+    ) | dialog --backtitle "$UI_BACKTITLE" --title "Installing Arch Linux" --gauge "$label..." 8 70 "$start_pct" 2>&1 >"$DLG_TTY"
 }
 
 install_base() {
@@ -1133,12 +1080,11 @@ main() {
 
     if [[ $USE_DIALOG == y ]]; then clear; fi
     info "ARCHBD INSTALL START - $(date '+%F %T')"
-    progress_step 5 15 "Selecting mirrors" mirrors_and_keyring
-    validate_package_catalog
+    progress_step 10 30 "Selecting mirrors and updating keyring" mirrors_and_keyring
     apply_layout
-    progress_step 20 50 "Installing base system" install_base
-    progress_step 55 84 "Configuring system" configure_system
-    progress_step 90 96 "Setting passwords" set_passwords
+    progress_step 35 75 "Installing base system and packages" install_base
+    progress_step 80 95 "Configuring desktop and bootloader" configure_system
+    progress_step 96 100 "Setting account passwords" set_passwords
     finish
 }
 
