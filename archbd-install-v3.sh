@@ -19,6 +19,15 @@ LOG=/tmp/archbd-install.log
 USE_DIALOG=n
 PLAIN_UI=${ARCHBD_PLAIN:+y}
 trap 'on_error "$LINENO" "${FUNCNAME[0]:-main}"' ERR
+# Restore the terminal's standard green palette entry when the installer exits.
+# OSC palette commands are ignored by terminals that do not support them.
+PALETTE_TWEAKED=n
+restore_terminal_palette() {
+    if [[ ${PALETTE_TWEAKED:-n} == y && -w ${DLG_TTY:-/dev/tty} ]]; then
+        printf '\033]104;2\007' > "${DLG_TTY:-/dev/tty}" 2>/dev/null || true
+    fi
+}
+trap restore_terminal_palette EXIT
 
 # ---------------------------------------------------------------- defaults --
 DEFAULT_TIMEZONE="Asia/Dhaka"
@@ -61,7 +70,7 @@ MENU_BACK=n
 DLG_FAILS=0
 declare -A MENU_DESC=()
 
-ui_theme() {   # muted midnight palette: charcoal/navy canvas, amber text, teal focus
+ui_theme() {   # dark olive canvas, warm amber text, restrained cyan focus
     cat <<'RC'
 aspect = 0
 separate_widget = ""
@@ -69,43 +78,43 @@ tab_len = 0
 visit_items = OFF
 use_shadow = ON
 use_colors = ON
-screen_color = (WHITE,BLUE,OFF)
+screen_color = (WHITE,GREEN,OFF)
 shadow_color = (BLACK,BLACK,ON)
-dialog_color = (WHITE,BLUE,OFF)
-title_color = (YELLOW,BLUE,ON)
-border_color = (CYAN,BLUE,ON)
-border2_color = (CYAN,BLUE,OFF)
+dialog_color = (WHITE,GREEN,OFF)
+title_color = (YELLOW,GREEN,ON)
+border_color = (CYAN,GREEN,ON)
+border2_color = (CYAN,GREEN,OFF)
 button_active_color = (BLACK,CYAN,ON)
-button_inactive_color = (WHITE,BLUE,OFF)
+button_inactive_color = (WHITE,GREEN,OFF)
 button_key_active_color = (BLACK,CYAN,ON)
-button_key_inactive_color = (YELLOW,BLUE,ON)
+button_key_inactive_color = (YELLOW,GREEN,ON)
 button_label_active_color = (BLACK,CYAN,ON)
-button_label_inactive_color = (WHITE,BLUE,ON)
-inputbox_color = (YELLOW,BLUE,OFF)
-inputbox_border_color = (CYAN,BLUE,ON)
-inputbox_border2_color = (CYAN,BLUE,OFF)
-searchbox_color = (WHITE,BLUE,OFF)
-searchbox_title_color = (YELLOW,BLUE,ON)
-searchbox_border_color = (CYAN,BLUE,ON)
-searchbox_border2_color = (CYAN,BLUE,OFF)
-position_indicator_color = (YELLOW,BLUE,ON)
-menubox_color = (WHITE,BLUE,OFF)
-menubox_border_color = (CYAN,BLUE,ON)
-menubox_border2_color = (CYAN,BLUE,OFF)
-item_color = (WHITE,BLUE,OFF)
+button_label_inactive_color = (WHITE,GREEN,ON)
+inputbox_color = (YELLOW,GREEN,OFF)
+inputbox_border_color = (CYAN,GREEN,ON)
+inputbox_border2_color = (CYAN,GREEN,OFF)
+searchbox_color = (WHITE,GREEN,OFF)
+searchbox_title_color = (YELLOW,GREEN,ON)
+searchbox_border_color = (CYAN,GREEN,ON)
+searchbox_border2_color = (CYAN,GREEN,OFF)
+position_indicator_color = (YELLOW,GREEN,ON)
+menubox_color = (WHITE,GREEN,OFF)
+menubox_border_color = (CYAN,GREEN,ON)
+menubox_border2_color = (CYAN,GREEN,OFF)
+item_color = (WHITE,GREEN,OFF)
 item_selected_color = (BLACK,CYAN,ON)
-tag_color = (YELLOW,BLUE,ON)
+tag_color = (YELLOW,GREEN,ON)
 tag_selected_color = (BLACK,CYAN,ON)
-tag_key_color = (YELLOW,BLUE,ON)
+tag_key_color = (YELLOW,GREEN,ON)
 tag_key_selected_color = (BLACK,CYAN,ON)
-check_color = (WHITE,BLUE,OFF)
+check_color = (WHITE,GREEN,OFF)
 check_selected_color = (BLACK,CYAN,ON)
-uarrow_color = (GREEN,BLUE,ON)
-darrow_color = (GREEN,BLUE,ON)
-itemhelp_color = (YELLOW,BLUE,OFF)
+uarrow_color = (YELLOW,GREEN,ON)
+darrow_color = (YELLOW,GREEN,ON)
+itemhelp_color = (YELLOW,GREEN,OFF)
 form_active_text_color = (BLACK,CYAN,ON)
-form_text_color = (WHITE,BLUE,ON)
-form_item_readonly_color = (CYAN,BLUE,ON)
+form_text_color = (WHITE,GREEN,ON)
+form_item_readonly_color = (CYAN,GREEN,ON)
 gauge_color = (BLACK,GREEN,ON)
 RC
 }
@@ -123,6 +132,13 @@ ui_init() {   # decides between dialog and plain prompts
         return 0
     fi
     if [[ ${ARCHBD_THEME:-dark} != classic ]]; then
+        # Dialog only exposes the eight ANSI colors in its portable theme file.
+        # Recolor ANSI green to a dark olive on terminals supporting OSC 4;
+        # the EXIT trap restores the original palette entry.
+        if [[ -w "$DLG_TTY" ]]; then
+            printf '\033]4;2;rgb:32/36/20\007' > "$DLG_TTY" 2>/dev/null || true
+            PALETTE_TWEAKED=y
+        fi
         ui_theme > /tmp/archbd-dialogrc
         export DIALOGRC=/tmp/archbd-dialogrc
         # safety net: if this dialog version rejects the theme, fall back to its defaults
